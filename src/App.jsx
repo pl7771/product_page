@@ -1,5 +1,5 @@
+// src/App.jsx
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 // Layout
 import { Navigation } from './components/layout/Navigation';
@@ -17,6 +17,7 @@ import { LightboxModal } from './components/modals/LightboxModal';
 import { InfoModal } from './components/modals/InfoModal';
 import { WeChatModal } from './components/modals/WeChatModal';
 import { ProductContactModal } from './components/modals/ProductContactModal';
+import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 import ProjectsGallery from './components/ProjectsGallery';
 
 export default function App() {
@@ -27,14 +28,15 @@ export default function App() {
   const [contactMessage, setContactMessage] = useState("");
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [productContactModal, setProductContactModal] = useState(null);
+  const [productGalleryModal, setProductGalleryModal] = useState(null); // 🆕
 
   useEffect(() => {
-    // 🆕 Сброс всех модалок при первой загрузке
     setLightboxImg(null);
     setWechatModal(false);
     setInfoProduct(null);
     setGalleryOpen(false);
     setProductContactModal(null);
+    setProductGalleryModal(null);
     
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -48,8 +50,9 @@ export default function App() {
       <HeroSection />
       <ProjectsSection onOpenGallery={() => setGalleryOpen(true)} />
       
+      {/* 🆕 Product Showcase с галереей и контактами */}
       <ProductShowcase 
-        onLightboxClick={setLightboxImg}
+        onGalleryClick={setProductGalleryModal}
         onContactClick={setProductContactModal}
       />
       
@@ -57,23 +60,17 @@ export default function App() {
       <QuickContacts />
       <Footer />
 
-      {/* Modals */}
+      {/* 🆕 Модальные окна */}
       <LightboxModal image={lightboxImg} onClose={() => setLightboxImg(null)} />
-      
-      <InfoModal 
-        product={infoProduct} 
-        onClose={() => setInfoProduct(null)}
-        onContactRequest={setContactMessage}
-      />
-      
+      <InfoModal product={infoProduct} onClose={() => setInfoProduct(null)} onContactRequest={setContactMessage} />
       <WeChatModal isOpen={wechatModal} onClose={() => setWechatModal(false)} />
       
       {productContactModal && (
-        <ProductContactModal 
-          product={productContactModal} 
-          onClose={() => setProductContactModal(null)} 
-        />
+        <ProductContactModal product={productContactModal} onClose={() => setProductContactModal(null)} />
       )}
+      
+      {/* 🆕 Карусель фото продукта */}
+      <GalleryCarouselModal product={productGalleryModal} onClose={() => setProductGalleryModal(null)} />
       
       <ProjectsGallery isOpen={galleryOpen} onClose={() => setGalleryOpen(false)} />
     </div>
