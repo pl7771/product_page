@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom';
+import ProjectsSection from './components/ProjectsSection';
+import ProjectsGallery from './components/ProjectsGallery';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Menu, X, ChevronRight, Shield, Truck, Clock, 
   Settings, CheckCircle, Star, MessageCircle, Mail, 
-  MapPin, Phone, ArrowRight, Expand, Info, Zap
+  MapPin, Phone, ArrowRight, Expand, Info, Zap 
 } from 'lucide-react';
 
 // --- CUSTOM HOOKS & UTILS ---
@@ -185,6 +188,7 @@ export default function App() {
   const [wechatModal, setWechatModal] = useState(false);
   const [infoProduct, setInfoProduct] = useState(null);
   const [contactMessage, setContactMessage] = useState("");
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -280,6 +284,9 @@ export default function App() {
         </div>
       </section>
 
+      {/* \-\-\- PROJECTS GALLERY CTA --- \*/}
+      <ProjectsSection onOpenGallery={() => setGalleryOpen(true)} />
+
       {/* --- PRODUCT SHOWCASE --- */}
       <section id="products" className="py-32 bg-green-950 relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -358,6 +365,18 @@ export default function App() {
               </Reveal>
             ))}
           </div>
+
+          <div className="mt-16 text-center">
+            <Link
+              to="/products"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 group"
+            >
+              View All Products
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>   
+
+
         </div>
       </section>
 
@@ -406,6 +425,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      
 
       {/* --- CONTACT SECTION --- */}
       <section id="contact" className="py-32 bg-green-950 border-t border-white/5">
@@ -658,6 +679,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      <ProjectsGallery isOpen={galleryOpen} onClose={() => setGalleryOpen(false)} />  
+
 
     </div>
   );
