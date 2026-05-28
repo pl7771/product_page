@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* Плавный скролл для всей страницы */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Чтобы фиксированный хедер не перекрывал контент при переходе по якорям */
+:target {
+  scroll-margin-top: 100px;
+}

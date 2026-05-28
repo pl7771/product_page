@@ -31,13 +31,22 @@ export const ProductShowcase = ({ onGalleryClick, onContactClick }) => {
         </div>
 
         <div className="mt-16 text-center">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 group"
-          >
-            Request Commercial Offer
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </a>
+                    <button
+  type="button"
+  onClick={() => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }}
+  className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 group cursor-pointer"
+>
+  Request Commercial Offer
+  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+</button>
         </div>
       </div>
     </section>

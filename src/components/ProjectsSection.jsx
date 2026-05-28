@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 const ProjectsSection = ({ onOpenGallery }) => {
   return (
     <section 
-      className="relative min-h-[60vh] flex items-center justify-center overflow-hidden cursor-pointer group"
+      id="projects" className="relative min-h-[60vh] flex items-center justify-center overflow-hidden cursor-pointer group scroll-mt-20"
       onClick={onOpenGallery}
       role="button"
       tabIndex={0}

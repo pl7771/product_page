@@ -12,7 +12,7 @@ import { TrustSection } from './components/sections/TrustSection';
 import { QuickContacts } from './components/sections/QuickContacts';
 import ProjectsSection from './components/ProjectsSection';
 
-// Modals
+// Modals — простые, без хуков внутри
 import { LightboxModal } from './components/modals/LightboxModal';
 import { InfoModal } from './components/modals/InfoModal';
 import { WeChatModal } from './components/modals/WeChatModal';
@@ -28,16 +28,10 @@ export default function App() {
   const [contactMessage, setContactMessage] = useState("");
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [productContactModal, setProductContactModal] = useState(null);
-  const [productGalleryModal, setProductGalleryModal] = useState(null); // 🆕
+  const [productGalleryModal, setProductGalleryModal] = useState(null);
 
+  // Скролл для навбара
   useEffect(() => {
-    setLightboxImg(null);
-    setWechatModal(false);
-    setInfoProduct(null);
-    setGalleryOpen(false);
-    setProductContactModal(null);
-    setProductGalleryModal(null);
-    
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -50,7 +44,6 @@ export default function App() {
       <HeroSection />
       <ProjectsSection onOpenGallery={() => setGalleryOpen(true)} />
       
-      {/* 🆕 Product Showcase с галереей и контактами */}
       <ProductShowcase 
         onGalleryClick={setProductGalleryModal}
         onContactClick={setProductContactModal}
@@ -60,19 +53,18 @@ export default function App() {
       <QuickContacts />
       <Footer />
 
-      {/* 🆕 Модальные окна */}
-      <LightboxModal image={lightboxImg} onClose={() => setLightboxImg(null)} />
-      <InfoModal product={infoProduct} onClose={() => setInfoProduct(null)} onContactRequest={setContactMessage} />
-      <WeChatModal isOpen={wechatModal} onClose={() => setWechatModal(false)} />
+      {/* Модальные окна — рендерятся ТОЛЬКО когда нужно */}
+      {lightboxImg && <LightboxModal image={lightboxImg} onClose={() => setLightboxImg(null)} />}
       
-      {productContactModal && (
-        <ProductContactModal product={productContactModal} onClose={() => setProductContactModal(null)} />
-      )}
+      {infoProduct && <InfoModal product={infoProduct} onClose={() => setInfoProduct(null)} onContactRequest={setContactMessage} />}
       
-      {/* 🆕 Карусель фото продукта */}
-      <GalleryCarouselModal product={productGalleryModal} onClose={() => setProductGalleryModal(null)} />
+      {wechatModal && <WeChatModal onClose={() => setWechatModal(false)} />}
       
-      <ProjectsGallery isOpen={galleryOpen} onClose={() => setGalleryOpen(false)} />
+      {productGalleryModal && <GalleryCarouselModal product={productGalleryModal} onClose={() => setProductGalleryModal(null)} />}
+      
+      {productContactModal && <ProductContactModal product={productContactModal} onClose={() => setProductContactModal(null)} />}
+      
+      {galleryOpen && <ProjectsGallery onClose={() => setGalleryOpen(false)} />}
     </div>
   );
 }

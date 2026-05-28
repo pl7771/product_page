@@ -14,7 +14,8 @@ export const Navigation = ({ isScrolled }) => {
         
         <div className="hidden md:flex items-center gap-8">
           <a href="#products" className="text-sm font-medium text-green-400 hover:text-white transition-colors">Products</a>
-          <a href="#technology" className="text-sm font-medium text-green-400 hover:text-white transition-colors">Technology</a>
+          {/* ✅ Изменено: ведёт к секции проектов */}
+          <a href="#projects" className="text-sm font-medium text-green-400 hover:text-white transition-colors">Technology</a>
           <a href="#trust" className="text-sm font-medium text-green-400 hover:text-white transition-colors">Enterprise</a>
           <a href="#contact" className="px-6 py-2 bg-white text-black font-semibold text-sm rounded-full hover:bg-green-200 transition-colors">Contact Sales</a>
         </div>
@@ -27,7 +28,8 @@ export const Navigation = ({ isScrolled }) => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-green-900/95 backdrop-blur-xl border-b border-white/10 py-4 px-6 flex flex-col gap-4">
           <a href="#products" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-green-300">Products</a>
-          <a href="#technology" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-green-300">Technology</a>
+          {/* ✅ Изменено и в мобильном меню */}
+          <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-green-300">Technology</a>
           <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-green-300">Enterprise</a>
           <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-emerald-400">Contact Sales</a>
         </div>
