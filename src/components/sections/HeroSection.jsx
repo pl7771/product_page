@@ -63,13 +63,6 @@ export const HeroSection = () => {
         </Reveal>
       </div>
 
-      {/* Анимация Ken Burns для фото (добавь это в tailwind.config.js или используй inline style) */}
-      <style jsx>{`
-        @keyframes kenburns {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.1); }
-        }
-      `}</style>
     </section>
   );
 };

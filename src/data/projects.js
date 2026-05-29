@@ -1,14 +1,15 @@
 export const projects = [
   {
     id: 1,
-    title: "AeroTest Lab",
-    category: "Industrial Testing",
-    description: "Wind tunnel atmospheric simulation for aerospace R&D",
-    cover: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800",
+    title: "Coal Preparation Plant Dust Control",
+    category: "Industrial Micro-Mist Dust Suppression Project",
+    description: "By deploying high-pressure atomization systems at key locations throughout the facility, micron-scale water mist is utilized to efficiently adsorb suspended particles, thereby significantly reducing PM₂.₅ concentrations and preventing dust dispersion. Concurrently, within enclosed spaces, dry ash undergoes precisely metered water injection and forced mixing to accurately regulate moisture content, thereby completely eliminating secondary dust generation during the discharge and transport processes.",
+    cover: "src/data/conrete_batching/quarry1.jpeg",
     images: [
-      "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&q=100&w=1600"
+      "src/data/conrete_batching/quarry2.jpeg",
+      "src/data/conrete_batching/quarry3.jpeg",
+      "src/data/conrete_batching/quarry1.jpeg",
+      "src/data/conrete_batching/quarry4.jpeg"
     ]
   },
   {
@@ -36,7 +37,7 @@ export const projects = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: "DeepSea Research",
     category: "Marine Science",
     description: "Submersible atmospheric emitters for oceanic studies",
@@ -48,7 +49,7 @@ export const projects = [
     ]
   },
   {
-    id: 3,
+    id: 5,
     title: "DeepSea Research",
     category: "Marine Science",
     description: "Submersible atmospheric emitters for oceanic studies",

@@ -19,7 +19,7 @@ export const QuickContacts = () => {
 
   return (
     // ✅ Секция светло-серая для контраста с белыми карточками
-    <section id="contact" className="w-full px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 mb-12 scroll-mt-24 bg-slate-50 py-16">
+    <section id="contact" className="w-full px-4 sm:px-6 lg:px-8 mb-12 scroll-mt-24 bg-slate-50 py-12">
       <div className="max-w-6xl mx-auto">
         
         {/* Заголовок секции */}

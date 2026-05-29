@@ -1,5 +1,4 @@
 // src/components/sections/ProductShowcase.jsx
-import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import { ProductCard } from '../ui/ProductCard';
@@ -7,16 +6,23 @@ import { showcaseProducts } from '../../data/showcaseProducts';
 
 export const ProductShowcase = ({ onGalleryClick, onContactClick }) => {
   return (
-    // ✅ Фон белый или очень светло-серый
-    <section id="products" className="py-32 bg-white relative border-t border-slate-100">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    // ✅ Фон: Белый с легким бирюзовым свечением сверху
+    <section id="products" className="py-16 bg-white relative border-t border-slate-100 overflow-hidden">
+      
+      {/* Декоративное свечение (Atmosphere effect) */}
+      <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#00A29A]/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-[-10%] w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <Reveal>
-          <div className="mb-20 md:flex justify-between items-end">
-            <div className="max-w-2xl">
-              <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">Hardware</h2>
-              <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-slate-900">Precision Instruments.</h3>
-              <p className="text-slate-600 text-lg font-light">Engineered for absolute reliability in the most demanding industrial and cinematic environments.</p>
-            </div>
+          <div className="mb-20 text-center max-w-3xl mx-auto">
+            <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">Hardware</h2>
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
+              Precision <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A29A] to-teal-600">Instruments.</span>
+            </h3>
+            <p className="text-slate-600 text-lg font-light">
+              Engineered for absolute reliability in the most demanding industrial and cinematic environments.
+            </p>
           </div>
         </Reveal>
 
