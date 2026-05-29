@@ -34,5 +34,29 @@ export const projects = [
       "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=100&w=1600",
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=100&w=1600"
     ]
+  },
+  {
+    id: 3,
+    title: "DeepSea Research",
+    category: "Marine Science",
+    description: "Submersible atmospheric emitters for oceanic studies",
+    cover: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800",
+    images: [
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=100&w=1600",
+      "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=100&w=1600",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=100&w=1600"
+    ]
+  },
+  {
+    id: 3,
+    title: "DeepSea Research",
+    category: "Marine Science",
+    description: "Submersible atmospheric emitters for oceanic studies",
+    cover: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800",
+    images: [
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=100&w=1600",
+      "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=100&w=1600",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=100&w=1600"
+    ]
   }
 ];

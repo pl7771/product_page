@@ -4,8 +4,8 @@ import { ArrowRight, Image as ImageIcon } from 'lucide-react';
 
 const ProjectsSection = ({ onOpenGallery }) => {
   return (
-    <section 
-      className="relative py-24 flex items-center justify-center overflow-hidden bg-slate-50"
+    <section id="projects" 
+      className="relative min-h-[60vh] flex items-center justify-center overflow-hidden cursor-pointer group bg-slate-900 scroll-mt-24"
     >
       {/* Декоративный фон секции (легкие пятна) */}
       <div className="absolute inset-0 pointer-events-none">
