@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 // Layout
 import { Navigation } from './components/layout/Navigation';
 import { Footer } from './components/layout/Footer';
+import { BackToTop } from './components/ui/BackToTop';
 
 // Sections
 import { HeroSection } from './components/sections/HeroSection';
@@ -19,6 +20,7 @@ import { WeChatModal } from './components/modals/WeChatModal';
 import { ProductContactModal } from './components/modals/ProductContactModal';
 import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 import ProjectsGallery from './components/ProjectsGallery';
+
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,6 +67,8 @@ export default function App() {
       {productContactModal && <ProductContactModal product={productContactModal} onClose={() => setProductContactModal(null)} />}
       
       {galleryOpen && <ProjectsGallery onClose={() => setGalleryOpen(false)} />}
+
+       <BackToTop /> 
     </div>
   );
 }

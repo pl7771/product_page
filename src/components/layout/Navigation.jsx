@@ -36,47 +36,53 @@ export const Navigation = ({ isScrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    // ✅ ИЗМЕНЕНИЕ: Белый фон при скролле, легкая тень
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100 py-2' : 'bg-transparent py-4'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
         
-        {/* 🆕 ЛОГОТИП: Твой SVG + Текст */}
-        <a href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 transition-transform group-hover:scale-105">
-             <LogoIcon /> 
+        {/* ✅ ЛОГОТИП И НАЗВАНИЕ */}
+        <a href="#" className="flex items-center gap-2 sm:gap-3 group">
+          
+          {/* Контейнер для логотипа: белый фон, чтобы бирюзовый лого выделялся */}
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden border border-slate-100">
+            {/* Вставляем твой оригинальный LogoIcon */}
+            <LogoIcon /> 
           </div>
-          {/* Текст стал темным для контраста на белом фоне */}
-          <div className="hidden sm:flex flex-col leading-tight">
-            <span className="text-lg font-bold text-slate-800 tracking-wide uppercase">Hebei Shandao</span>
-            <span className="text-[10px] text-[#00A29A] font-medium uppercase tracking-wider">Environmental Tech</span>
+
+          {/* Текст названия */}
+          <div className="flex flex-col leading-tight">
+            <span className="text-base sm:text-lg font-bold text-slate-900 tracking-wide uppercase">
+              Hebei Shandao
+            </span>
+            <span className="text-[10px] sm:text-xs text-[#00A29A] font-semibold uppercase tracking-wider">
+              Environmental Tech
+            </span>
           </div>
         </a>
-        
+
+        {/* Десктопное меню */}
         <div className="hidden md:flex items-center gap-8">
-          {/* Ссылки стали темно-серыми, при наведении - бирюзовыми */}
           <a href="#products" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Products</a>
           <a href="#projects" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Technology</a>
           <a href="#trust" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Enterprise</a>
-          
-          {/* ✅ Кнопка стала бирюзовой с белым текстом */}
-          <a href="#contact" className="px-6 py-2 bg-[#00A29A] text-white font-semibold text-sm rounded-full hover:bg-[#008f88] transition-colors shadow-lg shadow-[#00A29A]/20">
-            Contact Sales
-          </a>
+          <a href="#contact" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Contact Sales</a>
         </div>
 
-        {/* Иконка меню стала темной */}
-        <button className="md:hidden text-slate-600 hover:text-[#00A29A]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? <X /> : <Menu />}
+        {/* Кнопка мобильного меню (Бирюзовая при открытии) */}
+        <button 
+          className={`md:hidden p-2 rounded-full transition-all ${mobileMenuOpen ? 'bg-[#00A29A] text-white' : 'text-slate-600 hover:text-[#00A29A]'}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Мобильное меню стало белым */}
+      {/* Мобильное меню (выпадающее) */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 py-4 px-6 flex flex-col gap-4 shadow-xl">
-          <a href="#products" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-slate-600">Products</a>
-          <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-slate-600">Technology</a>
-          <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-slate-600">Enterprise</a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium text-[#00A29A] font-bold">Contact Sales</a>
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-40">
+          <a href="#products" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Products</a>
+          <a href="#projects" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Technology</a>
+          <a href="#trust" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Enterprise</a>
+          <a href="#contact" className="text-slate-600 hover:text-[#00A29A] font-medium py-2" onClick={() => setMobileMenuOpen(false)}>Contact Sales</a>
         </div>
       )}
     </nav>

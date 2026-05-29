@@ -1,20 +1,33 @@
 // src/components/ui/ProductCard.jsx
-import { MessageCircle, Image as ImageIcon } from 'lucide-react';
+import { MessageCircle, Image as ImageIcon, ZoomIn } from 'lucide-react';
 
 export const ProductCard = ({ product, onGalleryClick, onContactClick }) => {
   return (
-    // ✅ ИЗМЕНЕНИЯ: hover:-translate-y-2 (подъем), hover:shadow-xl, transition-all duration-300
-    <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-[#00A29A]/50 hover:shadow-2xl hover:shadow-[#00A29A]/15 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col cursor-pointer">
+    <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-[#00A29A]/50 hover:shadow-2xl hover:shadow-[#00A29A]/15 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
       
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50">
+      {/* 🖼️ ОБЛАСТЬ ИЗОБРАЖЕНИЯ: Теперь кликабельна для открытия галереи */}
+      <div 
+        className="relative aspect-[4/3] overflow-hidden bg-slate-50 cursor-pointer"
+        onClick={() => onGalleryClick(product)}
+      >
         <img 
           src={product.cover} 
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        {/* Бейдж категории */}
-        <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] sm:text-xs font-semibold text-[#00A29A] border border-[#00A29A]/10 shadow-sm">
+        
+        {/* Оверлей с иконкой при наведении */}
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
+          <div className="bg-white/90 p-3 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
+            <ZoomIn className="w-6 h-6 text-[#00A29A]" />
+          </div>
+          <span className="absolute bottom-4 left-0 right-0 text-center text-white font-medium text-sm drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            Tap to View Gallery
+          </span>
+        </div>
+
+        {/* Бейдж категории (поверх оверлея) */}
+        <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] sm:text-xs font-semibold text-[#00A29A] border border-[#00A29A]/10 shadow-sm pointer-events-none">
           {product.category}
         </div>
       </div>

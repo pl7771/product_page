@@ -13,10 +13,27 @@ const PhotoCarousel = ({ images, onClose }) => {
   return (
     <div className="fixed inset-0 z-[120] bg-black/90 flex items-center justify-center p-4">
       <div className="absolute inset-0" onClick={onClose} />
-      <button onClick={onClose} className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white z-[130] transition-colors"><X className="w-6 h-6"/></button>
-      <button onClick={prev} className="absolute left-4 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white z-[110] transition-colors"><ChevronLeft className="w-6 h-6"/></button>
+      <button 
+        onClick={onClose} 
+        className="absolute top-4 right-4 sm:top-8 sm:right-8 p-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-full shadow-lg z-[130] transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent hover:border-white/20"
+        aria-label="Close carousel"
+      >
+        <X className="w-6 h-6"/>
+      </button>
+      <button 
+          onClick={prev} 
+          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-full shadow-lg z-[110] transition-all duration-300 hover:scale-110 active:scale-95 border border-transparent hover:border-white/20"
+          aria-label="Previous image">
+  <ChevronLeft className="w-6 h-6"/>
+</button>
       <img src={images[i]} alt="" className="relative z-0 w-full max-w-5xl h-[70vh] object-contain rounded-lg shadow-2xl"/>
-      <button onClick={next} className="absolute right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white z-[110] transition-colors"><ChevronRight className="w-6 h-6"/></button>
+      <button 
+        onClick={next} 
+        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-full shadow-lg z-[110] transition-all duration-300 hover:scale-110 active:scale-95 border border-transparent hover:border-white/20"
+        aria-label="Next image"
+      >
+        <ChevronRight className="w-6 h-6"/>
+      </button>
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm z-0 font-medium bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">{i + 1} / {images.length}</div>
     </div>
   );
@@ -61,15 +78,21 @@ const ProjectCard = ({ project, onSelect }) => (
   </div>
 );
 
-// 🪟 Главное модальное окно (ИСПРАВЛЕННОЕ: Крестик теперь фиксирован)
+// 🪟 Главное модальное окно (ИСПРАВЛЕННОЕ ДЛЯ ТАЧ-СКРОЛЛА)
+// src/components/ProjectsGallery.jsx
+
+// ... (код компонентов PhotoCarousel и ProjectCard без изменений) ...
+
 const ProjectsGallery = ({ onClose }) => {
   const [selected, setSelected] = useState(null);
 
   // Блокировка скролла фона
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, []);
   
@@ -78,26 +101,29 @@ const ProjectsGallery = ({ onClose }) => {
       {/* Затемнение фона */}
       <div className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm" onClick={() => { setSelected(null); onClose(); }} />
       
-      {/* ✅ ФИКСИРОВАННЫЙ КРЕСТИК ЗАКРЫТИЯ (всегда виден справа сверху) */}
-      <button 
-        onClick={() => { setSelected(null); onClose(); }} 
-        className="fixed top-4 right-4 sm:top-8 sm:right-8 z-[160] p-3 bg-white/90 hover:bg-white text-slate-500 hover:text-[#00A29A] rounded-full shadow-lg backdrop-blur-md transition-all border border-slate-200"
-        aria-label="Close gallery"
-      >
-        <X className="w-6 h-6"/>
-      </button>
+      {/* ✅ ИСПРАВЛЕНИЕ: Показываем крестик галереи ТОЛЬКО если не открыто фото (!selected) */}
+      {!selected && (
+        <button 
+          onClick={onClose} 
+          className="fixed top-4 right-4 sm:top-8 sm:right-8 z-[160] p-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-full shadow-lg backdrop-blur-md transition-all border border-transparent hover:border-white/20 hover:scale-105 active:scale-95"
+          aria-label="Close gallery"
+        >
+          <X className="w-6 h-6"/>
+        </button>
+      )}
       
       {/* Внешний контейнер со скроллом */}
-      <div className="fixed inset-0 z-[105] flex items-start justify-center p-4 sm:p-8 overflow-y-auto">
+      <div className="fixed inset-0 z-[105] flex items-start justify-center p-4 sm:p-8 overflow-y-auto overscroll-y-contain touch-pan-y">
+        
+        {/* Белое окно модалки */}
         <div className="relative bg-white rounded-3xl w-full max-w-6xl shadow-2xl z-[110] border border-slate-200 flex flex-col my-8">
           
-          {/* Хедер внутри модалки (теперь без кнопки закрытия, просто заголовок) */}
+          {/* Хедер */}
           <div className="flex items-center justify-between p-6 bg-white border-b border-slate-100 rounded-t-3xl">
             <div>
               <h2 className="text-2xl font-bold text-slate-900">Our Projects</h2>
               <p className="text-slate-500 text-sm mt-1">Click any project to view photos</p>
             </div>
-            {/* Пустой div или можно оставить место, если нужно выравнивание */}
             <div className="w-10"></div> 
           </div>
           
@@ -111,6 +137,7 @@ const ProjectsGallery = ({ onClose }) => {
         </div>
       </div>
 
+      {/* Карусель фото (поверх всего) */}
       {selected && <PhotoCarousel images={selected.images} onClose={() => setSelected(null)} />}
     </>
   );
