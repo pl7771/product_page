@@ -38,7 +38,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-green-950 text-green-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-[#00A29A]/30 selection:text-[#00A29A] overflow-x-hidden">
       
       <Navigation isScrolled={isScrolled} />
       <HeroSection />
@@ -48,9 +48,9 @@ export default function App() {
         onGalleryClick={setProductGalleryModal}
         onContactClick={setProductContactModal}
       />
-      
-      <TrustSection />
+
       <QuickContacts />
+      <TrustSection />
       <Footer />
 
       {/* Модальные окна — рендерятся ТОЛЬКО когда нужно */}
