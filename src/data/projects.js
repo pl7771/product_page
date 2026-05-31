@@ -4,129 +4,157 @@
 export const projectCategories = [
   {
     id: 'industrial',
-    title: 'Industrial Solutions',
+    title: 'Industrial Micro-Mist Dust Suppression',
     description: 'Dust suppression & atmospheric control for heavy industry.',
-    cover: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
+    cover: '/data/concrete-batching-plant/4.jpeg',
     projects: [
       {
         id: 1,
-        title: 'Coal Plant Dust Control',
+        title: 'Concrete Batching Plant Dust Control',
         shortDesc: 'High-pressure mist systems for coal preparation.',
         fullDescription: 'By deploying high-pressure atomization systems at key locations throughout the facility, micron-scale water mist is utilized to efficiently adsorb suspended particles, thereby significantly reducing PM2.5 concentrations and preventing dust dispersion. Concurrently, within enclosed spaces, dry ash undergoes precisely metered water injection and forced mixing to accurately regulate moisture content, thereby completely eliminating secondary dust generation during the discharge and transport processes.',
-        cover: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800',
+        cover: '/data/concrete-batching-plant/3.jpeg',
         images: [
-          'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1565514020176-db7936a7d6b7?auto=format&fit=crop&q=80&w=800'
+          '/data/concrete-batching-plant/1.jpeg',
+          '/data/concrete-batching-plant/2.jpeg',
+          '/data/concrete-batching-plant/3.jpeg',
+          '/data/concrete-batching-plant/4.jpeg',
+          '/data/concrete-batching-plant/5.jpeg',
+          '/data/concrete-batching-plant/6.jpeg',
+          '/data/concrete-batching-plant/7.jpeg', 
+          '/data/concrete-batching-plant/8.jpeg',
+          '/data/concrete-batching-plant/9.jpeg',
+          '/data/concrete-batching-plant/10.jpeg'
         ]
       },
       {
         id: 10,
-        title: 'Steel Mill Fog Suppression',
+        title: 'Coal Preparation Plant Dust Control',
         shortDesc: 'Advanced fog cannons for steel production lines.',
-        fullDescription: 'Our fog cannon technology provides long-range dust suppression for open-pit steel mills, ensuring worker safety and environmental compliance. The system uses intelligent wind sensors to adjust spray direction and intensity in real-time, maximizing efficiency while minimizing water usage.',
-        cover: 'https://images.unsplash.com/photo-1565514020176-db7936a7d6b7?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'The high-pressure humidification and atomization system for coal preparation plants significantly reduces PM2.5 and PM10 concentrations within operational zones. While ensuring highly efficient dust suppression, it simultaneously eliminates material wastage and secondary pollution. By deeply integrating intelligent control modules, the system enables unmanned, precision spraying operations—thereby providing robust support for enterprises seeking to establish a modern, clean production environment that is both eco-friendly and energy-efficient.',
+        cover: '/data/coal-preparation-plant/1.jpeg',
         images: [
-          'https://images.unsplash.com/photo-1565514020176-db7936a7d6b7?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1518709414768-a88986a45ca8?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1535136894957-b229f13c9753?auto=format&fit=crop&q=80&w=800'
+          '/data/coal-dust-control/1.jpeg',
+          '/data/coal-dust-control/2.jpeg',
+          '/data/coal-dust-control/3.jpeg',
+          '/data/coal-dust-control/4.jpeg',
+          '/data/coal-dust-control/5.jpeg',
+          '/data/coal-dust-control/6.jpeg',
+          '/data/coal-dust-control/7.jpeg'
         ]
       },
       {
         id: 11,
-        title: 'Cement Factory Air Quality',
+        title: 'Smart Hoarding Sprinkler System',
         shortDesc: 'Mist rings for cement kilns.',
-        fullDescription: 'Specialized mist ring systems installed around cement kilns to capture dust at the source before it enters the atmosphere. This solution has reduced particulate emissions by 85% in major cement plants across Asia, meeting strict new environmental regulations.',
-        cover: 'https://images.unsplash.com/photo-1590247657962-d92636360e49?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'Intelligent spraying systems not only improve air quality at construction sites and in surrounding areas but also provide cooling relief for work surfaces during hot seasons. Supporting flexible scheduled start-and-stop modes, this system significantly reduces manual operation and maintenance costs, as well as administrative burdens, while simultaneously ensuring highly effective dust suppression and a comfortable working environment.',
+        cover: '/data/sprinkler-system/3.jpeg',
         images: [
-          'https://images.unsplash.com/photo-1590247657962-d92636360e49?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
-          'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800'
+          '/data/sprinkler-system/1.jpeg',
+          '/data/sprinkler-system/2.jpeg',
+          '/data/sprinkler-system/3.jpeg',
+          '/data/sprinkler-system/4.jpeg',
+          '/data/sprinkler-system/5.jpeg',
+          '/data/sprinkler-system/6.jpeg'
         ]
       }
     ]
   },
   {
-    id: 'cinema',
-    title: 'Cinema & FX',
+    id: 'Ecology',
+    title: 'Ecological Mistscape Aesthetics Engineering',
     description: 'Atmospheric effects for blockbuster movie scenes.',
-    cover: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800',
+    cover: '/data/eco-atomizer/2.jpg',
     projects: [
       {
         id: 2,
         title: 'CinemaFX Studio',
         shortDesc: 'Fog and haze generation for film production.',
-        fullDescription: 'Our technology provides precise control over atmospheric density and duration, allowing directors to create immersive environments for cinematic storytelling. Used in major productions for realistic fog, smoke, and haze effects that respond dynamically to lighting changes.',
-        cover: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'Utilizing micron-level atomization technology, artificial fog landscape systems create a dreamlike, ethereal atmosphere while simultaneously delivering a multitude of benefits—including cooling, humidification, air purification, and the release of negative oxygen ions. Integrated with fully automated intelligent controls to ensure precise misting, these systems significantly enhance the artistic aesthetic of garden landscapes, crafting outdoor leisure spaces that are cool, comfortable, healthy, and ecologically sound.',
+        cover: '/data/eco-atomizer/1.jpg',
         images: [
-           'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800'
-        ]
-      },
-      {
-        id: 20,
-        title: 'Horror Movie Atmosphere',
-        shortDesc: 'Low-lying fog for suspense scenes.',
-        fullDescription: 'Custom-designed low-lying fog generators used in horror film productions to create eerie, ground-hugging mist that enhances suspense without obscuring actor visibility. The fluid formula is non-toxic and safe for prolonged indoor use.',
-        cover: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&q=80&w=800',
-        images: [
-           'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800'
+           '/data/eco-atomizer/1.jpg',
+           '/data/eco-atomizer/2.jpg',
+           '/data/eco-atomizer/3.jpg',
+            '/data/eco-atomizer/4.jpg',
+            '/data/eco-atomizer/5.jpg',
+            '/data/eco-atomizer/6.jpg',
+            '/data/eco-atomizer/7.jpg',
+            '/data/eco-atomizer/8.jpg',
+            '/data/eco-atomizer/9.jpg',
+            '/data/eco-atomizer/10.jpg',
+            '/data/eco-atomizer/11.jpg'
         ]
       }
     ]
   },
   {
     id: 'marine',
-    title: 'Marine Science',
+    title: 'Smart Agriculture Greenhouse Support',
     description: 'Submersible emitters for oceanic studies.',
-    cover: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800',
+    cover: '/data/greenery/2.jpeg',
     projects: [
        {
         id: 3,
-        title: 'DeepSea Research',
+        title: 'Containerized Unit for Edible Mushroom Cultivation',
         shortDesc: 'Underwater atmospheric simulation.',
-        fullDescription: 'Specialized equipment designed to withstand extreme pressures while releasing controlled bubbles for marine biology research. Helps in studying gas exchange and underwater visibility conditions for submersible vehicles.',
-        cover: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'In enclosed mushroom cultivation greenhouses, ultrasonic humidifiers generate an ultra-fine "cold mist" consisting of 1–5 micron droplets, precisely maintaining the internal humidity within the optimal growth range of 85%–95%. This effectively prevents dehydration and wilting of the mushrooms, shortens the growth cycle, and significantly boosts yields. Furthermore, it eliminates the issues of rot and blemishes often caused by water accumulation associated with traditional sprinkler systems, ensuring that the mushrooms remain plump and rounded in appearance—thereby attaining a premium commercial grade—and creating a perfect microclimate for their growth.',
+        cover: '/data/mushroom-cultivation/1.jpeg',
         images: [
-           'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1582967788606-a171f1080ca8?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1583212234807-0192857dfcb1?auto=format&fit=crop&q=80&w=800'
+           '/data/mushroom-cultivation/1.jpeg',
+           '/data/mushroom-cultivation/2.jpeg',
+           '/data/mushroom-cultivation/3.jpeg',
+            '/data/mushroom-cultivation/4.jpeg',
+            '/data/mushroom-cultivation/5.jpeg',
+            '/data/mushroom-cultivation/6.jpeg'
         ]
       },
       {
         id: 30,
-        title: 'Coral Reef Restoration',
+        title: 'Greenhouse Seedling Nursery',
         shortDesc: 'Bubble curtains for reef protection.',
-        fullDescription: 'Innovative bubble curtain systems deployed around coral reefs to protect them from sediment runoff and temperature fluctuations. The air barriers help maintain optimal water conditions for coral growth and marine life preservation.',
-        cover: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'The application of high-pressure humidification systems in agricultural nurseries rapidly elevates humidity and lowers temperature through micron-level atomization. This effectively minimizes moisture transpiration in seedlings and alleviates heat stress, thereby significantly boosting both seedling survival rates and quality. Integrated with fully automated intelligent controls, the system enables precise irrigation and humidification; while substantially conserving water resources, it also reduces manual labor and operational costs. Consequently, it stands as an ideal solution for supporting precision cultivation in modern agriculture, facilitating both cost reduction and efficiency enhancement.',
+        cover: '/data/greenery/2.jpeg',
         images: [
-           'https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1582967788606-a171f1080ca8?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800'
+           '/data/greenery/2.jpeg',
+           '/data/greenery/3.jpeg',
+           '/data/greenery/4.jpeg',
+            '/data/greenery/5.jpeg',
+            '/data/greenery/6.jpeg'
         ]
       }
     ]
   },
   {
     id: 'science',
-    title: 'Scientific Research',
+    title: 'Spatial Atomization Disinfection System',
     description: 'Precision climate chambers for labs.',
-    cover: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800',
+    cover: '/data/odor-control/3.jpeg',
     projects: [
       {
         id: 40,
-        title: 'Lab Climate Control',
+        title: 'Municipal Sanitation Odor Control',
         shortDesc: 'Humidity regulation for sensitive experiments.',
-        fullDescription: 'Ultra-precise humidity and temperature control systems for scientific laboratories conducting sensitive material research. Maintains stability within ±0.5% RH, crucial for nanotechnology and pharmaceutical development.',
-        cover: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800',
+        fullDescription: 'Waste transfer stations utilize high-pressure humidification and deodorization equipment, which employs micron-level atomization to rapidly decompose malodorous molecules—such as hydrogen sulfide and ammonia—thereby efficiently purifying the air at the source. While significantly mitigating odor-related nuisances for the public, this system also serves the dual functions of dust suppression and cooling, effectively improving the working environment for sanitation personnel. Integrated with fully automated intelligent controls, the system achieves precise, round-the-clock deodorization, making it an ideal solution for municipal sanitation departments seeking to reduce costs, enhance efficiency, and foster a green, fresh urban environment.',
+        cover: '/data/odor-control/3.jpeg',
         images: [
-           'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800',
-           'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800'
+           '/data/odor-control/3.jpeg',
+           '/data/odor-control/4.jpeg',
+           '/data/odor-control/5.jpeg',
+            '/data/odor-control/1.jpeg',
+            '/data/odor-control/2.jpeg'
+        ]
+      },
+      {
+        id: 41,
+        title: 'Livestock Epidemic Prevention',
+        shortDesc: 'Humidity regulation for sensitive experiments.',
+        fullDescription: 'Leveraging the principle of highly efficient evaporative cooling, this system significantly lowers the temperature and humidity within livestock housing, effectively mitigating heat stress in animals and thereby substantially boosting survival rates and productivity. Furthermore, the equipment features comprehensive, "dead-angle-free" disinfection capabilities, establishing a robust health barrier for the livestock. This integrated solution—combining intelligent temperature control with environmental disinfection—represents an ideal choice for modern animal husbandry operations seeking to reduce costs, enhance efficiency, and realize sustainable, eco-friendly farming practices.',
+        cover: '/data/epidemic-prevention/1.jpeg',
+        images: [
+           '/data/epidemic-prevention/1.jpeg',
+            '/data/epidemic-prevention/4.jpeg',
+            '/data/epidemic-prevention/5.jpeg'
         ]
       }
     ] 

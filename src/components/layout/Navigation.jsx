@@ -62,7 +62,7 @@ export const Navigation = ({ leftSlot }) => {
           {leftSlot && <div className="flex-shrink-0">{leftSlot}</div>}
 
           <a href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
               <LogoIcon /> 
             </div>
             <div className="flex flex-col leading-tight hidden sm:flex">
@@ -79,7 +79,7 @@ export const Navigation = ({ leftSlot }) => {
         {/* МЕНЮ (Справа) */}
         <div className="hidden md:flex items-center gap-8">
           <a href="/#products" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Products</a>
-          <a href="/#projects" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Technology</a>
+          <a href="/#projects-section" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Technology</a>
           <a href="/#trust" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Enterprise</a>
           <a href="/#contact" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Contact Sales</a>
         </div>

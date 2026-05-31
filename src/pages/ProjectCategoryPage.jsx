@@ -7,7 +7,7 @@ import { GalleryCarouselModal } from '../components/modals/GalleryCarouselModal'
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 
-// ProjectItem без изменений (код тот же, что был у тебя)
+// Компонент одного проекта (без изменений)
 const ProjectItem = ({ project }) => {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -95,17 +95,25 @@ export const ProjectCategoryPage = () => {
   
   const category = projectCategories.find(cat => cat.id === categoryId);
 
+  // Скролл наверх при открытии категории
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [categoryId]);
 
+  // ✅ ФУНКЦИЯ ВОЗВРАТА К СЕКЦИИ ПРОЕКТОВ
   const handleBackToProjects = () => {
+    // 1. Переходим на главную страницу
     navigate('/');
+    
+    // 2. Ждем рендера новой страницы и скроллим к секции
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const section = document.getElementById('projects-section');
         if (section) {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          // Если по какой-то причине секция не найдена, скроллим просто вниз
+          window.scrollTo({ top: 800, behavior: 'smooth' });
         }
       });
     });
@@ -115,15 +123,17 @@ export const ProjectCategoryPage = () => {
     return <div className="min-h-screen flex items-center justify-center">Category not found</div>;
   }
 
-  // ✅ Красивая кнопка Back для передачи в навигацию
+  // ✅ Кнопка Back для передачи в навигацию
+   // ✅ ИЗМЕНЕННАЯ КНОПКА BACK
+  // Убрали rounded-full, добавили h-12 (высота как у лого) и rounded-lg (квадратные углы)
   const backButton = (
     <button 
       onClick={handleBackToProjects} 
-      className="group flex items-center gap-2 text-slate-500 hover:text-[#00A29A] transition-colors font-medium bg-white/50 hover:bg-white border border-slate-200/50 hover:border-[#00A29A]/30 px-3 py-2 rounded-full text-sm shadow-sm backdrop-blur-sm"
+      className="group flex items-center gap-3 px-4 h-12 text-slate-600 hover:text-[#00A29A] transition-colors font-medium bg-white/80 hover:bg-white border border-slate-200 hover:border-[#00A29A]/50 rounded-lg shadow-sm backdrop-blur-md"
       title="Back to Categories"
     >
-      <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" /> 
-      <span className="hidden sm:inline font-semibold">Back</span>
+      <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" /> 
+      <span className="font-semibold text-sm uppercase tracking-wide">Back</span>
     </button>
   );
 
@@ -133,8 +143,8 @@ export const ProjectCategoryPage = () => {
       {/* 1. Навигация с кнопкой Back слева */}
       <Navigation leftSlot={backButton} />
 
-      {/* 2. Контент с отступом только под навигацию (pt-24) */}
-      <main className="flex-grow py-12 pt-22 sm:pt-28">
+      {/* 2. Контент с отступом сверху (pt-32), чтобы не перекрывался навбаром */}
+      <main className="flex-grow py-12 pt-32 sm:pt-40">
         
         {category.projects.length > 0 ? (
           category.projects.map((project) => (
