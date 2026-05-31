@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
 import { projects } from '../data/projects';
 
+
 // 🎠 Карусель фото (без изменений)
 const PhotoCarousel = ({ images, onClose }) => {
   if (!images?.length) return null;

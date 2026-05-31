@@ -1,16 +1,15 @@
-import { useState } from 'react';
+// src/components/layout/Navigation.jsx
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-// 🎨 Твой оригинальный SVG логотип (вставь его сюда, как было)
+// 🎨 Твой оригинальный SVG логотип
 const LogoIcon = () => (
   <svg 
     viewBox="0 0 364 368" 
-    className="w-full h-full text-[#00A29A] fill-current"
+    fill="#00A29A"         // ← прямо цветом
     xmlns="http://www.w3.org/2000/svg"
   >
-    
-    {/* ... пути ... */}
-    
+    {/* ⚠️ ВСТАВЬ СЮДА ВСЕ PATH ИЗ ТВОЕГО ПРЕДЫДУЩЕГО КОДА ⚠️ */}
     <path d="M0 0 C33.13299356 12.2912718 59.27580921 49.40957398 73.49072266 80.12036133 C90.34876366 117.98067136 93.94887162 164.53122805 79.6875 203.75 C69.16879318 229.26819207 49.97275463 246.19239279 24.75 256.8125 C-0.47878911 265.727704 -28.49490034 266.42342992 -53 255 C-59.06618788 251.68564171 -63.84862009 248.59908977 -68 243 C-66.741875 242.70867187 -65.48375 242.41734375 -64.1875 242.1171875 C-41.6524548 236.7761538 -21.83508387 229.06371745 -4 214 C-3.48308594 213.56816406 -2.96617187 213.13632812 -2.43359375 212.69140625 C20.20289327 193.57236834 36.17490138 164.68323135 38.75 135 C38.84747285 133.33410046 38.93683512 131.66755282 39 130 C38.58041016 131.77890625 38.58041016 131.77890625 38.15234375 133.59375 C32.98521621 154.75719577 24.46532101 173.49066623 10 190 C9.3915625 190.72960937 8.783125 191.45921875 8.15625 192.2109375 C-3.4899681 206.02758715 -18.6646091 215.66097292 -35 223 C-36.06734375 223.48339844 -37.1346875 223.96679688 -38.234375 224.46484375 C-50.65252123 229.64957739 -64.56917413 232.39636738 -78 233 C-90.59729448 216.91757505 -94.77490707 196.91738185 -92.375 176.8125 C-89.47241526 160.03133124 -81.96265602 146.00334533 -70 134 C-69.32453125 133.30132812 -68.6490625 132.60265625 -67.953125 131.8828125 C-60.46868463 124.65160507 -51.11462909 120.43948655 -41.828125 116 C-33.70818418 112.09343378 -26.81686327 107.99783164 -20 102 C-19.1853125 101.38253906 -18.370625 100.76507813 -17.53125 100.12890625 C-3.27742183 88.14073286 5.6699305 68.13969992 8 50 C8.97612945 31.95020116 6.46771216 16.82116442 0 0 Z M40 114 C40 117.3 40 120.6 40 124 C40.33 124 40.66 124 41 124 C41 120.7 41 117.4 41 114 C40.67 114 40.34 114 40 114 Z " transform="translate(226,69)"/>
     <path d="M0 0 C1.1456543 0.31348389 1.1456543 0.31348389 2.31445312 0.63330078 C20.27769396 5.73562557 36.98472666 13.92561235 52 25 C52.92683594 25.68320313 53.85367188 26.36640625 54.80859375 27.0703125 C69.20969477 38.32585356 81.25872937 51.57360047 91 67 C91.41330566 67.64904297 91.82661133 68.29808594 92.25244141 68.96679688 C113.78018016 103.34834965 119.0307233 146.10391633 110.47998047 185.38916016 C107.03579067 200.19702175 101.31633704 215.20365477 93 228 C92.34 228.33 91.68 228.66 91 229 C91.18067017 228.11296387 91.18067017 228.11296387 91.36499023 227.20800781 C101.80401308 175.54164295 98.89017557 125.11126284 68.9375 79.9375 C64.65250315 73.66173029 59.97606675 67.74365152 55 62 C54.29359375 61.17113281 53.5871875 60.34226562 52.859375 59.48828125 C25.71120565 28.38507285 -9.99019867 11.73569643 -49.5859375 2.796875 C-53 2 -53 2 -56 1 C-56 -0.32 -56 -1.64 -56 -3 C-40.06423275 -8.31192242 -15.73019911 -4.33078267 0 0 Z " transform="translate(222,39)"/>
     <path d="M0 0 C1.38801819 -0.01485695 1.38801819 -0.01485695 2.80407715 -0.03001404 C3.81715942 -0.02551239 4.8302417 -0.02101074 5.87402344 -0.01637268 C7.47679138 -0.02666756 7.47679138 -0.02666756 9.11193848 -0.03717041 C12.65255936 -0.05550869 16.19274015 -0.0515911 19.73339844 -0.0459137 C22.18815252 -0.05047182 24.64290532 -0.05577627 27.09765625 -0.0617981 C32.24582092 -0.07074282 37.39383058 -0.06829015 42.54199219 -0.05836487 C49.15012401 -0.0468684 55.75772203 -0.06709081 62.36578369 -0.09628201 C67.4357444 -0.11459746 72.50557605 -0.11436091 77.57556152 -0.10864449 C80.01249948 -0.10849073 82.4494459 -0.11457965 84.88635254 -0.12693596 C88.2888371 -0.14175742 91.69032093 -0.1312336 95.09277344 -0.11402893 C96.61239685 -0.12853088 96.61239685 -0.12853088 98.16271973 -0.14332581 C99.55073792 -0.1285746 99.55073792 -0.1285746 100.96679688 -0.11352539 C101.77131287 -0.11331611 102.57582886 -0.11310682 103.40472412 -0.1128912 C105.48339844 0.38768005 105.48339844 0.38768005 107.26959229 2.22759914 C108.48339844 4.38768005 108.48339844 4.38768005 108.42089844 7.45018005 C107.32577313 10.88157268 106.50854529 11.56383938 103.48339844 13.38768005 C101.33132172 13.76799679 101.33132172 13.76799679 98.96716309 13.77536011 C97.61711433 13.79021706 97.61711433 13.79021706 96.23979187 13.80537415 C95.25992813 13.8008725 94.28006439 13.79637085 93.27050781 13.79173279 C91.71382133 13.80202766 91.71382133 13.80202766 90.12568665 13.81253052 C86.69270171 13.83084323 83.26017177 13.82695486 79.82714844 13.8212738 C77.44347993 13.82583312 75.05981273 13.83113794 72.67614746 13.8371582 C67.67938905 13.84609788 62.68279039 13.84365595 57.68603516 13.83372498 C51.27644192 13.82222859 44.86739903 13.8424533 38.45787811 13.87164211 C33.53542568 13.88996897 28.61310603 13.88971874 23.69062805 13.88400459 C21.32708463 13.88385098 18.96353243 13.88992822 16.60002136 13.90229607 C13.29842362 13.91713912 9.99785416 13.90657776 6.69628906 13.88938904 C5.22649345 13.90389099 5.22649345 13.90389099 3.727005 13.91868591 C-2.86529725 13.84665562 -2.86529725 13.84665562 -6.12756348 11.54772949 C-8.01010904 8.6202421 -8.02503903 6.8014745 -7.51660156 3.38768005 C-5.27719563 0.40308453 -3.65584002 0.01104181 0 0 Z " transform="translate(103.5166015625,130.61231994628906)"/>
@@ -29,45 +28,63 @@ const LogoIcon = () => (
     <path d="M0 0 C0.69867188 -0.00708984 1.39734375 -0.01417969 2.1171875 -0.02148438 C6.55852982 0.03298492 9.49189988 0.68018646 13 3.4375 C14 5.8125 14 5.8125 14 8.4375 C11.80597015 13.03451493 11.80597015 13.03451493 9 14.4375 C6.19648462 14.56229416 3.4286626 14.62267138 0.625 14.625 C-0.14328125 14.63724609 -0.9115625 14.64949219 -1.703125 14.66210938 C-8.93013267 14.68086459 -8.93013267 14.68086459 -12 12.4375 C-13.43735246 9.56279507 -13.38172649 7.61855412 -13 4.4375 C-9.07636933 0.23360999 -5.49313504 -0.1570915 0 0 Z " transform="translate(150,35.5625)"/>
     <path d="M0 0 C0.75925781 -0.01160156 1.51851562 -0.02320313 2.30078125 -0.03515625 C5.6129564 -0.01775428 8.05013507 0.12483814 10.97265625 1.75 C13.05511763 3.96561109 13.42775604 5.34075381 13.5 8.375 C12.25 11.125 12.25 11.125 10.5 13.375 C6.90998391 14.57167203 3.9095161 14.58038881 0.125 14.625 C-1.18210937 14.65078125 -2.48921875 14.6765625 -3.8359375 14.703125 C-7.66889304 14.35987525 -9.570046 13.84350014 -12.5 11.375 C-13.12890625 9.4375 -13.12890625 9.4375 -13.0625 7.375 C-13.06378906 6.694375 -13.06507812 6.01375 -13.06640625 5.3125 C-12.5 3.375 -12.5 3.375 -10.99609375 1.6484375 C-7.39803121 -0.18719378 -3.94389063 -0.06026318 0 0 Z " transform="translate(41.5,192.625)"/>
     <path d="M0 0 C0.76376953 -0.02449219 1.52753906 -0.04898438 2.31445312 -0.07421875 C6.07656755 -0.09386426 7.96295427 -0.0629859 11.0703125 2.20703125 C13.08194907 5.12969695 13.08008008 6.89981944 12.5625 10.375 C10.99242765 12.44594496 10.09663972 13.26905546 7.52539062 13.77905273 C5.0366652 13.8109257 2.55143646 13.83284049 0.0625 13.8125 C-0.80503906 13.83248047 -1.67257813 13.85246094 -2.56640625 13.87304688 C-8.86194305 13.8681817 -8.86194305 13.8681817 -11.5390625 11.57421875 C-12.90735644 8.22487315 -12.3296836 5.8162796 -11.4375 2.375 C-7.6141501 -0.17389993 -4.43285358 0.00744392 0 0 Z " transform="translate(106.4375,255.625)"/>
+  
   </svg>
 );
 
-export const Navigation = ({ isScrolled }) => {
+export const Navigation = ({ leftSlot }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Отслеживаем скролл для эффекта стекла
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'}`}>
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
+        isScrolled 
+          ? 'bg-white/80 backdrop-blur-md shadow-sm py-3 border-slate-200/50' 
+          : 'bg-transparent py-5'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
         
-        {/* ✅ ЛОГОТИП И НАЗВАНИЕ */}
-        <a href="#" className="flex items-center gap-2 sm:gap-3 group">
+        {/* ЛЕВАЯ ЧАСТЬ: Кнопка Назад + Логотип */}
+        <div className="flex items-center gap-4 sm:gap-6">
           
-          {/* Контейнер для логотипа: белый фон, чтобы бирюзовый лого выделялся */}
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden border border-slate-100">
-            {/* Вставляем твой оригинальный LogoIcon */}
-            <LogoIcon /> 
-          </div>
+          {/* Сюда вставляется кнопка Back, если она передана */}
+          {leftSlot && <div className="flex-shrink-0">{leftSlot}</div>}
 
-          {/* Текст названия */}
-          <div className="flex flex-col leading-tight">
-            <span className="text-base sm:text-lg font-bold text-slate-900 tracking-wide uppercase">
-              Hebei Shandao
-            </span>
-            <span className="text-[10px] sm:text-xs text-[#00A29A] font-semibold uppercase tracking-wider">
-              Environmental Tech
-            </span>
-          </div>
-        </a>
-
-        {/* Десктопное меню */}
-        <div className="hidden md:flex items-center gap-8">
-          <a href="#products" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Products</a>
-          <a href="#projects" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Technology</a>
-          <a href="#trust" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Enterprise</a>
-          <a href="#contact" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Contact Sales</a>
+          <a href="/" className="flex items-center gap-2 sm:gap-3 group">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+              <LogoIcon /> 
+            </div>
+            <div className="flex flex-col leading-tight hidden sm:flex">
+              <span className="text-base font-bold text-slate-900 tracking-wide uppercase drop-shadow-sm">
+                Hebei Shandao
+              </span>
+              <span className="text-[10px] text-[#00A29A] font-semibold uppercase tracking-wider drop-shadow-sm">
+                Environmental Tech
+              </span>
+            </div>
+          </a>
         </div>
 
-        {/* Кнопка мобильного меню (Бирюзовая при открытии) */}
+        {/* МЕНЮ (Справа) */}
+        <div className="hidden md:flex items-center gap-8">
+          <a href="/#products" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Products</a>
+          <a href="/#projects" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Technology</a>
+          <a href="/#trust" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Enterprise</a>
+          <a href="/#contact" className="text-sm font-medium text-slate-600 hover:text-[#00A29A] transition-colors">Contact Sales</a>
+        </div>
+
+        {/* Мобильная кнопка */}
         <button 
           className={`md:hidden p-2 rounded-full transition-all ${mobileMenuOpen ? 'bg-[#00A29A] text-white' : 'text-slate-600 hover:text-[#00A29A]'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -76,13 +93,13 @@ export const Navigation = ({ isScrolled }) => {
         </button>
       </div>
 
-      {/* Мобильное меню (выпадающее) */}
+      {/* Мобильное меню */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-40">
-          <a href="#products" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Products</a>
-          <a href="#projects" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Technology</a>
-          <a href="#trust" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Enterprise</a>
-          <a href="#contact" className="text-slate-600 hover:text-[#00A29A] font-medium py-2" onClick={() => setMobileMenuOpen(false)}>Contact Sales</a>
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-40">
+          <a href="/#products" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Products</a>
+          <a href="/#projects" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Technology</a>
+          <a href="/#trust" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Enterprise</a>
+          <a href="/#contact" className="text-slate-600 hover:text-[#00A29A] font-medium py-2" onClick={() => setMobileMenuOpen(false)}>Contact Sales</a>
         </div>
       )}
     </nav>
