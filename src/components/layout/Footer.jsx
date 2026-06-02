@@ -1,5 +1,6 @@
 // src/components/layout/Footer.jsx
 import { Mail, Phone, MapPin, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 // Импортируй свой LogoIcon, если он в отдельном файле:
 // import { LogoIcon } from '../ui/LogoIcon'; 
 
@@ -60,7 +61,7 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Leading provider of industrial atmospheric solutions and cinematic effect equipment. Precision engineering for global markets.
+              Precision atomization systems for industrial dust suppression and environmental control.
             </p>
           </div>
 
@@ -74,11 +75,11 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#00A29A] flex-shrink-0" />
-                <span>+86 311 8888 6666</span>
+                <span>+86 166 3110 5554</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#00A29A] flex-shrink-0" />
-                <a href="mailto:sales@shandao-tech.com" className="hover:text-[#00A29A] transition-colors">sales@shandao-tech.com</a>
+                <a href="mailto:test@test.com" className="hover:text-[#00A29A] transition-colors">sales@shandao-tech.com</a>
               </li>
             </ul>
           </div>
@@ -88,7 +89,7 @@ export const Footer = () => {
             <h4 className="text-white font-semibold mb-6 uppercase text-sm tracking-wider">Quick Links</h4>
             <ul className="space-y-3 text-sm">
               <li><a href="#products" className="hover:text-[#00A29A] transition-colors">Products</a></li>
-              <li><a href="#projects" className="hover:text-[#00A29A] transition-colors">Technology</a></li>
+              <li><a href="#projects-section" className="hover:text-[#00A29A] transition-colors">Technology</a></li>
               <li><a href="#trust" className="hover:text-[#00A29A] transition-colors">About Us</a></li>
               <li><a href="#contact" className="hover:text-[#00A29A] transition-colors">Contact Sales</a></li>
             </ul>
@@ -111,12 +112,16 @@ export const Footer = () => {
 
         {/* Нижняя полоса */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Hebei Shandao Environmental Technology Co., Ltd. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-          </div>
-        </div>
+  <p>© {new Date().getFullYear()} Hebei Shandao Environmental Technology Co., Ltd. All rights reserved.</p>
+  <div className="flex gap-6">
+    <Link to="/privacy-policy" className="hover:text-white transition-colors">
+      Privacy Policy
+    </Link>
+    <Link to="/terms-of-service" className="hover:text-white transition-colors">
+      Terms of Service
+    </Link>
+  </div>
+</div>
       </div>
     </footer>
   );

@@ -1,14 +1,53 @@
 // src/pages/ProjectCategoryPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Maximize2, ChevronRight } from 'lucide-react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+
+import { ArrowLeft, ArrowUpRight, Maximize2 } from 'lucide-react';
 import { projectCategories } from '../data/projects';
 import { GalleryCarouselModal } from '../components/modals/GalleryCarouselModal';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 
-// Компонент одного проекта (без изменений)
-const ProjectItem = ({ project }) => {
+// Умная ссылка на секцию контактов
+const ContactLink = ({ children, className }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    const scrollToContact = () => {
+      const el = document.getElementById('contact');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // Если элемент ещё не отрендерился, пробуем через 400мс
+        setTimeout(() => {
+          const retry = document.getElementById('contact');
+          if (retry) retry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 400);
+      }
+    };
+    
+    // Если мы НЕ на главной — сначала переходим, потом скроллим
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Ждём пока React отрисует главную страницу
+      setTimeout(scrollToContact, 300);
+    } else {
+      // Если уже на главной — просто скроллим
+      scrollToContact();
+    }
+  };
+  
+  return (
+    <a href="/#contact" onClick={handleClick} className={className}>
+      {children}
+    </a>
+  );
+};
+
+// ✅ СОВРЕМЕННЫЙ МИНИМАЛИСТИЧНЫЙ ProjectItem
+const ProjectItem = ({ project, index }) => {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -16,66 +55,80 @@ const ProjectItem = ({ project }) => {
     if (!project || project.images.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentImgIndex((prev) => (prev + 1) % project.images.length);
-    }, 1500);
+    }, 2000);
     return () => clearInterval(interval);
   }, [project]);
 
   return (
-    <div className="mb-12 last:mb-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
-            <div className="p-6 sm:p-8 lg:p-10">
-              <div 
-                className="relative bg-slate-100 rounded-2xl overflow-hidden aspect-video group cursor-pointer shadow-inner" 
-                onClick={() => setIsGalleryOpen(true)}
-              >
-                <div className="absolute inset-0 w-full h-full">
-                  {project.images.map((imgSrc, index) => (
-                    <img 
-                      key={index}
-                      src={imgSrc} 
-                      alt={`${project.title} - ${index}`}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                        index === currentImgIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                      }`}
-                    />
-                  ))}
-                </div>
-                
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-                  <div className="bg-black/30 backdrop-blur-[2px] border border-white/20 p-3 rounded-full shadow-lg transition-all duration-300 group-hover:bg-[#00A29A]/90 group-hover:scale-110">
-                    <Maximize2 className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="mt-3 text-white font-bold text-xs sm:text-sm tracking-wide uppercase drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">
-                    Tap to View Gallery
-                  </span>
-                </div>
+    <article className="group border-b border-slate-200 last:border-b-0 py-8 sm:py-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+        
+        {/* ✅ НОМЕР ПРОЕКТА + ТЕГ */}
+        <div className="lg:col-span-1 flex lg:flex-col items-center lg:items-start gap-3 lg:gap-4">
+          <span className="text-xs font-mono text-slate-400">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+        </div>
 
-                <div className="absolute bottom-4 left-4 bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm z-30">
-                  {currentImgIndex + 1} / {project.images.length}
-                </div>
+        {/* ✅ КАРТИНКА (7 колонок из 12) */}
+        <div className="lg:col-span-7">
+          <div 
+            className="relative aspect-[16/10] bg-slate-100 rounded-lg overflow-hidden cursor-pointer"
+            onClick={() => setIsGalleryOpen(true)}
+          >
+            {project.images.map((imgSrc, imgIndex) => (
+              <img 
+                key={imgIndex}
+                src={imgSrc} 
+                alt={`${project.title} - ${imgIndex}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                  imgIndex === currentImgIndex 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-0 scale-105'
+                }`}
+              />
+            ))}
+            
+            {/* Оверлей при наведении */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
+                <Maximize2 className="w-5 h-5 text-slate-900" />
               </div>
             </div>
 
-            <div className="p-8 sm:p-12 lg:p-16 flex flex-col justify-center bg-white">
-              <span className="text-[#00A29A] font-bold uppercase tracking-wider text-xs mb-3">Project Details</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6 leading-tight">{project.title}</h2>
-              
-              <div className="prose prose-slate text-slate-600 leading-relaxed mb-8">
-                <p>{project.fullDescription}</p>
-              </div>
-
-              <a 
-                href="#contact" 
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#00A29A] hover:bg-[#008f88] text-white font-bold rounded-xl transition-colors shadow-lg shadow-[#00A29A]/30 w-full sm:w-auto group/btn"
-              >
-                Get Quote / Contact Us
-                <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-              </a>
+            {/* Счетчик */}
+            <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-slate-700 text-xs px-2.5 py-1 rounded-md font-medium">
+              {currentImgIndex + 1} / {project.images.length}
             </div>
           </div>
         </div>
+
+        {/* ✅ ТЕКСТ (4 колонки из 12) */}
+        <div className="lg:col-span-4 flex flex-col justify-between lg:pt-2">
+          <div>
+            {/* Тег категории */}
+            <div className="inline-block px-2.5 py-1 bg-[#00A29A]/10 text-[#00A29A] text-[10px] font-semibold uppercase tracking-wider rounded-md mb-4">
+              Case Study
+            </div>
+
+            {/* Заголовок */}
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 leading-tight">
+              {project.title}
+            </h2>
+
+            {/* Описание */}
+            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+              {project.fullDescription}
+            </p>
+          </div>
+
+          {/* Кнопка */}
+          <ContactLink className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-[#00A29A] transition-colors group/link">
+  Get in touch
+  <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+</ContactLink>
+        </div>
+
       </div>
 
       {isGalleryOpen && (
@@ -84,7 +137,7 @@ const ProjectItem = ({ project }) => {
           onClose={() => setIsGalleryOpen(false)} 
         />
       )}
-    </div>
+    </article>
   );
 };
 
@@ -95,25 +148,17 @@ export const ProjectCategoryPage = () => {
   
   const category = projectCategories.find(cat => cat.id === categoryId);
 
-  // Скролл наверх при открытии категории
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [categoryId]);
 
-  // ✅ ФУНКЦИЯ ВОЗВРАТА К СЕКЦИИ ПРОЕКТОВ
   const handleBackToProjects = () => {
-    // 1. Переходим на главную страницу
     navigate('/');
-    
-    // 2. Ждем рендера новой страницы и скроллим к секции
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const section = document.getElementById('projects-section');
         if (section) {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          // Если по какой-то причине секция не найдена, скроллим просто вниз
-          window.scrollTo({ top: 800, behavior: 'smooth' });
         }
       });
     });
@@ -123,38 +168,64 @@ export const ProjectCategoryPage = () => {
     return <div className="min-h-screen flex items-center justify-center">Category not found</div>;
   }
 
-  // ✅ Кнопка Back для передачи в навигацию
-   // ✅ ИЗМЕНЕННАЯ КНОПКА BACK
-  // Убрали rounded-full, добавили h-12 (высота как у лого) и rounded-lg (квадратные углы)
   const backButton = (
     <button 
       onClick={handleBackToProjects} 
-      className="group flex items-center gap-3 px-4 h-12 text-slate-600 hover:text-[#00A29A] transition-colors font-medium bg-white/80 hover:bg-white border border-slate-200 hover:border-[#00A29A]/50 rounded-lg shadow-sm backdrop-blur-md"
-      title="Back to Categories"
+      className="group flex items-center gap-2 px-3 h-10 text-slate-600 hover:text-[#00A29A] transition-colors font-medium bg-white/80 hover:bg-white border border-slate-200 hover:border-[#00A29A]/50 rounded-md shadow-sm backdrop-blur-md text-sm"
     >
-      <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" /> 
-      <span className="font-semibold text-sm uppercase tracking-wide">Back</span>
+      <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" /> 
+      <span className="font-medium">Back</span>
     </button>
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      
-      {/* 1. Навигация с кнопкой Back слева */}
+    <div className="min-h-screen bg-white flex flex-col">
       <Navigation leftSlot={backButton} />
-
-      {/* 2. Контент с отступом сверху (pt-32), чтобы не перекрывался навбаром */}
-      <main className="flex-grow py-12 pt-32 sm:pt-40">
-        
-        {category.projects.length > 0 ? (
-          category.projects.map((project) => (
-            <ProjectItem key={project.id} project={project} />
-          ))
-        ) : (
-          <div className="text-center py-20 text-slate-500">
-            No projects in this category yet.
+      
+      {/* ✅ HEADER СТРАНИЦЫ */}
+      <header className="pt-32 pb-12 sm:pt-40 sm:pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-px bg-[#00A29A]"></span>
+            <span className="text-xs font-semibold text-[#00A29A] uppercase tracking-wider">
+              {category.title.split(' ').slice(0, 2).join(' ')}
+            </span>
           </div>
-        )}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 max-w-3xl leading-tight">
+            {category.title}
+          </h1>
+          <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
+            {category.description}
+          </p>
+          
+          {/* Счетчик проектов */}
+          <div className="mt-8 flex items-center gap-6 text-sm text-slate-500">
+            <span className="font-mono">
+              {String(category.projects.length).padStart(2, '0')} Projects
+            </span>
+            <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+            <span>2024—2026</span>
+          </div>
+        </div>
+      </header>
+
+      {/* ✅ СПИСОК ПРОЕКТОВ */}
+      <main className="flex-grow px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="max-w-6xl mx-auto">
+          {category.projects.length > 0 ? (
+            category.projects.map((project, index) => (
+              <ProjectItem 
+                key={project.id} 
+                project={project} 
+                index={index} 
+              />
+            ))
+          ) : (
+            <div className="text-center py-20 text-slate-500">
+              No projects in this category yet.
+            </div>
+          )}
+        </div>
       </main>
       
       <Footer />

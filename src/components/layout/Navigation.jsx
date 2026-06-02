@@ -1,12 +1,14 @@
 // src/components/layout/Navigation.jsx
-import { useState, useEffect } from 'react';
+
+// src/components/layout/Navigation.jsx
+import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 // 🎨 Твой оригинальный SVG логотип
 const LogoIcon = () => (
   <svg 
     viewBox="0 0 364 368" 
-    fill="#00A29A"         // ← прямо цветом
+    className="w-full h-full text-[#00A29A] fill-current"
     xmlns="http://www.w3.org/2000/svg"
   >
     {/* ⚠️ ВСТАВЬ СЮДА ВСЕ PATH ИЗ ТВОЕГО ПРЕДЫДУЩЕГО КОДА ⚠️ */}
@@ -29,29 +31,16 @@ const LogoIcon = () => (
     <path d="M0 0 C0.75925781 -0.01160156 1.51851562 -0.02320313 2.30078125 -0.03515625 C5.6129564 -0.01775428 8.05013507 0.12483814 10.97265625 1.75 C13.05511763 3.96561109 13.42775604 5.34075381 13.5 8.375 C12.25 11.125 12.25 11.125 10.5 13.375 C6.90998391 14.57167203 3.9095161 14.58038881 0.125 14.625 C-1.18210937 14.65078125 -2.48921875 14.6765625 -3.8359375 14.703125 C-7.66889304 14.35987525 -9.570046 13.84350014 -12.5 11.375 C-13.12890625 9.4375 -13.12890625 9.4375 -13.0625 7.375 C-13.06378906 6.694375 -13.06507812 6.01375 -13.06640625 5.3125 C-12.5 3.375 -12.5 3.375 -10.99609375 1.6484375 C-7.39803121 -0.18719378 -3.94389063 -0.06026318 0 0 Z " transform="translate(41.5,192.625)"/>
     <path d="M0 0 C0.76376953 -0.02449219 1.52753906 -0.04898438 2.31445312 -0.07421875 C6.07656755 -0.09386426 7.96295427 -0.0629859 11.0703125 2.20703125 C13.08194907 5.12969695 13.08008008 6.89981944 12.5625 10.375 C10.99242765 12.44594496 10.09663972 13.26905546 7.52539062 13.77905273 C5.0366652 13.8109257 2.55143646 13.83284049 0.0625 13.8125 C-0.80503906 13.83248047 -1.67257813 13.85246094 -2.56640625 13.87304688 C-8.86194305 13.8681817 -8.86194305 13.8681817 -11.5390625 11.57421875 C-12.90735644 8.22487315 -12.3296836 5.8162796 -11.4375 2.375 C-7.6141501 -0.17389993 -4.43285358 0.00744392 0 0 Z " transform="translate(106.4375,255.625)"/>
   
+    
   </svg>
 );
 
 export const Navigation = ({ leftSlot }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Отслеживаем скролл для эффекта стекла
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-sm py-3 border-slate-200/50' 
-          : 'bg-transparent py-5'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm py-3 border-b border-slate-200/50 transition-all duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
         
@@ -62,18 +51,18 @@ export const Navigation = ({ leftSlot }) => {
           {leftSlot && <div className="flex-shrink-0">{leftSlot}</div>}
 
           <a href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
-              <LogoIcon /> 
-            </div>
-            <div className="flex flex-col leading-tight hidden sm:flex">
-              <span className="text-base font-bold text-slate-900 tracking-wide uppercase drop-shadow-sm">
-                Hebei Shandao
-              </span>
-              <span className="text-[10px] text-[#00A29A] font-semibold uppercase tracking-wider drop-shadow-sm">
-                Environmental Tech
-              </span>
-            </div>
-          </a>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white border border-slate-200 rounded-lg p-1.5 sm:p-2 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                <LogoIcon /> 
+              </div>
+              <div className="flex flex-col leading-tight hidden sm:flex">
+                <span className="text-base font-bold text-slate-900 tracking-wide uppercase drop-shadow-sm">
+                  Hebei Shandao
+                </span>
+                <span className="text-[10px] text-[#00A29A] font-semibold uppercase tracking-wider drop-shadow-sm">
+                  Environmental Tech
+                </span>
+              </div>
+            </a>
         </div>
 
         {/* МЕНЮ (Справа) */}
@@ -97,7 +86,7 @@ export const Navigation = ({ leftSlot }) => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-40">
           <a href="/#products" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Products</a>
-          <a href="/#projects" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Technology</a>
+          <a href="/#projects-section" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Technology</a>
           <a href="/#trust" className="text-slate-600 hover:text-[#00A29A] font-medium py-2 border-b border-slate-50" onClick={() => setMobileMenuOpen(false)}>Enterprise</a>
           <a href="/#contact" className="text-slate-600 hover:text-[#00A29A] font-medium py-2" onClick={() => setMobileMenuOpen(false)}>Contact Sales</a>
         </div>

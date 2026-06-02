@@ -23,6 +23,9 @@ import { WeChatModal } from './components/modals/WeChatModal';
 import { ProductContactModal } from './components/modals/ProductContactModal';
 import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 
+import { PrivacyPolicy } from './pages/legal/PrivacyPolicy';
+import { TermsOfService } from './pages/legal/TermsOfService';
+
 // Компонент Главной страницы
 const HomePage = () => {
   return (
@@ -54,6 +57,8 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/projects/:categoryId" element={<ProjectCategoryPage />} />
         <Route path="/projects/:categoryId/:projectId" element={<SingleProjectPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>
 
       <BackToTop /> 
