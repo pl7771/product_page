@@ -1,0 +1,20 @@
+import { useMemo } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
+import { getLocalizedProjectCategories, getLocalizedProducts } from '../i18n/localizeProjects';
+
+export function useLocalizedProjects() {
+  const { dict } = useLanguage();
+  return useMemo(() => getLocalizedProjectCategories(dict), [dict]);
+}
+
+export function useLocalizedProducts() {
+  const { dict, t } = useLanguage();
+  return useMemo(
+    () =>
+      getLocalizedProducts(dict).map((p) => ({
+        ...p,
+        price: t('products.requestQuote'),
+      })),
+    [dict, t],
+  );
+}
