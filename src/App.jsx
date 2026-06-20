@@ -21,19 +21,18 @@ import { LightboxModal } from './components/modals/LightboxModal';
 import { InfoModal } from './components/modals/InfoModal';
 import { WeChatModal } from './components/modals/WeChatModal';
 import { ProductContactModal } from './components/modals/ProductContactModal';
-import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 
 import { PrivacyPolicy } from './pages/legal/PrivacyPolicy';
 import { TermsOfService } from './pages/legal/TermsOfService';
 
 // Компонент Главной страницы
-const HomePage = () => {
+const HomePage = ({ onContactClick }) => {
   return (
     <>
       <Navigation />
       <HeroSection />
       <ProjectsSection />
-      <ProductShowcase />
+      <ProductShowcase onContactClick={onContactClick} />
       <QuickContacts />
       <TrustSection />
       <Footer />
@@ -47,14 +46,18 @@ export default function App() {
   const [wechatModal, setWechatModal] = useState(false);
   const [infoProduct, setInfoProduct] = useState(null);
   const [productContactModal, setProductContactModal] = useState(null);
-  const [productGalleryModal, setProductGalleryModal] = useState(null);
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-[#00A29A]/30 selection:text-[#00A29A] overflow-x-hidden">
       
       {/* Маршруты */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <HomePage onContactClick={setProductContactModal} />
+          }
+        />
         <Route path="/projects/:categoryId" element={<ProjectCategoryPage />} />
         <Route path="/projects/:categoryId/:projectId" element={<SingleProjectPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -67,7 +70,6 @@ export default function App() {
       {lightboxImg && <LightboxModal image={lightboxImg} onClose={() => setLightboxImg(null)} />}
       {infoProduct && <InfoModal product={infoProduct} onClose={() => setInfoProduct(null)} />}
       {wechatModal && <WeChatModal onClose={() => setWechatModal(false)} />}
-      {productGalleryModal && <GalleryCarouselModal product={productGalleryModal} onClose={() => setProductGalleryModal(null)} />}
       {productContactModal && <ProductContactModal product={productContactModal} onClose={() => setProductContactModal(null)} />}
     </div>
   );

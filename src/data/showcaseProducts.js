@@ -1,97 +1,75 @@
 // src/data/showcaseProducts.js
+const productImg = (folder, filename) =>
+  `/data/products/${folder}/${encodeURIComponent(filename)}`;
+
 export const showcaseProducts = [
   {
     id: 101,
-    name: "AeroMist Pro",
-    subtitle: "Professional Fog Generation",
-    description: "Professional-grade atmospheric fog emitter for industrial testing and cinematic applications with precise control.",
-    price: "$2,499",
-    category: "Fog Generation",
-    cover: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800",
+    name: "Ultrasonic Humidifier",
+    subtitle: "Ultrasonic Cold Mist System",
+    description:
+      "Generates ultra-fine 1–5 micron cold mist for precise humidity control in greenhouses, laboratories, and enclosed industrial spaces.",
+    price: "Request Quote",
+    category: "Humidification",
+    cover: productImg("ultra-sonic-humidifier", "1.png"),
     gallery: [
-      "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=100&w=1600"
-    ],
-    specs: ["Output: 500ml/min", "Coverage: 200m²", "Power: 220V/50Hz", "Weight: 12kg"]
+      "1.png",
+      "2.png",
+      "C400-1-C800-2.jpg",
+      "C1200-3-C1600-4.jpg",
+      "C2000-5-C2400-6.jpg",
+      "IMG_20200707_152826.jpg",
+      "IMG_20200707_152835.jpg",
+      "IMG_20200707_152839.jpg",
+      "IMG_20200707_153029.jpg",
+    ].map((f) => productImg("ultra-sonic-humidifier", f)),
+    specs: ["Models: C400 – C2400", "1–5 μm droplet size", "Low energy consumption", "Silent operation"],
   },
   {
     id: 102,
-    name: "SmokeFX Ultra",
-    subtitle: "Visual Effects System",
-    description: "High-density smoke generator designed for film productions and stage performances with remote control.",
-    price: "$3,899",
-    category: "Visual Effects",
-    cover: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800",
+    name: "High Pressure Micro Mist Humidifier",
+    subtitle: "Industrial Atomization System",
+    description:
+      "High-pressure micron-level atomization for dust suppression, cooling, and large-scale humidification in demanding industrial environments.",
+    price: "Request Quote",
+    category: "Atomization",
+    cover: productImg("high-pressure-micro-mist-humidifier", "2K_202606061722.jpeg"),
     gallery: [
-      "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1536440136628-84e594316ce8?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=100&w=1600"
-    ],
-    specs: ["Output: 800ml/min", "Remote control", "Low noise design", "DMX compatible"]
+      "2K_202606061722.jpeg",
+      "4.jpg",
+      "1 (4)P.jpg",
+      "0e812ddddf84ff6e51637ff90b57ad9.jpg",
+      "fe1b77d474e98867994c318022bef652.jpg",
+    ].map((f) => productImg("high-pressure-micro-mist-humidifier", f)),
+    specs: ["High-pressure pump system", "Adjustable flow rate", "Corrosion-resistant nozzles", "Automated control ready"],
   },
   {
     id: 103,
-    name: "CloudMaker X1",
-    subtitle: "Research Equipment",
-    description: "Precision cloud simulation system for meteorological studies and scientific research applications.",
-    price: "$5,299",
-    category: "Research Equipment",
-    cover: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800",
+    name: "Accessories & Components",
+    subtitle: "System Parts & Spares",
+    description:
+      "Nozzles, fittings, pumps, and control modules — precision components engineered for seamless integration with Aether mist systems.",
+    price: "Request Quote",
+    category: "Accessories",
+    cover: productImg("accessoirs", "1.jpeg"),
     gallery: [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=100&w=1600",
-      "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=100&w=1600"
-    ],
-    specs: ["Variable density", "Data logging", "Lab-certified", "API integration"]
+      "1.jpeg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg",
+      "8.jpg",
+      "9.jpg",
+      "1 (4).jpg",
+      "1 (7).jpg",
+      "1 (8).jpg",
+      "1 (9).jpg",
+      "1 (10).jpg",
+      "1 (11).jpg",
+      "1 (12).jpg",
+    ].map((f) => productImg("accessoirs", f)),
+    specs: ["OEM-compatible parts", "Quick-swap nozzle heads", "Stainless steel options", "Full system kits available"],
   },
-//   {
-//     id: 104,
-//     name: "VaporStream Mini",
-//     subtitle: "Portable Solutions",
-//     description: "Compact fog emitter for small spaces and mobile applications with battery-powered operation.",
-//     price: "$899",
-//     category: "Portable Solutions",
-//     cover: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
-//     gallery: [
-//       "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&q=100&w=1600"
-//     ],
-//     specs: ["Battery powered", "Weight: 2.1kg", "USB-C charging", "Runtime: 4 hours"]
-//   },
-//   {
-//     id: 105,
-//     name: "AtmoControl Hub",
-//     subtitle: "Smart Systems",
-//     description: "Central controller for managing multiple atmospheric devices with app-based scheduling.",
-//     price: "$1,799",
-//     category: "Smart Systems",
-//     cover: "https://images.unsplash.com/photo-1551654898-8c6c5f5c6f5f?auto=format&fit=crop&q=80&w=800",
-//     gallery: [
-//       "https://images.unsplash.com/photo-1551654898-8c6c5f5c6f5f?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=100&w=1600"
-//     ],
-//     specs: ["WiFi + Bluetooth", "App control", "Scheduler included", "Cloud sync"]
-//   },
-//   {
-//     id: 106,
-//     name: "EcoMist Green",
-//     subtitle: "Eco-Friendly",
-//     description: "Biodegradable fluid fog system for sustainable operations with zero VOC emissions.",
-//     price: "$1,999",
-//     category: "Eco-Friendly",
-//     cover: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800",
-//     gallery: [
-//       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=100&w=1600",
-//       "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=100&w=1600"
-//     ],
-//     specs: ["Plant-based fluid", "Zero VOC", "Certified green", "Carbon neutral"]
-//   }
 ];
