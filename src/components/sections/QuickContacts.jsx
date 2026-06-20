@@ -33,7 +33,7 @@ export const QuickContacts = () => {
           <p className="text-slate-500">{t('contact.subtitle')}</p>
         </div>
 
-        <div className={`grid grid-cols-1 gap-8 mb-20 ${lang === 'en' ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+        <div className={`grid grid-cols-1 gap-8 mb-20 ${lang === 'en' ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
           <div className="group bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center text-center hover:border-[#00A29A] hover:shadow-xl hover:shadow-[#00A29A]/10 transition-all duration-300 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-[#00A29A] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             <div className="mb-6 p-2 bg-slate-50 rounded-xl border border-slate-100 shadow-inner">
@@ -53,30 +53,6 @@ export const QuickContacts = () => {
               {t('contact.wechatCopy')} <Copy className="w-4 h-4" />
             </button>
           </div>
-
-          {contact.phones.map((phone) => (
-            <a
-              key={phone}
-              href={`tel:${phone.replace(/\s/g, '')}`}
-              className="group bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center text-center hover:border-[#00A29A] hover:shadow-xl hover:shadow-[#00A29A]/10 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-[#00A29A] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-              <div className="mb-6 p-2 bg-slate-50 rounded-xl border border-slate-100 shadow-inner flex items-center justify-center w-40 h-40">
-                <Phone className="w-16 h-16 text-[#00A29A]/40" />
-              </div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 bg-[#00A29A]/10 rounded-full flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-[#00A29A]" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">{t('contact.phoneTitle')}</h3>
-              </div>
-              <p className="text-lg font-bold text-slate-800 mb-2">{phone}</p>
-              <p className="text-sm text-slate-500 mb-6">{t('contact.phoneDesc')}</p>
-              <span className="mt-auto w-full inline-flex items-center justify-center gap-2 py-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-xl transition-colors text-sm font-bold shadow-md">
-                {t('contact.phoneCall')} <ArrowRight className="w-4 h-4" />
-              </span>
-            </a>
-          ))}
 
           <a
             href={whatsappLink}

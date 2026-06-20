@@ -170,7 +170,7 @@ export default {
     submit: '提交咨询',
     sending: '发送中...',
     sent: '消息发送成功！',
-    phones: ['16631108208', '16631108228'],
+    phones: ['16631108208'],
     whatsapp: '+8616631105554',
     emailAddress: 'hbsd@outlook.com',
   },

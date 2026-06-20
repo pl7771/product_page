@@ -172,7 +172,7 @@ export default {
     submit: 'Submit Request',
     sending: 'Sending...',
     sent: 'Message sent successfully!',
-    phones: ['+86 166 3110 8208', '+86 166 3110 8228'],
+    phones: ['+86 166 3110 8208'],
     whatsapp: '+86 166 3110 5554',
     emailAddress: 'hbsd@outlook.com',
   },
