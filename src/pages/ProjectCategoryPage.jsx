@@ -165,7 +165,7 @@ export const ProjectCategoryPage = () => {
   const backButton = (
     <button 
       onClick={handleBackToProjects} 
-      className="group flex items-center gap-2 px-3 h-10 text-slate-600 hover:text-[#00A29A] transition-colors font-medium bg-white/80 hover:bg-white border border-slate-200 hover:border-[#00A29A]/50 rounded-md shadow-sm backdrop-blur-md text-sm"
+      className="group flex items-center gap-2 px-3 h-10 text-slate-700 hover:text-[#00A29A] transition-colors font-medium bg-white hover:bg-white border border-slate-100 hover:border-[#00A29A]/50 rounded-md shadow-sm text-sm"
     >
       <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" /> 
       <span className="font-medium">{t('nav.back')}</span>
@@ -191,15 +191,6 @@ export const ProjectCategoryPage = () => {
           <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
             {category.description}
           </p>
-          
-          {/* Счетчик проектов */}
-          <div className="mt-8 flex items-center gap-6 text-sm text-slate-500">
-            <span className="font-mono">
-              {String(category.projects.length).padStart(2, '0')} {t('projectPage.projectsCount')}
-            </span>
-            <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-            <span>2024—2026</span>
-          </div>
         </div>
       </header>
 

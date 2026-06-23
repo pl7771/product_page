@@ -6,7 +6,7 @@ export default {
   },
 
   nav: {
-    products: 'Products',
+    products: 'Product Gallery',
     technology: 'Projects',
     enterprise: 'About',
     contact: 'Contact',
@@ -28,20 +28,21 @@ export default {
     stat1Label: 'Dust Reduction',
     stat2Value: '24/7',
     stat2Label: 'Smart Control',
-    stat3Value: '100+',
+    stat3Value: '1000+',
     stat3Label: 'Installations',
   },
 
   projectsSection: {
+    eyebrow: 'Projects',
     title: 'Our Expertise',
     subtitle: 'Explore our solutions across key industries. Click a category to view projects.',
     viewProjects: 'View Projects',
   },
 
   products: {
-    eyebrow: 'Equipment',
-    title: 'Project',
-    titleHighlight: 'Equipment.',
+    eyebrow: 'Products',
+    title: 'Product Gallery',
+    titleHighlight: '',
     description:
       'Components we deploy on installation projects — turnkey misting and humidification services for industrial clients.',
     requestOffer: 'Request Commercial Offer',
@@ -97,31 +98,14 @@ export default {
   },
 
   trust: {
-    eyebrow: 'Why Shandao',
-    title: 'Your Partner for Micro-Mist Engineering Projects.',
+    eyebrow: 'About Us',
+    title: '',
     description:
       'Our company is deeply rooted in the field of eco-friendly atomization, serving as a comprehensive service provider that integrates R&D, sales, and the design and construction of micro-mist engineering projects. We specialize in offering clients one-stop solutions for localized environmental improvement—specifically focusing on humidification, dust suppression, and cooling. Our business footprint spans a wide array of industries: from environmental control in paper manufacturing, printing, chemicals, textiles, and synthetic fibers, to electronics manufacturing workshops; from odor control and treatment at landfills and waste transfer stations, to epidemic prevention and disinfection in the livestock and poultry farming sectors. Furthermore, our services extend to creating artificial mist landscapes for real estate developments and scenic areas, as well as providing precision humidification for specialized settings such as agricultural greenhouses and edible mushroom cultivation facilities.\n\nThe company consistently upholds a management philosophy centered on "Integrity, Innovation, Service, and Gratitude." This philosophy serves as the cornerstone for fostering team growth and responding precisely to our clients\' needs. We actively recruit high-caliber professional talent and strictly adhere to the operational principles of "Customer First, Service Foremost," maintaining rigorous quality control through our exceptional service standards and sophisticated technical expertise. By providing professional consultation and customized solutions to clients across diverse industries, we have earned the profound recognition and trust of a broad base of customers and partners alike.',
-    hpBlock:
-      'The high-pressure micro-mist system developed by our company offers users a wide range of specifications and comprehensive customization services. It is specifically designed to address the drawbacks often encountered when purchasing traditional humidification equipment—such as high initial investment, high operating costs, and heavy maintenance burdens—while also meeting the unique humidification requirements of specific environments.\n\nTailored to client needs, our high-pressure micro-mist system can integrate multiple operational control subsystems, including constant-pressure water supply, low-water protection, water filtration, multi-zone temperature and humidity control, comprehensive motor protection, automatic drainage, and water heating systems.\n\nThe multi-zone temperature and humidity control system enables precise regulation of temperature and humidity across multiple distinct areas, thereby satisfying the specific environmental requirements of various production processes.\n\nThe water heating and electrical control systems ensure optimal misting performance and system functionality, even in low-temperature environments.\n\nOur high-pressure micro-mist system features excellent system integration and is backed by comprehensive installation and after-sales support services. Offering both ease of use and high performance, it is ideally suited for a diverse range of industries—including papermaking, real estate, chemicals, textiles and synthetic fibers, electronics manufacturing, livestock farming, edible fungi cultivation, printing, tobacco processing, and coal mining—as well as any space requiring humidification or constant humidity control.\n\nWe are dedicated to serving you with our impeccable corporate reputation, a proactive and comprehensive system of pre-sales, in-sales, and after-sales support, and a diverse portfolio of micro-mist system engineering solutions.',
-    features: [
-      {
-        title: 'Turnkey Installation',
-        desc: 'Site survey, system design, equipment integration, commissioning, and handover — managed end to end.',
-      },
-      {
-        title: 'Industrial-Grade Equipment',
-        desc: 'High-pressure and ultrasonic humidifiers, pumps, and nozzles built for continuous operation in demanding environments.',
-      },
-      {
-        title: 'Smart Automation',
-        desc: 'Manual, timer, and humidity-based control for unmanned, precision spraying and humidification.',
-      },
-      {
-        title: 'Lifecycle Support',
-        desc: 'Pre-sales, in-sales, and after-sales support — professional consultation and customized solutions for every industry.',
-      },
-    ],
-    testimonialsTitle: 'Project Outcomes',
+    hpBlock: '',
+    features: [],
+    testimonialsEyebrow: 'Project Outcomes',
+    testimonialsTitle: '',
     testimonialsSubtitle: 'Feedback from installation and deployment engagements',
     testimonials: [
       {
@@ -149,6 +133,7 @@ export default {
   },
 
   contact: {
+    eyebrow: 'Contact',
     title: 'Contact Us',
     subtitle: 'Scan to connect or send us a direct message.',
     wechatTitle: 'WeChat',
@@ -179,7 +164,7 @@ export default {
 
   footer: {
     tagline:
-      'Precision atomization systems for industrial dust suppression, environmental control, and micro-mist engineering.',
+      'Precision atomization systems for industrial dust suppression, environmental control, and micro-mist engineering projects.',
     contactTitle: 'Contact Us',
     address: 'Hebei Province, China',
     linksTitle: 'Quick Links',

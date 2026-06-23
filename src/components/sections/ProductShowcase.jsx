@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import { ProductCard } from '../ui/ProductCard';
-import { ProductSpecsTable } from '../ui/ProductSpecsTable';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useLocalizedProducts } from '../../hooks/useLocalizedData';
 
@@ -18,11 +17,11 @@ export const ProductShowcase = ({ onContactClick }) => {
         <Reveal>
           <div className="mb-20 text-center max-w-3xl mx-auto">
             <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{t('products.eyebrow')}</h2>
-            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
-              {t('products.title')}{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A29A] to-teal-600">{t('products.titleHighlight')}</span>
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">
+              {t('products.title')}
+              {t('products.titleHighlight')}
             </h3>
-            <p className="text-slate-600 text-lg font-light">{t('products.description')}</p>
+            <p className="text-slate-600 text-lg">{t('products.description')}</p>
           </div>
         </Reveal>
 
@@ -33,12 +32,6 @@ export const ProductShowcase = ({ onContactClick }) => {
             </Reveal>
           ))}
         </div>
-
-        <Reveal delay={300}>
-          <div className="mt-14 sm:mt-16">
-            <ProductSpecsTable />
-          </div>
-        </Reveal>
 
         <div className="mt-16 text-center">
           <a

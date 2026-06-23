@@ -29,8 +29,9 @@ export const QuickContacts = () => {
     <section id="contact" className="w-full px-4 sm:px-6 lg:px-8 py-20 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 mb-3">{t('contact.title')}</h2>
-          <p className="text-slate-500">{t('contact.subtitle')}</p>
+          <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{t('contact.eyebrow')}</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('contact.title')}</h3>
+          <p className="text-slate-600 text-lg">{t('contact.subtitle')}</p>
         </div>
 
         <div className={`grid grid-cols-1 gap-8 mb-20 ${lang === 'en' ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
@@ -70,7 +71,6 @@ export const QuickContacts = () => {
               </div>
               <h3 className="text-lg font-bold text-slate-900">{t('contact.whatsappTitle')}</h3>
             </div>
-            <p className="text-sm text-slate-500 mb-1">{contact.whatsapp}</p>
             <p className="text-sm text-slate-500 mb-6">{t('contact.whatsappDesc')}</p>
             <span className="mt-auto w-full inline-flex items-center justify-center gap-2 py-3 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-xl transition-colors text-sm font-bold shadow-md">
               {t('contact.whatsappOpen')} <ArrowRight className="w-4 h-4" />

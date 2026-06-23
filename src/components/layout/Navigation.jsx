@@ -16,7 +16,7 @@ export const Navigation = ({ leftSlot }) => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm py-3 border-b border-slate-200/50 transition-all duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl backdrop-saturate-150 py-3 border-b border-slate-100 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 sm:gap-6 min-w-0">
           {leftSlot && <div className="flex-shrink-0">{leftSlot}</div>}
@@ -52,7 +52,7 @@ export const Navigation = ({ leftSlot }) => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 z-40">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-lg py-4 px-6 flex flex-col gap-4 z-40">
           {links.map((link) => (
             <a
               key={link.href}
