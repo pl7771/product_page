@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MessageCircle, Phone, Mail, ArrowRight, Send, Copy } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { OptimizedImage } from '../ui/OptimizedImage';
+import { QR_WECHAT, QR_WHATSAPP } from '../../assets/qr';
 
 export const QuickContacts = () => {
   const { t, dict, lang } = useLanguage();
@@ -29,8 +29,7 @@ export const QuickContacts = () => {
     <section id="contact" className="w-full px-4 sm:px-6 lg:px-8 py-20 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{t('contact.eyebrow')}</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t('contact.title')}</h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#00A29A] mb-4">{t('contact.title')}</h2>
           <p className="text-slate-600 text-lg">{t('contact.subtitle')}</p>
         </div>
 
@@ -38,7 +37,7 @@ export const QuickContacts = () => {
           <div className="group bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center text-center hover:border-[#00A29A] hover:shadow-xl hover:shadow-[#00A29A]/10 transition-all duration-300 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-[#00A29A] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             <div className="mb-6 p-2 bg-slate-50 rounded-xl border border-slate-100 shadow-inner">
-              <OptimizedImage src="/data/qr/wechat3.png" alt="WeChat QR" loading="lazy" className="w-40 h-40 object-contain" />
+              <img src={QR_WECHAT} alt="WeChat QR" loading="lazy" className="w-40 h-40 object-contain" draggable={false} />
             </div>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 bg-[#00A29A]/10 rounded-full flex items-center justify-center">
@@ -63,7 +62,7 @@ export const QuickContacts = () => {
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-[#25D366] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             <div className="mb-6 p-2 bg-slate-50 rounded-xl border border-slate-100 shadow-inner">
-              <OptimizedImage src="/data/qr/whatsapp2.png" alt="WhatsApp QR" loading="lazy" className="w-40 h-40 object-contain" />
+              <img src={QR_WHATSAPP} alt="WhatsApp QR" loading="lazy" className="w-40 h-40 object-contain" draggable={false} />
             </div>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 bg-[#25D366]/10 rounded-full flex items-center justify-center">

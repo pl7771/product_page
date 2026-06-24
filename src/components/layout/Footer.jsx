@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LogoIcon } from '../ui/LogoIcon';
+import { LogoChip } from '../ui/LogoChip';
 import { useLanguage } from '../../i18n/LanguageContext';
 
 export const Footer = () => {
@@ -10,17 +11,11 @@ export const Footer = () => {
   return (
     <footer className="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-white rounded-lg p-1 flex items-center justify-center shadow-md">
-                <LogoIcon />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-white tracking-wide uppercase leading-tight">{t('nav.brandLine1')}</span>
-                <span className="text-[10px] text-[#00A29A] font-medium uppercase tracking-wider">{t('nav.brandLine2')}</span>
-              </div>
-            </div>
+            <LogoChip className="mb-6">
+              <LogoIcon variant="footer" className="h-8 sm:h-9 w-auto max-w-[200px] sm:max-w-[300px] object-contain object-left" />
+            </LogoChip>
             <p className="text-sm text-slate-400 leading-relaxed">{t('footer.tagline')}</p>
           </div>
 
@@ -52,13 +47,7 @@ export const Footer = () => {
               <li><a href="#products" className="hover:text-[#00A29A] transition-colors">{t('nav.products')}</a></li>
               <li><a href="#projects-section" className="hover:text-[#00A29A] transition-colors">{t('nav.technology')}</a></li>
               <li><a href="#trust" className="hover:text-[#00A29A] transition-colors">{t('nav.enterprise')}</a></li>
-              <li><a href="#contact" className="hover:text-[#00A29A] transition-colors">{t('nav.contact')}</a></li>
             </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-6 uppercase text-sm tracking-wider">{t('footer.followTitle')}</h4>
-            <p className="text-sm text-slate-400">WeChat / WhatsApp</p>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 import { X, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { OptimizedImage } from '../ui/OptimizedImage';
+import { QR_WECHAT } from '../../assets/qr';
 
 export const ProductContactModal = ({ product, onClose }) => {
   const { t, dict, lang } = useLanguage();
@@ -38,7 +38,7 @@ export const ProductContactModal = ({ product, onClose }) => {
             </div>
             <h4 className="text-slate-900 font-semibold text-center text-sm">{t('productModal.wechat')}</h4>
             <div className="bg-white p-2 rounded-lg w-24 h-24 border border-slate-200">
-              <OptimizedImage src="/data/qr/wechat3.png" alt="WeChat" loading="lazy" className="w-full h-full object-contain" />
+              <img src={QR_WECHAT} alt="WeChat" loading="lazy" className="w-full h-full object-contain" draggable={false} />
             </div>
           </div>
         </div>

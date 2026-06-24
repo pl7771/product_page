@@ -17,8 +17,7 @@ const ProjectsSection = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-10 max-w-3xl mx-auto">
-          <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{t('projectsSection.eyebrow')}</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">{t('projectsSection.title')}</h3>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#00A29A] tracking-tight mb-4">{t('projectsSection.title')}</h2>
           <p className="text-slate-600 text-lg">{t('projectsSection.subtitle')}</p>
         </div>
 

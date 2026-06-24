@@ -16,11 +16,10 @@ export const ProductShowcase = ({ onContactClick }) => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <Reveal>
           <div className="mb-20 text-center max-w-3xl mx-auto">
-            <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{t('products.eyebrow')}</h2>
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-slate-900">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-[#00A29A]">
               {t('products.title')}
               {t('products.titleHighlight')}
-            </h3>
+            </h2>
             <p className="text-slate-600 text-lg">{t('products.description')}</p>
           </div>
         </Reveal>
