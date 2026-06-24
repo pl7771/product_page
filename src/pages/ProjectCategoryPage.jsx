@@ -124,9 +124,10 @@ const ProjectItem = ({ project, index }) => {
       </div>
 
       {isGalleryOpen && (
-        <GalleryCarouselModal 
-          product={{ gallery: project.images }} 
-          onClose={() => setIsGalleryOpen(false)} 
+        <GalleryCarouselModal
+          product={{ gallery: project.images, title: project.title }}
+          initialIndex={currentImgIndex}
+          onClose={() => setIsGalleryOpen(false)}
         />
       )}
     </article>

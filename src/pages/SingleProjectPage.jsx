@@ -94,7 +94,13 @@ export const SingleProjectPage = () => {
 
       <Footer />
 
-      {isGalleryOpen && <GalleryCarouselModal product={{ gallery: project.images }} onClose={() => setIsGalleryOpen(false)} />}
+      {isGalleryOpen && (
+        <GalleryCarouselModal
+          product={{ gallery: project.images, title: project.title }}
+          initialIndex={currentImgIndex}
+          onClose={() => setIsGalleryOpen(false)}
+        />
+      )}
     </div>
   );
 };

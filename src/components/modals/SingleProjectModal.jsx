@@ -83,9 +83,10 @@ export const SingleProjectModal = ({ project, onClose }) => {
 
       {/* Если открыли галерею - показываем твою существующую карусель */}
       {isGalleryOpen && (
-        <GalleryCarouselModal 
-          product={{ gallery: project.images }} // Адаптируем под формат твоей карусели
-          onClose={() => setIsGalleryOpen(false)} 
+        <GalleryCarouselModal
+          product={{ gallery: project.images, title: project.title }}
+          initialIndex={currentImgIndex}
+          onClose={() => setIsGalleryOpen(false)}
         />
       )}
     </>

@@ -196,9 +196,13 @@ export default {
   },
 
   gallery: {
+    open: 'Open gallery',
     close: 'Close gallery',
     prev: 'Previous image',
     next: 'Next image',
+    swipeHint: 'Swipe to browse photos',
+    keyboardHint: 'Use arrow keys to navigate',
+    goTo: 'Go to image',
   },
 
   projects: {

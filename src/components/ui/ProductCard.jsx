@@ -1,28 +1,47 @@
 import { useState } from 'react';
-import { MessageCircle, Image as ImageIcon } from 'lucide-react';
+import { MessageCircle, Image as ImageIcon, Maximize2 } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { CyclingImage } from './CyclingImage';
 
-export const ProductCard = ({ product, onContactClick }) => {
+export const ProductCard = ({ product, onContactClick, onGalleryClick }) => {
   const { t } = useLanguage();
   const images = product.gallery?.length ? product.gallery : product.cover ? [product.cover] : [];
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
+  const openGallery = () => {
+    if (images.length && onGalleryClick) {
+      onGalleryClick(product, currentImgIndex);
+    }
+  };
+
   return (
     <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-[#00A29A]/50 hover:shadow-2xl hover:shadow-[#00A29A]/15 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
       <div className="p-4 pb-0">
-        <div className="relative aspect-[4/3] overflow-hidden bg-slate-50 rounded-2xl">
+        <button
+          type="button"
+          onClick={openGallery}
+          disabled={!images.length || !onGalleryClick}
+          className="relative aspect-[4/3] overflow-hidden bg-slate-50 rounded-2xl w-full text-left disabled:cursor-default cursor-pointer group/image focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00A29A] focus-visible:ring-offset-2"
+          aria-label={images.length ? `${product.name} — ${t('gallery.open')}` : undefined}
+        >
           {images.length > 0 ? (
-            <CyclingImage
-              images={images}
-              alt={product.name}
-              interval={2000}
-              containerClassName="absolute inset-0"
-              className="w-full h-full object-cover group-hover:scale-105"
-              hoverScaleClassName=""
-              loading="lazy"
-              onIndexChange={setCurrentImgIndex}
-            />
+            <>
+              <CyclingImage
+                images={images}
+                alt={product.name}
+                interval={2000}
+                containerClassName="absolute inset-0"
+                className="w-full h-full object-cover group-hover/image:scale-105"
+                hoverScaleClassName=""
+                loading="lazy"
+                onIndexChange={setCurrentImgIndex}
+              />
+              {onGalleryClick && (
+                <div className="absolute inset-0 bg-black/0 group-hover/image:bg-black/15 transition-all flex items-center justify-center pointer-events-none">
+                  <Maximize2 className="w-8 h-8 text-white opacity-0 group-hover/image:opacity-100 transition-opacity drop-shadow-md" />
+                </div>
+              )}
+            </>
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-2">
               <ImageIcon className="w-10 h-10 opacity-40" />
@@ -39,7 +58,7 @@ export const ProductCard = ({ product, onContactClick }) => {
           <div className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-full text-[10px] sm:text-xs font-semibold text-[#00A29A] border border-[#00A29A]/10 shadow-sm pointer-events-none z-10">
             {product.category}
           </div>
-        </div>
+        </button>
       </div>
 
       <div className="p-5 sm:p-6 flex flex-col flex-grow">
@@ -51,6 +70,7 @@ export const ProductCard = ({ product, onContactClick }) => {
         <p className="text-slate-600 text-sm mb-6 flex-grow line-clamp-3 leading-relaxed">{product.description}</p>
 
         <button
+          type="button"
           onClick={() => onContactClick(product)}
           className="w-full py-2.5 px-3 bg-[#00A29A] hover:bg-[#008f88] text-white text-xs sm:text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-[#00A29A]/20 hover:shadow-lg hover:shadow-[#00A29A]/40 mt-auto"
         >

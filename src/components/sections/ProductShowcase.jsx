@@ -4,7 +4,7 @@ import { ProductCard } from '../ui/ProductCard';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useLocalizedProducts } from '../../hooks/useLocalizedData';
 
-export const ProductShowcase = ({ onContactClick }) => {
+export const ProductShowcase = ({ onContactClick, onGalleryClick }) => {
   const { t } = useLanguage();
   const showcaseProducts = useLocalizedProducts();
 
@@ -27,7 +27,7 @@ export const ProductShowcase = ({ onContactClick }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {showcaseProducts.map((product, idx) => (
             <Reveal key={product.id} delay={idx * 100}>
-              <ProductCard product={product} onContactClick={onContactClick} />
+              <ProductCard product={product} onContactClick={onContactClick} onGalleryClick={onGalleryClick} />
             </Reveal>
           ))}
         </div>

@@ -13,7 +13,6 @@ export const OptimizedImage = ({
   if (!src) return null;
 
   const webp = toWebpSrc(src);
-  const usePicture = pictureClassName || className.includes('absolute');
 
   const img = (
     <img

@@ -193,9 +193,13 @@ export default {
   },
 
   gallery: {
+    open: '打开图库',
     close: '关闭图库',
     prev: '上一张',
     next: '下一张',
+    swipeHint: '左右滑动浏览图片',
+    keyboardHint: '可用方向键切换',
+    goTo: '跳转到第',
   },
 
   projects: {
