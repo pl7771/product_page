@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['"Akzidenz-Grotesk BQ"', '"Helvetica Neue"', 'Arial', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+      },
+      letterSpacing: {
+        brand: '0.02em',
+        label: '0.14em',
+        btn: '0.04em',
+      },
+    },
   },
   plugins: [],
 }

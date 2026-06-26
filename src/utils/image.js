@@ -1,5 +1,5 @@
 export function toWebpSrc(src) {
-  if (!src) return '';
+  if (!src || src.startsWith('data:')) return src || '';
   return src.replace(/\.(jpe?g|png)$/i, '.webp');
 }
 

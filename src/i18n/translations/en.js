@@ -2,14 +2,14 @@ import { productGalleryPaths } from '../../data/productImages';
 
 export default {
   meta: {
-    title: 'Hebei Shandao Environmental Technology',
+    title: 'Precision Micro-Mist Systems',
   },
 
   nav: {
     products: 'Product Gallery',
     technology: 'Projects',
-    enterprise: 'About',
-    contact: 'Contact',
+    industry: 'Industry Information',
+    contact: 'Contacts',
     back: 'Back',
     brandLine1: 'Hebei Shandao',
     brandLine2: 'Environmental Tech',
@@ -37,6 +37,50 @@ export default {
     title: 'Our Expertise',
     subtitle: 'Explore our solutions across key industries. Click a category to view projects.',
     viewProjects: 'View Projects',
+  },
+
+  industry: {
+    title: 'Industry Information',
+    subtitle: 'Latest trends, regulations, and insights in eco-friendly atomization and micro-mist engineering.',
+    readMore: 'Read more',
+    backToList: 'Back',
+    notFound: 'Article not found.',
+    contactCta: 'Need help applying this to your site? Talk to our engineering team.',
+    articles: [
+      {
+        id: 1,
+        date: '2026-03-15',
+        category: 'Regulation',
+        image: '/data/concrete-batching-plant/4.jpeg',
+        title: 'Stricter Dust Emission Standards for Industrial Sites',
+        excerpt:
+          'New environmental guidelines are pushing concrete batching plants and mining operations to adopt high-pressure mist suppression systems as a primary dust control measure.',
+        body:
+          'Regional environmental authorities are tightening particulate matter limits for open industrial yards, material transfer points, and aggregate handling areas. Facilities that previously relied on occasional water spraying are now expected to maintain continuous, measurable dust control.\n\nHigh-pressure micro-mist systems have become the preferred approach because they suppress respirable dust without over-wetting product or creating runoff. Typical installations combine zone-based nozzle layouts, pressure monitoring, and automated activation tied to production activity or air-quality sensors.\n\nFor plant operators, the practical takeaway is to plan mist infrastructure early in site layout — pump location, water quality, and electrical capacity all affect long-term performance. Retrofits are possible, but integrated design during expansion or renovation delivers better coverage and lower operating cost.',
+      },
+      {
+        id: 2,
+        date: '2026-02-08',
+        category: 'Technology',
+        image: '/data/eco-atomizer/3.jpeg',
+        title: 'Ultrasonic vs. High-Pressure Atomization: Choosing the Right System',
+        excerpt:
+          'A practical comparison of ultrasonic humidifiers and high-pressure micro-mist systems for greenhouse, workshop, and outdoor cooling applications.',
+        body:
+          'Ultrasonic humidifiers excel in enclosed spaces that require precise relative humidity — greenhouses, laboratories, mushroom cultivation, and clean production areas. They produce fine cold mist quietly and with relatively low energy use per unit of humidification.\n\nHigh-pressure micro-mist systems are better suited to larger volumes, outdoor or semi-open environments, dust suppression, and evaporative cooling where air exchange is high. They deliver smaller droplets at scale and can cover wide areas through engineered nozzle spacing and pump capacity.\n\nThe right choice depends on space size, target outcome (humidity vs. cooling vs. dust), water quality, and control requirements. In many industrial projects, both technologies appear in the same facility — ultrasonic units for process zones and high-pressure mist for yard or loading areas.',
+      },
+      {
+        id: 3,
+        date: '2026-01-20',
+        category: 'Market',
+        image: '/data/epidemic-prevention/2.webp',
+        title: 'Growing Demand for Smart Mist Control in Livestock Farming',
+        excerpt:
+          'Automated disinfection and cooling mist systems are becoming standard in modern poultry and livestock facilities across North China.',
+        body:
+          'Modern livestock facilities are investing in automated mist systems for three overlapping reasons: temperature stress reduction in summer, humidity management in dry seasons, and scheduled disinfection cycles in high-density housing.\n\nDemand is strongest where ventilation alone cannot stabilize microclimate conditions. Programmable controllers allow different mist schedules for day and night, integration with temperature sensors, and reduced labor compared with manual spraying.\n\nFarm operators typically evaluate total cost of ownership — water consumption, pump maintenance, and nozzle wear — rather than equipment price alone. Systems designed with accessible filtration and quick-change nozzles tend to see faster adoption because downtime directly affects animal welfare and production continuity.',
+      },
+    ],
   },
 
   products: {
@@ -157,12 +201,13 @@ export default {
     submit: 'Submit Request',
     sending: 'Sending...',
     sent: 'Message sent successfully!',
-    phones: ['+86 166 3110 8208'],
+    phones: ['+86 166 3110 8208', '+86 166 31108228'],
     whatsapp: '+86 166 3110 5554',
     emailAddress: 'hbsd@outlook.com',
   },
 
   footer: {
+    companyName: 'Hebei Shandao Environmental Technology Co., Ltd.',
     tagline:
       'Precision atomization systems for industrial dust suppression, environmental control, and micro-mist engineering projects.',
     contactTitle: 'Contact Us',

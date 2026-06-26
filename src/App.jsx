@@ -15,6 +15,8 @@ import ProjectsSection from './components/ProjectsSection';
 // Pages (Новые страницы)
 import { ProjectCategoryPage } from './pages/ProjectCategoryPage';
 import { SingleProjectPage } from './pages/SingleProjectPage';
+import { IndustryInformationPage } from './pages/IndustryInformationPage';
+import { IndustryArticlePage } from './pages/IndustryArticlePage';
 
 // Modals
 import { LightboxModal } from './components/modals/LightboxModal';
@@ -25,6 +27,11 @@ import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 
 import { PrivacyPolicy } from './pages/legal/PrivacyPolicy';
 import { TermsOfService } from './pages/legal/TermsOfService';
+
+import { AdminLoginPage } from './pages/admin/AdminLoginPage';
+import { AdminArticlesPage } from './pages/admin/AdminArticlesPage';
+import { AdminArticleEditPage } from './pages/admin/AdminArticleEditPage';
+import { RequireAdmin } from './components/admin/RequireAdmin';
 
 // Компонент Главной страницы
 const HomePage = ({ onContactClick, onGalleryClick }) => {
@@ -71,6 +78,25 @@ export default function App() {
         />
         <Route path="/projects/:categoryId" element={<ProjectCategoryPage />} />
         <Route path="/projects/:categoryId/:projectId" element={<SingleProjectPage />} />
+        <Route path="/industry-information" element={<IndustryInformationPage />} />
+        <Route path="/industry-information/:articleId" element={<IndustryArticlePage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route
+          path="/admin/articles"
+          element={
+            <RequireAdmin>
+              <AdminArticlesPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/articles/:id"
+          element={
+            <RequireAdmin>
+              <AdminArticleEditPage />
+            </RequireAdmin>
+          }
+        />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>

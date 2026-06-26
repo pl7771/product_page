@@ -8,6 +8,7 @@ import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { CyclingImage } from '../components/ui/CyclingImage';
+import { type } from '../styles/typography';
 
 // Умная ссылка на секцию контактов
 const ContactLink = ({ children, className }) => {
@@ -89,7 +90,7 @@ const ProjectItem = ({ project, index }) => {
             </div>
 
             {/* Счетчик */}
-            <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-slate-700 text-xs px-2.5 py-1 rounded-md font-medium">
+            <div className={`absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-slate-700 px-2.5 py-1 rounded-md ${type.label} normal-case tracking-[0.04em]`}>
               {currentImgIndex + 1} / {project.images.length}
             </div>
           </div>
@@ -99,23 +100,20 @@ const ProjectItem = ({ project, index }) => {
         <div className="lg:col-span-4 flex flex-col justify-between lg:pt-2">
           <div>
             {/* Тег категории */}
-            <div className="inline-block px-2.5 py-1 bg-[#00A29A]/10 text-[#00A29A] text-[10px] font-semibold uppercase tracking-wider rounded-md mb-4">
+            <div className={`inline-block px-2.5 py-1 bg-[#00A29A]/10 text-[#00A29A] ${type.labelBrand} normal-case tracking-[0.08em] rounded-md mb-4`}>
               {t('projectPage.caseStudy')}
             </div>
 
-            {/* Заголовок */}
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 leading-tight">
+            <h2 className={`${type.cardTitle} sm:text-2xl mb-3`}>
               {project.title}
             </h2>
 
-            {/* Описание */}
-            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+            <p className={`${type.bodySm} mb-6`}>
               {project.fullDescription}
             </p>
           </div>
 
-          {/* Кнопка */}
-          <ContactLink className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-[#00A29A] transition-colors group/link">
+          <ContactLink className={`inline-flex items-center gap-2 ${type.btn} text-slate-900 hover:text-[#00A29A] transition-colors group/link`}>
             {t('projectPage.getInTouch')}
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
           </ContactLink>
@@ -182,14 +180,14 @@ export const ProjectCategoryPage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-px bg-[#00A29A]"></span>
-            <span className="text-xs font-semibold text-[#00A29A] uppercase tracking-wider">
+            <span className={`${type.labelBrand} normal-case tracking-[0.08em]`}>
               {category.title.split(' ').slice(0, 2).join(' ')}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 max-w-3xl leading-tight">
+          <h1 className={`${type.pageTitle} mb-4 max-w-3xl`}>
             {category.title}
           </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
+          <p className={`${type.lead} max-w-2xl`}>
             {category.description}
           </p>
         </div>

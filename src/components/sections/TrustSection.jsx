@@ -1,6 +1,8 @@
 import { Reveal } from '../ui/Reveal';
+import { SectionHeading, SectionLead, sectionHeadingClassName } from '../ui/SectionHeading';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { OptimizedImage } from '../ui/OptimizedImage';
+import { type } from '../../styles/typography';
 
 export const TrustSection = () => {
   const { dict } = useLanguage();
@@ -12,10 +14,12 @@ export const TrustSection = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <Reveal>
-          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-            <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{trust.eyebrow}</h2>
-            {trust.title && <h3 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">{trust.title}</h3>}
-            <div className="text-slate-600 text-lg leading-relaxed space-y-4">
+          <div className="max-w-3xl mx-auto mb-16 sm:mb-20 text-left">
+            <SectionHeading centered>{trust.eyebrow}</SectionHeading>
+            {trust.title && (
+              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
+            )}
+            <div className={`${type.lead} space-y-4`}>
               {trust.description.split('\n\n').map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
@@ -25,11 +29,11 @@ export const TrustSection = () => {
 
         <Reveal>
           <div className="text-center mb-10">
-            <h2 className="text-sm font-semibold text-[#00A29A] tracking-widest uppercase mb-3">{trust.testimonialsEyebrow}</h2>
+            <SectionHeading centered>{trust.testimonialsEyebrow}</SectionHeading>
             {trust.testimonialsTitle && (
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">{trust.testimonialsTitle}</h3>
+              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-3 text-center`}>{trust.testimonialsTitle}</h3>
             )}
-            <p className="text-slate-600 text-lg max-w-2xl mx-auto">{trust.testimonialsSubtitle}</p>
+            <SectionLead centered className="max-w-2xl mx-auto">{trust.testimonialsSubtitle}</SectionLead>
           </div>
         </Reveal>
 
@@ -41,10 +45,10 @@ export const TrustSection = () => {
                   <OptimizedImage src={test.image} alt={test.role} loading="lazy" pictureClassName="block w-full h-full" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
-                  <p className="text-base text-slate-700 mb-6 leading-relaxed flex-grow">&ldquo;{test.quote}&rdquo;</p>
+                  <p className={`${type.body} text-slate-700 mb-6 flex-grow`}>&ldquo;{test.quote}&rdquo;</p>
                   <div className="pt-4 border-t border-slate-100">
-                    <p className="font-semibold text-slate-900">{test.author}</p>
-                    <p className="text-sm text-slate-500 mt-0.5">{test.role}</p>
+                    <p className={`${type.cardTitleSm} text-slate-900`}>{test.author}</p>
+                    <p className={`${type.bodySm} text-slate-500 mt-0.5`}>{test.role}</p>
                   </div>
                 </div>
               </div>

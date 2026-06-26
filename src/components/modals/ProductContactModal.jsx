@@ -32,9 +32,9 @@ export const ProductContactModal = ({ product, onClose }) => {
             </span>
           </a>
 
-          <div className="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 hover:border-[#00A29A] transition-all">
-            <div className="w-12 h-12 bg-[#00A29A]/10 rounded-full flex items-center justify-center">
-              <MessageCircle className="w-6 h-6 text-[#00A29A]" />
+          <div className="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 hover:border-[#07C160] hover:bg-[#07C160]/5 transition-all group">
+            <div className="w-12 h-12 bg-[#07C160]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+              <MessageCircle className="w-6 h-6 text-[#07C160]" />
             </div>
             <h4 className="text-slate-900 font-semibold text-center text-sm">{t('productModal.wechat')}</h4>
             <div className="bg-white p-2 rounded-lg w-24 h-24 border border-slate-200">
