@@ -32,11 +32,23 @@ import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminArticlesPage } from './pages/admin/AdminArticlesPage';
 import { AdminArticleEditPage } from './pages/admin/AdminArticleEditPage';
 import { RequireAdmin } from './components/admin/RequireAdmin';
+import { PageSEO } from './components/seo/PageSEO';
+import { buildOrganizationSchema } from './seo/organizationSchema';
+import { useLanguage } from './i18n/LanguageContext';
 
 // Компонент Главной страницы
 const HomePage = ({ onContactClick, onGalleryClick }) => {
+  const { t, dict, lang } = useLanguage();
+
   return (
     <>
+      <PageSEO
+        title={t('seo.home.title')}
+        description={t('seo.home.description')}
+        path="/"
+        keywords={t('meta.keywords')}
+        jsonLd={buildOrganizationSchema(lang, dict.contact)}
+      />
       <Navigation />
       <HeroSection />
       <ProjectsSection />
@@ -63,7 +75,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-[#00A29A]/30 selection:text-[#00A29A] overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-[#00A29A]/30 selection:text-[#00A29A] overflow-x-hidden">
       
       {/* Маршруты */}
       <Routes>

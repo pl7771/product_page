@@ -4,16 +4,16 @@ import { ArrowLeft, ImagePlus, Save, ScanEye, Upload, X } from 'lucide-react';
 import { AdminConfirmDialog } from '../../components/admin/AdminConfirmDialog';
 import { AdminArticlePreviewModal } from '../../components/admin/AdminArticlePreviewModal';
 import { AdminLanguageBar } from '../../components/admin/AdminLanguageBar';
+import { PageSEO } from '../../components/seo/PageSEO';
 import {
   ARTICLE_CATEGORIES,
   getArticleCategoryId,
   getCategoryLabel,
 } from '../../constants/articleCategories';
+import { createArticle, fetchArticle, updateArticle } from '../../api/articles';
 import {
   createEmptyArticle,
-  getCustomArticle,
   isArticleComplete,
-  upsertCustomArticle,
 } from '../../utils/industryArticles';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { type } from '../../styles/typography';
@@ -41,31 +41,58 @@ export const AdminArticleEditPage = () => {
   const { t } = useLanguage();
   const isNew = id === 'new';
 
-  const [article, setArticle] = useState(() => (isNew ? createEmptyArticle() : getCustomArticle(id)));
+  const [article, setArticle] = useState(() => (isNew ? createEmptyArticle() : null));
   const [activeLang, setActiveLang] = useState('en');
   const [publishError, setPublishError] = useState('');
   const [draftSavedOpen, setDraftSavedOpen] = useState(false);
   const [pendingEditId, setPendingEditId] = useState(null);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [missing, setMissing] = useState(false);
+  const [loading, setLoading] = useState(!isNew);
+  const [loadError, setLoadError] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedToServer, setSavedToServer] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (isNew) {
       setArticle(createEmptyArticle());
-      setMissing(false);
+      setLoading(false);
+      setLoadError(false);
       return;
     }
-    const found = getCustomArticle(id);
-    if (found) {
-      setArticle(found);
-      setMissing(false);
-    } else {
-      setMissing(true);
-    }
+
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(false);
+
+    fetchArticle(id)
+      .then((found) => {
+        if (!cancelled) setArticle(found);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setArticle(null);
+          setLoadError(true);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [id, isNew]);
 
-  if (!isNew && missing) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#00A29A] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isNew && (loadError || !article)) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <div className="px-4 sm:px-6 py-4">
@@ -135,22 +162,40 @@ export const AdminArticleEditPage = () => {
 
   const canPublish = isArticleComplete(article);
 
-  const save = (status) => {
+  const save = async (status) => {
     if (status === 'published' && !isArticleComplete(article)) {
       setPublishError(t('admin.edit.publishError'));
       return;
     }
+
     setPublishError('');
-    const next = upsertCustomArticle({ ...article, status });
-    if (status === 'published') {
-      navigate('/admin/articles');
-      return;
+    setSaving(true);
+
+    const payload = { ...article, status };
+
+    try {
+      const shouldCreate = isNew && !savedToServer;
+      const saved = shouldCreate
+        ? await createArticle(payload)
+        : await updateArticle(article.id, payload);
+
+      setSavedToServer(true);
+
+      if (status === 'published') {
+        navigate('/admin/articles');
+        return;
+      }
+
+      setArticle(saved);
+      if (isNew) {
+        setPendingEditId(saved.id);
+      }
+      setDraftSavedOpen(true);
+    } catch {
+      setPublishError(t('admin.errors.network'));
+    } finally {
+      setSaving(false);
     }
-    setArticle(next);
-    if (isNew) {
-      setPendingEditId(next.id);
-    }
-    setDraftSavedOpen(true);
   };
 
   const closeDraftSavedDialog = () => {
@@ -168,24 +213,26 @@ export const AdminArticleEditPage = () => {
         <button
           type="button"
           onClick={() => setPreviewOpen(true)}
-          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] ${type.btn}`}
+          disabled={saving}
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] disabled:opacity-60 ${type.btn}`}
         >
           <ScanEye className="w-4 h-4" /> {t('admin.actions.preview')}
         </button>
         <button
           type="button"
           onClick={() => save('draft')}
-          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-slate-300 ${type.btn}`}
+          disabled={saving}
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-slate-300 disabled:opacity-60 ${type.btn}`}
         >
           <Save className="w-4 h-4" /> {t('admin.actions.saveDraft')}
         </button>
         <button
           type="button"
           onClick={() => save('published')}
-          disabled={!canPublish}
+          disabled={!canPublish || saving}
           title={canPublish ? t('admin.edit.publishTitle') : t('admin.edit.publishDisabledTitle')}
           className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg ${type.btnStrong} ${
-            canPublish
+            canPublish && !saving
               ? 'bg-[#00A29A] hover:bg-[#008f88] text-white'
               : 'bg-slate-200 text-slate-400 cursor-not-allowed'
           }`}
@@ -198,6 +245,12 @@ export const AdminArticleEditPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <PageSEO
+        title={t('seo.admin.title')}
+        description={t('seo.admin.description')}
+        path={isNew ? '/admin/articles/new' : `/admin/articles/${id}`}
+        noindex
+      />
       <AdminConfirmDialog
         open={draftSavedOpen}
         alertOnly

@@ -23,3 +23,9 @@ export const getCategoryLabel = (categoryId, lang) => {
   if (!category) return '';
   return lang === 'zh' ? category.zh : category.en;
 };
+
+export const getCategoryIdFromLabel = (label) => {
+  if (!label) return null;
+  const match = ARTICLE_CATEGORIES.find((c) => c.en === label || c.zh === label);
+  return match?.id ?? null;
+};

@@ -1,47 +1,51 @@
-import { createContext, useContext, useMemo, useState } from 'react';
-
-const SESSION_KEY = 'admin-session';
-const SESSION_HOURS = 8;
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { ApiError, clearAuthSession, getAuthSession, setAuthSession } from '../api/client';
+import { loginAdmin, logoutAdmin, verifyAdminSession } from '../api/articles';
 
 const AdminAuthContext = createContext(null);
 
-const readSession = () => {
-  try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
-    if (!raw) return false;
-    const { expiresAt } = JSON.parse(raw);
-    if (Date.now() > expiresAt) {
-      sessionStorage.removeItem(SESSION_KEY);
-      return false;
-    }
-    return true;
-  } catch {
-    return false;
-  }
-};
-
 export const AdminAuthProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(readSession);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [checking, setChecking] = useState(true);
 
-  const login = (password) => {
-    const expected = import.meta.env.VITE_ADMIN_PASSWORD;
-    if (!expected) return { ok: false, errorKey: 'notConfigured' };
-    if (password !== expected) return { ok: false, errorKey: 'invalid' };
+  useEffect(() => {
+    const session = getAuthSession();
+    if (!session) {
+      setChecking(false);
+      return;
+    }
 
-    sessionStorage.setItem(
-      SESSION_KEY,
-      JSON.stringify({ expiresAt: Date.now() + SESSION_HOURS * 60 * 60 * 1000 }),
-    );
-    setAuthenticated(true);
-    return { ok: true };
+    verifyAdminSession()
+      .then(() => setAuthenticated(true))
+      .catch(() => clearAuthSession())
+      .finally(() => setChecking(false));
+  }, []);
+
+  const login = async (password) => {
+    try {
+      const session = await loginAdmin(password);
+      setAuthSession(session);
+      setAuthenticated(true);
+      return { ok: true };
+    } catch (error) {
+      if (error instanceof ApiError) {
+        if (error.code === 'not_configured') return { ok: false, errorKey: 'notConfigured' };
+        if (error.code === 'invalid') return { ok: false, errorKey: 'invalid' };
+      }
+      return { ok: false, errorKey: 'network' };
+    }
   };
 
   const logout = () => {
-    sessionStorage.removeItem(SESSION_KEY);
+    logoutAdmin();
+    clearAuthSession();
     setAuthenticated(false);
   };
 
-  const value = useMemo(() => ({ authenticated, login, logout }), [authenticated]);
+  const value = useMemo(
+    () => ({ authenticated, checking, login, logout }),
+    [authenticated, checking],
+  );
 
   return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
 };

@@ -2,7 +2,47 @@ import { productGalleryPaths } from '../../data/productImages';
 
 export default {
   meta: {
-    title: '河北善道环境科技有限公司',
+    title: '河北善道环境科技有限公司 | 精准微雾系统',
+    description:
+      '河北善道环境科技有限公司 — 专注精准微雾系统，提供工业除尘、加湿降温、雾化消毒及工程设计施工一站式解决方案。',
+    keywords:
+      '河北善道环境科技有限公司, 河北善道, 微雾系统, 除尘, 加湿, 雾化, 环保科技, 工业雾化, Hebei Shandao Environmental Technology, micro-mist',
+  },
+
+  seo: {
+    home: {
+      title: '河北善道环境科技有限公司 | 精准微雾系统',
+      description:
+        '河北善道环境科技有限公司 — 加湿、除尘、降温一站式微雾解决方案，集研发、设备供应、工程设计与施工于一体。',
+    },
+    industry: {
+      title: '行业资讯 | 河北善道环境科技有限公司',
+      description: '河北善道环境科技有限公司发布的环保雾化与微雾工程领域最新趋势、政策动态与行业洞察。',
+    },
+    article: {
+      title: '{title} | 河北善道环境科技有限公司',
+      description: '{excerpt}',
+    },
+    projectCategory: {
+      title: '{category} | 河北善道环境科技有限公司工程案例',
+      description: '{description}',
+    },
+    project: {
+      title: '{project} | {category} | 河北善道环境科技有限公司',
+      description: '{description}',
+    },
+    privacy: {
+      title: '隐私政策 | 河北善道环境科技有限公司',
+      description: '河北善道环境科技有限公司如何收集、使用和保护您的个人信息。',
+    },
+    terms: {
+      title: '服务条款 | 河北善道环境科技有限公司',
+      description: '使用河北善道环境科技有限公司网站与服务的条款与条件。',
+    },
+    admin: {
+      title: '管理后台 | 河北善道环境科技有限公司',
+      description: '内部管理区域。',
+    },
   },
 
   nav: {
@@ -11,7 +51,7 @@ export default {
     industry: '行业资讯',
     contact: '联系我们',
     back: '返回',
-    brandLine1: '河北闪道',
+    brandLine1: '河北善道',
     brandLine2: '环境科技',
   },
 
@@ -46,41 +86,12 @@ export default {
     backToList: '返回',
     notFound: '未找到该文章。',
     contactCta: '需要将以上内容应用到您的项目？欢迎联系我们的工程团队。',
-    articles: [
-      {
-        id: 1,
-        date: '2026-03-15',
-        category: '政策',
-        image: '/data/concrete-batching-plant/4.jpeg',
-        title: '工业场所扬尘排放标准进一步收紧',
-        excerpt:
-          '新环保政策推动混凝土搅拌站、矿山等企业将高压微雾抑尘系统作为主要的粉尘治理手段。',
-        body:
-          '各地环保部门正在收紧露天工业堆场、物料转运点及骨料装卸区域的颗粒物排放要求。以往依赖不定期洒水的做法，已难以满足连续、可量化抑尘的监管预期。\n\n高压微雾系统因能在不过度打湿物料、不产生明显径流的情况下抑制可吸入粉尘，成为搅拌站、矿山、港口等场景的主流选择。典型方案包括分区喷嘴布置、水压监测，以及与生产工况或空气质量传感器联动的自动启停。\n\n对业主而言，应尽早将雾效基础设施纳入厂区规划——泵房位置、水质处理与供电容量都会直接影响长期运行效果。后期改造可行，但在扩建或新建阶段同步设计，通常能获得更完整的覆盖和更低的运维成本。',
-      },
-      {
-        id: 2,
-        date: '2026-02-08',
-        category: '技术',
-        image: '/data/eco-atomizer/3.jpeg',
-        title: '超声波与高压雾化：如何选对系统',
-        excerpt:
-          '针对温室、车间及户外降温场景，对比超声波加湿机与高压微雾系统的适用性与运行成本。',
-        body:
-          '超声波加湿机适合需要精准控制相对湿度的封闭空间，如温室、实验室、食用菌培育及洁净生产区域。其冷雾细腻、运行安静，单位加湿量能耗相对较低。\n\n高压微雾系统更适合大空间、半开放或户外环境，以及扬尘治理与蒸发降温等工况。通过合理的喷嘴间距与泵组配置，可在较大范围内形成稳定雾幕。\n\n选型应综合考虑空间体积、目标效果（加湿、降温或除尘）、水质条件及自动化需求。许多工业项目中两种技术会并存：工艺区用超声波精准加湿，堆场或装卸区用高压微雾覆盖。',
-      },
-      {
-        id: 3,
-        date: '2026-01-20',
-        category: '市场',
-        image: '/data/epidemic-prevention/2.webp',
-        title: '畜牧养殖智能化雾控需求持续增长',
-        excerpt:
-          '自动化消毒与降温微雾系统正在成为华北地区现代化畜禽养殖场的标配设施。',
-        body:
-          '现代化畜禽养殖场越来越多地投资自动化雾控系统，主要出于三方面考虑：夏季热应激缓解、干燥季节湿度调节，以及高密度圈舍的定时消毒。\n\n在单纯通风无法稳定微气候的场景，可编程控制器可按昼夜设定不同喷雾策略，并与温湿度传感器联动，相比人工喷洒更省人力、更稳定。\n\n养殖企业评估方案时，往往更关注全生命周期成本——耗水量、泵组维护与喷嘴损耗——而非仅看设备采购价。过滤与喷嘴更换便捷、停机维护时间短的系统，更容易在实际生产中持续使用。',
-      },
-    ],
+    filter: {
+      searchPlaceholder: '搜索文章…',
+      allCategories: '全部',
+      noResults: '没有符合条件的文章。',
+    },
+    articles: [],
   },
 
   products: {
@@ -201,7 +212,7 @@ export default {
     sent: '消息发送成功！',
     phones: ['+86 166 3110 8208', '+86 166 31108228'],
     whatsapp: '+8616631105554',
-    emailAddress: 'hbsd@outlook.com',
+    emailAddress: 'hsshandao@outlook.com',
   },
 
   footer: {
@@ -332,21 +343,42 @@ export default {
       showPassword: '显示密码',
       hidePassword: '隐藏密码',
       signIn: '登录',
+      signingIn: '登录中…',
     },
     errors: {
-      notConfigured: '未配置管理密码（VITE_ADMIN_PASSWORD）。',
+      notConfigured: '服务器未配置管理密码（ADMIN_PASSWORD）。',
       invalid: '密码错误。',
+      network: '无法连接服务器，请确认 API 已启动。',
     },
     articles: {
       title: '文章管理',
-      subtitle: '自定义行业资讯（保存在当前浏览器）',
+      subtitle: '自定义行业资讯（保存在服务器）',
       newArticle: '新建文章',
       logout: '退出登录',
-      empty: '暂无自定义文章。网站内置文章仍会在公开页面显示。',
+      empty: '暂无文章。',
       footerBefore: '已发布且可见的文章会显示在',
       footerAfter: '。隐藏和归档的文章不会在公开页面显示。',
       untitled: '无标题',
       thisArticle: '此文章',
+      noFilterResults: '没有符合筛选条件的文章。',
+      filters: {
+        title: '搜索与筛选',
+        searchPlaceholder: '按标题、正文或分类搜索…',
+        category: '分类',
+        status: '状态',
+        dateFrom: '起始日期',
+        dateTo: '结束日期',
+        sortBy: '排序',
+        allCategories: '全部分类',
+        allStatuses: '全部状态',
+        sortDateDesc: '日期（新→旧）',
+        sortDateAsc: '日期（旧→新）',
+        sortCategoryAsc: '分类（A–Z）',
+        sortCategoryDesc: '分类（Z–A）',
+        sortStatusAsc: '状态（草稿→归档）',
+        sortStatusDesc: '状态（归档→草稿）',
+        reset: '重置筛选',
+      },
     },
     status: {
       archived: '已归档',
@@ -365,9 +397,11 @@ export default {
       back: '返回',
       saveDraft: '保存草稿',
       publish: '发布',
+      unpublish: '取消发布',
       close: '关闭',
       ok: '确定',
       cancel: '取消',
+      retry: '重试',
       addFromDevice: '从设备添加',
       removeImage: '移除图片',
     },
@@ -383,6 +417,10 @@ export default {
       deletePermanently: '永久删除',
       draftSavedTitle: '已保存为草稿',
       draftSavedMessage: '文章已保存为草稿。您可以继续编辑或返回文章列表。',
+      incompletePublishTitle: '无法发布',
+      incompletePublishMessage: '并非所有字段都已填写。发布前请填写中英文的所有必填字段。',
+      publishedDeleteTitle: '文章已发布',
+      publishedDeleteMessage: '该文章当前已发布。若要从公开网站移除，请先点击「取消发布」。',
     },
     edit: {
       notFound: '未找到该文章。',

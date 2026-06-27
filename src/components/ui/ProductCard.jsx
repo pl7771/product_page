@@ -16,7 +16,7 @@ export const ProductCard = ({ product, onContactClick, onGalleryClick }) => {
   };
 
   return (
-    <div className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-[#00A29A]/50 hover:shadow-2xl hover:shadow-[#00A29A]/15 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+    <div className="group bg-white border border-slate-200/80 rounded-2xl overflow-hidden hover:border-[#00A29A]/40 hover:shadow-[var(--shadow-brand)] hover:-translate-y-1.5 transition-all duration-300 h-full flex flex-col">
       <div className="p-4 pb-0">
         <button
           type="button"

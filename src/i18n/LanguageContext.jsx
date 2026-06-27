@@ -20,7 +20,6 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    document.title = dictionaries[lang].meta.title;
   }, [lang]);
 
   const value = useMemo(() => {

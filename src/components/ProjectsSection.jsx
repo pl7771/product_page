@@ -10,14 +10,14 @@ const ProjectsSection = () => {
   const projectCategories = useLocalizedProjects();
 
   return (
-    <section id="projects-section" className="relative py-16 sm:py-24 overflow-hidden bg-slate-50">
+    <section id="projects-section" className="relative py-12 sm:py-16 overflow-hidden bg-slate-50 section-mesh">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[#00A29A]/10 rounded-full blur-[100px]"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="text-center mb-10 max-w-3xl mx-auto">
+        <div className="text-center mb-8 max-w-3xl mx-auto">
           <SectionHeading centered className="mb-4">
             {t('projectsSection.title')}
           </SectionHeading>
@@ -29,7 +29,7 @@ const ProjectsSection = () => {
             <Link
               key={cat.id}
               to={`/projects/${cat.id}`}
-              className="group relative h-[280px] sm:h-[340px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-[#00A29A]/20 transition-all duration-500 hover:-translate-y-1 border border-slate-200 bg-white block"
+              className="group relative h-[280px] sm:h-[340px] rounded-2xl overflow-hidden shadow-[var(--shadow-soft)] hover:shadow-2xl hover:shadow-[#00A29A]/20 transition-all duration-500 hover:-translate-y-1.5 border border-slate-200/80 bg-white block"
             >
               <OptimizedImage
                 src={cat.cover}

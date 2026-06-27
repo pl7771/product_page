@@ -6,12 +6,15 @@ import { Footer } from '../components/layout/Footer';
 import { IndustryArticleContent } from '../components/industry/IndustryArticleContent';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useIndustryArticles } from '../hooks/useIndustryArticles';
+import { PageSEO } from '../components/seo/PageSEO';
+import { buildArticleSchema } from '../seo/organizationSchema';
+import { formatSeoText } from '../seo/siteConfig';
 import { type } from '../styles/typography';
 
 export const IndustryArticlePage = () => {
   const { articleId } = useParams();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { getArticle } = useIndustryArticles();
 
   const article = getArticle(articleId);
@@ -34,6 +37,12 @@ export const IndustryArticlePage = () => {
   if (!article) {
     return (
       <div className="min-h-screen bg-white flex flex-col">
+        <PageSEO
+          title={t('seo.industry.title')}
+          description={t('seo.industry.description')}
+          path={`/industry-information/${articleId}`}
+          noindex
+        />
         <Navigation leftSlot={backButton} />
         <main className="flex-grow pt-32 pb-20 px-4 text-center">
           <p className={type.lead}>{t('industry.notFound')}</p>
@@ -45,6 +54,14 @@ export const IndustryArticlePage = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <PageSEO
+        title={formatSeoText(t('seo.article.title'), { title: article.title })}
+        description={formatSeoText(t('seo.article.description'), { excerpt: article.excerpt })}
+        path={`/industry-information/${article.id}`}
+        image={article.image || undefined}
+        type="article"
+        jsonLd={buildArticleSchema(article, lang)}
+      />
       <Navigation leftSlot={backButton} />
 
       <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-12">

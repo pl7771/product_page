@@ -21,7 +21,8 @@ export const ProductContactModal = ({ product, onClose }) => {
           <p className="text-slate-500 text-sm">{t('productModal.subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div className={`grid gap-4 mb-6 ${lang === 'en' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 max-w-xs mx-auto'}`}>
+          {lang === 'en' && (
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group">
             <div className="w-12 h-12 bg-[#25D366]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
               <Phone className="w-6 h-6 text-[#25D366]" />
@@ -31,6 +32,7 @@ export const ProductContactModal = ({ product, onClose }) => {
               <MessageCircle className="w-3.5 h-3.5" /> {t('productModal.chatNow')}
             </span>
           </a>
+          )}
 
           <div className="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 hover:border-[#07C160] hover:bg-[#07C160]/5 transition-all group">
             <div className="w-12 h-12 bg-[#07C160]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -43,17 +45,15 @@ export const ProductContactModal = ({ product, onClose }) => {
           </div>
         </div>
 
-        {lang === 'en' && (
-          <div className="text-center pt-4 border-t border-slate-100">
-            <p className="text-slate-500 text-xs mb-2">{t('productModal.orEmail')}</p>
-            <a
-              href={`mailto:${dict.contact.emailAddress}?subject=${encodeURIComponent(`${product.name}`)}`}
-              className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-slate-900 hover:bg-[#00A29A] text-white font-medium rounded-xl transition-all text-sm"
-            >
-              {dict.contact.emailAddress}
-            </a>
-          </div>
-        )}
+        <div className="text-center pt-4 border-t border-slate-100">
+          <p className="text-slate-500 text-xs mb-2">{t('productModal.orEmail')}</p>
+          <a
+            href={`mailto:${dict.contact.emailAddress}?subject=${encodeURIComponent(`${product.name}`)}`}
+            className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-slate-900 hover:bg-[#00A29A] text-white font-medium rounded-xl transition-all text-sm"
+          >
+            {dict.contact.emailAddress}
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -1,23 +1,45 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { fetchPublicArticles } from '../api/articles';
 import { mergePublishedArticles, findArticleById } from '../utils/industryArticles';
 
 export const useIndustryArticles = () => {
-  const { dict, lang } = useLanguage();
-  const [version, setVersion] = useState(0);
+  const { lang } = useLanguage();
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const refresh = () => setVersion((v) => v + 1);
-    window.addEventListener('industry-articles-updated', refresh);
-    return () => window.removeEventListener('industry-articles-updated', refresh);
+    let cancelled = false;
+
+    fetchPublicArticles()
+      .then((data) => {
+        if (!cancelled) {
+          setArticles(data);
+          setError(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setArticles([]);
+          setError(true);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const articles = useMemo(
-    () => mergePublishedArticles(dict.industry.articles, lang),
-    [dict.industry.articles, lang, version],
+  const publishedArticles = useMemo(
+    () => mergePublishedArticles(articles, lang),
+    [articles, lang],
   );
 
-  const getArticle = (id) => findArticleById(id, dict.industry.articles, lang);
+  const getArticle = (id) => findArticleById(id, articles, lang);
 
-  return { articles, getArticle };
+  return { articles: publishedArticles, getArticle, loading, error };
 };

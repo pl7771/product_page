@@ -1,0 +1,2 @@
+# Use on Alibaba Cloud ECS if npmjs.org is slow (copy to .npmrc before npm install)
+registry=https://registry.npmmirror.com

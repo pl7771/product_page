@@ -1,6 +1,7 @@
 // src/pages/legal/TermsOfService.jsx
 import { LegalLayout } from './LegalLayout';
-
+import { PageSEO } from '../../components/seo/PageSEO';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const sections = [
   { id: 'agreement', title: 'Agreement to Terms' },
@@ -12,7 +13,15 @@ const sections = [
 ];
 
 export const TermsOfService = () => {
+  const { t } = useLanguage();
+
   return (
+    <>
+      <PageSEO
+        title={t('seo.terms.title')}
+        description={t('seo.terms.description')}
+        path="/terms-of-service"
+      />
     <LegalLayout 
       title="Terms of Service" 
       subtitle="Last updated: June 2026. Please read these terms carefully before using our services."
@@ -76,5 +85,6 @@ export const TermsOfService = () => {
         </p>
       </section>
     </LegalLayout>
+    </>
   );
 };

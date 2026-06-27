@@ -6,6 +6,8 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
+import { PageSEO } from '../components/seo/PageSEO';
+import { formatSeoText } from '../seo/siteConfig';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { preloadImage } from '../utils/image';
 
@@ -37,6 +39,18 @@ export const SingleProjectPage = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <PageSEO
+        title={formatSeoText(t('seo.project.title'), {
+          project: project.title,
+          category: category?.title || '',
+        })}
+        description={formatSeoText(t('seo.project.description'), {
+          description: project.fullDescription || project.shortDesc || '',
+        })}
+        path={`/projects/${categoryId}/${projectId}`}
+        image={project.cover || project.images?.[0]}
+        keywords={t('meta.keywords')}
+      />
       <Navigation />
 
       <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 pt-32 w-full">

@@ -7,6 +7,8 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
+import { PageSEO } from '../components/seo/PageSEO';
+import { formatSeoText } from '../seo/siteConfig';
 import { CyclingImage } from '../components/ui/CyclingImage';
 import { type } from '../styles/typography';
 
@@ -163,6 +165,13 @@ export const ProjectCategoryPage = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <PageSEO
+        title={formatSeoText(t('seo.projectCategory.title'), { category: category.title })}
+        description={formatSeoText(t('seo.projectCategory.description'), { description: category.description })}
+        path={`/projects/${categoryId}`}
+        image={category.cover}
+        keywords={t('meta.keywords')}
+      />
       <Navigation leftSlot={backButton} />
       
       {/* ✅ HEADER СТРАНИЦЫ */}

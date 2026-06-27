@@ -1,69 +1,85 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Akzidenz-Grotesk BQ';
-  src: url('/fonts/akzidenz-grotesk-bq-light-extended.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-stretch: expanded;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Akzidenz-Grotesk BQ';
-  src: url('/fonts/akzidenz-grotesk-bq-regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Akzidenz-Grotesk BQ';
-  src: url('/fonts/akzidenz-grotesk-bq-bold-extended.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-stretch: expanded;
-  font-display: swap;
-}
-
 @theme {
-  --font-sans: 'Akzidenz-Grotesk BQ', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  --color-brand: #00a29a;
+  --color-brand-dark: #008f88;
+  --shadow-soft: 0 4px 24px -4px rgb(15 23 42 / 0.08);
+  --shadow-brand: 0 12px 40px -8px rgb(0 162 154 / 0.28);
 }
 
 @layer base {
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
   }
 
   body {
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 1rem;
-    line-height: 1.625;
+    line-height: 1.65;
     letter-spacing: 0.01em;
     color: #334155;
+    background-color: #f8fafc;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
-    letter-spacing: 0.01em;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    text-wrap: balance;
   }
 
   p {
-    line-height: 1.625;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: rgb(0 162 154 / 0.22);
+    color: #0f766e;
   }
 }
 
-/* Плавный скролл для всей страницы */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Чтобы фиксированный хедер не перекрывал контент при переходе по якорям */
 :target {
   scroll-margin-top: 100px;
+}
+
+@layer utilities {
+  .surface-card {
+    background: #fff;
+    border: 1px solid rgb(226 232 240 / 0.9);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .surface-glass {
+    background: rgb(255 255 255 / 0.72);
+    backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgb(255 255 255 / 0.6);
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #00a29a 0%, #00c4b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .section-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgb(0 162 154 / 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgb(59 130 246 / 0.04), transparent);
+  }
 }
 
 .custom-scrollbar::-webkit-scrollbar {

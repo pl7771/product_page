@@ -1,5 +1,7 @@
 // src/pages/legal/PrivacyPolicy.jsx
 import { LegalLayout } from './LegalLayout';
+import { PageSEO } from '../../components/seo/PageSEO';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const sections = [
   { id: 'intro', title: 'Introduction' },
@@ -11,7 +13,15 @@ const sections = [
 ];
 
 export const PrivacyPolicy = () => {
+  const { t } = useLanguage();
+
   return (
+    <>
+      <PageSEO
+        title={t('seo.privacy.title')}
+        description={t('seo.privacy.description')}
+        path="/privacy-policy"
+      />
     <LegalLayout 
       title="Privacy Policy" 
       subtitle="Last updated: June 2026. We value your trust and are committed to protecting your personal information."
@@ -72,9 +82,10 @@ export const PrivacyPolicy = () => {
           If you have questions or comments about this Privacy Policy, please contact us at:
         </p>
         <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200 inline-block">
-          <p className="font-mono text-sm text-slate-700">Email: lyn16631105554@outlook.com</p>
+          <p className="font-mono text-sm text-slate-700">Email: hsshandao@outlook.com</p>
         </div>
       </section>
     </LegalLayout>
+    </>
   );
 };

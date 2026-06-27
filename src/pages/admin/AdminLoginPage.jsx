@@ -4,34 +4,51 @@ import { Lock, Eye, EyeOff } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { AdminLanguageBar } from '../../components/admin/AdminLanguageBar';
+import { PageSEO } from '../../components/seo/PageSEO';
 import { type } from '../../styles/typography';
 
 export const AdminLoginPage = () => {
-  const { authenticated, login } = useAdminAuth();
+  const { authenticated, checking, login } = useAdminAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  if (checking) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#00A29A] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (authenticated) {
     return <Navigate to="/admin/articles" replace />;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = login(password);
+    setSubmitting(true);
+    setError('');
+
+    const result = await login(password);
+    setSubmitting(false);
+
     if (!result.ok) {
       setError(t(`admin.errors.${result.errorKey}`));
       return;
     }
+
     const redirectTo = location.state?.from || '/admin/articles';
     navigate(redirectTo, { replace: true });
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 relative">
+      <PageSEO title={t('seo.admin.title')} description={t('seo.admin.description')} path="/admin/login" noindex />
       <AdminLanguageBar className="absolute top-4 right-4 sm:top-6 sm:right-6" />
 
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-lg p-8">
@@ -59,6 +76,7 @@ export const AdminLoginPage = () => {
                 className="w-full border border-slate-200 rounded-lg px-4 py-3 pr-11 text-sm focus:outline-none focus:border-[#00A29A] focus:ring-1 focus:ring-[#00A29A]"
                 autoComplete="current-password"
                 required
+                disabled={submitting}
               />
               <button
                 type="button"
@@ -75,9 +93,10 @@ export const AdminLoginPage = () => {
 
           <button
             type="submit"
-            className={`w-full py-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-lg ${type.btnStrong}`}
+            disabled={submitting}
+            className={`w-full py-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-lg disabled:opacity-60 ${type.btnStrong}`}
           >
-            {t('admin.login.signIn')}
+            {submitting ? t('admin.login.signingIn') : t('admin.login.signIn')}
           </button>
         </form>
       </div>
