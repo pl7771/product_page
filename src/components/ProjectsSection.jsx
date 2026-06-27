@@ -4,7 +4,6 @@ import { SectionHeading, SectionLead } from './ui/SectionHeading';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { type } from '../styles/typography';
 
 const ProjectsSection = () => {
   const { t } = useLanguage();
@@ -42,11 +41,15 @@ const ProjectsSection = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 flex flex-col justify-end h-full text-white transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
                 <div>
-                  <h3 className={`${type.cardTitle} text-xl sm:text-2xl text-white mb-2 drop-shadow-md`}>{cat.title}</h3>
-                  <p className={`${type.bodySm} text-slate-300 line-clamp-2 mb-3 drop-shadow-sm opacity-90 group-hover:opacity-100 transition-opacity`}>{cat.description}</p>
-                  <div className={`flex items-center gap-1.5 text-[#00A29A] ${type.label} normal-case tracking-[0.04em] mt-auto pt-2 border-t border-white/20 group-hover:border-[#00A29A]/50 transition-colors`}>
+                  <h3 className="font-sans text-xl sm:text-2xl font-normal tracking-[0.01em] leading-snug !text-white mb-2 drop-shadow-md">
+                    {cat.title}
+                  </h3>
+                  <p className="font-sans text-sm leading-relaxed !text-white/90 line-clamp-2 mb-3 drop-shadow-sm">
+                    {cat.description}
+                  </p>
+                  <div className="flex items-center gap-2 !text-[#00A29A] font-sans text-sm sm:text-base font-bold tracking-[0.04em] mt-auto pt-2 border-t border-white/20 group-hover:border-[#00A29A]/50 transition-colors">
                     {t('projectsSection.viewProjects')}
-                    <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                    <ArrowRight className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#00A29A] transform group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
                 </div>
               </div>

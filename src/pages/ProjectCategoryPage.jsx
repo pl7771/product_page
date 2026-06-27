@@ -49,7 +49,7 @@ const ContactLink = ({ children, className }) => {
 };
 
 // ✅ СОВРЕМЕННЫЙ МИНИМАЛИСТИЧНЫЙ ProjectItem
-const ProjectItem = ({ project, index }) => {
+const ProjectItem = ({ project }) => {
   const { t } = useLanguage();
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -57,15 +57,6 @@ const ProjectItem = ({ project, index }) => {
   return (
     <article className="group border-b border-slate-200 last:border-b-0 py-8 sm:py-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-        
-        {/* ✅ НОМЕР ПРОЕКТА + ТЕГ */}
-        <div className="lg:col-span-1 flex lg:flex-col items-center lg:items-start gap-3 lg:gap-4">
-          <span className="text-xs font-mono text-slate-400">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-        </div>
-
-        {/* ✅ КАРТИНКА (7 колонок из 12) */}
         <div className="lg:col-span-7">
           <div 
             className="relative aspect-[16/10] bg-slate-100 rounded-lg overflow-hidden cursor-pointer"
@@ -96,8 +87,7 @@ const ProjectItem = ({ project, index }) => {
           </div>
         </div>
 
-        {/* ✅ ТЕКСТ (4 колонки из 12) */}
-        <div className="lg:col-span-4 flex flex-col justify-between lg:pt-2">
+        <div className="lg:col-span-5 flex flex-col justify-between lg:pt-2">
           <div>
             {/* Тег категории */}
             <div className={`inline-block px-2.5 py-1 bg-[#00A29A]/10 text-[#00A29A] ${type.labelBrand} normal-case tracking-[0.08em] rounded-md mb-4`}>
@@ -197,11 +187,10 @@ export const ProjectCategoryPage = () => {
       <main className="flex-grow px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
           {category.projects.length > 0 ? (
-            category.projects.map((project, index) => (
+            category.projects.map((project) => (
               <ProjectItem 
                 key={project.id} 
                 project={project} 
-                index={index} 
               />
             ))
           ) : (

@@ -8,6 +8,7 @@ export const AdminConfirmDialog = ({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   variant = 'default',
+  alertOnly = false,
   onConfirm,
   onCancel,
 }) => {
@@ -46,14 +47,16 @@ export const AdminConfirmDialog = ({
         </h2>
         <p className={`${type.body} text-slate-600 mb-6`}>{message}</p>
 
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
-          <button
-            type="button"
-            onClick={onCancel}
-            className={`px-4 py-2.5 border border-slate-200 rounded-lg hover:border-slate-300 ${type.btn}`}
-          >
-            {cancelLabel}
-          </button>
+        <div className={`flex ${alertOnly ? 'justify-end' : 'flex-col-reverse sm:flex-row sm:justify-end'} gap-2`}>
+          {!alertOnly && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className={`px-4 py-2.5 border border-slate-200 rounded-lg hover:border-slate-300 ${type.btn}`}
+            >
+              {cancelLabel}
+            </button>
+          )}
           <button
             type="button"
             onClick={onConfirm}

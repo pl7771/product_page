@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { useLanguage } from '../../i18n/LanguageContext';
+import { AdminLanguageBar } from '../../components/admin/AdminLanguageBar';
 import { type } from '../../styles/typography';
 
 export const AdminLoginPage = () => {
   const { authenticated, login } = useAdminAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [password, setPassword] = useState('');
@@ -20,7 +23,7 @@ export const AdminLoginPage = () => {
     e.preventDefault();
     const result = login(password);
     if (!result.ok) {
-      setError(result.error);
+      setError(t(`admin.errors.${result.errorKey}`));
       return;
     }
     const redirectTo = location.state?.from || '/admin/articles';
@@ -28,22 +31,24 @@ export const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 relative">
+      <AdminLanguageBar className="absolute top-4 right-4 sm:top-6 sm:right-6" />
+
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-lg p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full bg-[#00A29A]/10 flex items-center justify-center">
             <Lock className="w-5 h-5 text-[#00A29A]" />
           </div>
           <div>
-            <h1 className={type.cardTitle}>Admin</h1>
-            <p className={type.bodySm}>Industry articles</p>
+            <h1 className={type.cardTitle}>{t('admin.login.title')}</h1>
+            <p className={type.bodySm}>{t('admin.login.subtitle')}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="admin-password" className={`block ${type.label} normal-case tracking-normal text-slate-700 mb-2`}>
-              Password
+              {t('admin.login.password')}
             </label>
             <div className="relative">
               <input
@@ -59,7 +64,7 @@ export const AdminLoginPage = () => {
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? t('admin.login.hidePassword') : t('admin.login.showPassword')}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -72,7 +77,7 @@ export const AdminLoginPage = () => {
             type="submit"
             className={`w-full py-3 bg-[#00A29A] hover:bg-[#008f88] text-white rounded-lg ${type.btnStrong}`}
           >
-            Sign in
+            {t('admin.login.signIn')}
           </button>
         </form>
       </div>

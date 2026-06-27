@@ -5,7 +5,6 @@ import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { LogoIcon } from '../ui/LogoIcon';
 import { LogoChip } from '../ui/LogoChip';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { type } from '../../styles/typography';
 
 const SCROLL_THRESHOLD = 80;
 const SCROLL_DELTA = 8;
@@ -59,6 +58,7 @@ export const Navigation = ({ leftSlot }) => {
   const anchorScrollEndTimerRef = useRef(null);
   const anchorScrollMaxTimerRef = useRef(null);
   const { t } = useLanguage();
+  const location = useLocation();
 
   const endAnchorNavigation = useCallback(() => {
     anchorNavigatingRef.current = false;
@@ -148,10 +148,24 @@ export const Navigation = ({ leftSlot }) => {
     { href: '/#contact', label: t('nav.contact') },
   ];
 
-  const navLinkClassName = `${type.nav} hover:text-[#00A29A] transition-colors whitespace-nowrap`;
+  const navLinkClassName =
+    'relative font-sans text-[13px] sm:text-sm font-normal tracking-[0.05em] text-slate-600 whitespace-nowrap rounded-full px-2.5 py-1.5 transition-all duration-200 hover:text-[#00A29A] hover:bg-[#00A29A]/[0.07]';
+
+  const isLinkActive = (link) => {
+    if (link.to) return location.pathname.startsWith(link.to);
+    if (link.href === '/#contact') return location.pathname === '/' && location.hash === '#contact';
+    if (link.href === '/#products') return location.pathname === '/' && location.hash === '#products';
+    if (link.href === '/#projects-section') return location.pathname === '/' && location.hash === '#projects-section';
+    return false;
+  };
+
+  const activeNavClass = 'text-[#00A29A] bg-[#00A29A]/10';
 
   const renderLink = (link, mobile = false) => {
-    const mobileClass = mobile ? `${navLinkClassName} py-2 border-b border-slate-50 last:border-0` : navLinkClassName;
+    const active = isLinkActive(link);
+    const mobileClass = mobile
+      ? `${navLinkClassName} w-full text-left py-2.5 px-3 ${active ? activeNavClass : ''}`
+      : `${navLinkClassName} ${active ? activeNavClass : ''}`;
 
     if (link.to) {
       return (
@@ -199,8 +213,16 @@ export const Navigation = ({ leftSlot }) => {
             </LogoChip>
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
-            {links.map((link) => renderLink(link))}
+          <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
+            {links.map((link, index) => (
+              <div key={link.to || link.href} className="flex items-center">
+                {renderLink(link)}
+                {index < links.length - 1 && (
+                  <span className="mx-0.5 lg:mx-1 w-px h-3.5 bg-slate-200/90" aria-hidden="true" />
+                )}
+              </div>
+            ))}
+            <span className="mx-1.5 lg:mx-2 w-px h-4 bg-slate-200" aria-hidden="true" />
             <LanguageSwitcher />
           </div>
 
@@ -216,7 +238,7 @@ export const Navigation = ({ leftSlot }) => {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden relative border-t border-slate-200/80 py-4 px-6 flex flex-col gap-4">
+          <div className="md:hidden relative border-t border-slate-200/80 py-3 px-4 sm:px-6 flex flex-col gap-1">
             {links.map((link) => renderLink(link, true))}
           </div>
         )}

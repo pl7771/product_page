@@ -13,7 +13,7 @@ export const LanguageSwitcher = ({ className = '' }) => {
       <button
         type="button"
         onClick={() => setLang('zh')}
-        className={`px-3 py-1.5 ${type.btnStrong} rounded-md transition-all ${
+        className={`px-2.5 py-1 ${type.btnStrong} rounded-md transition-all text-xs sm:text-sm ${
           lang === 'zh'
             ? 'bg-[#00A29A] text-white shadow-sm'
             : 'text-slate-600 hover:text-[#00A29A] hover:bg-slate-50'
@@ -24,7 +24,7 @@ export const LanguageSwitcher = ({ className = '' }) => {
       <button
         type="button"
         onClick={() => setLang('en')}
-        className={`px-3 py-1.5 ${type.btnStrong} rounded-md transition-all ${
+        className={`px-2.5 py-1 ${type.btnStrong} rounded-md transition-all text-xs sm:text-sm ${
           lang === 'en'
             ? 'bg-[#00A29A] text-white shadow-sm'
             : 'text-slate-600 hover:text-[#00A29A] hover:bg-slate-50'

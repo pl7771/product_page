@@ -14,20 +14,6 @@ export const TrustSection = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <Reveal>
-          <div className="max-w-3xl mx-auto mb-16 sm:mb-20 text-left">
-            <SectionHeading centered>{trust.eyebrow}</SectionHeading>
-            {trust.title && (
-              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
-            )}
-            <div className={`${type.lead} space-y-4`}>
-              {trust.description.split('\n\n').map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal>
           <div className="text-center mb-10">
             <SectionHeading centered>{trust.testimonialsEyebrow}</SectionHeading>
             {trust.testimonialsTitle && (
@@ -37,7 +23,7 @@ export const TrustSection = () => {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
           {trust.testimonials.map((test, idx) => (
             <Reveal key={test.role} delay={idx * 120}>
               <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md hover:border-[#00A29A]/20 transition-all flex flex-col h-full">
@@ -55,6 +41,20 @@ export const TrustSection = () => {
             </Reveal>
           ))}
         </div>
+
+        <Reveal>
+          <div className="max-w-3xl mx-auto text-left">
+            <SectionHeading centered>{trust.eyebrow}</SectionHeading>
+            {trust.title && (
+              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
+            )}
+            <div className={`${type.lead} space-y-4`}>
+              {trust.description.split('\n\n').map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

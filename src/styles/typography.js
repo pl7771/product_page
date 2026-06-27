@@ -16,7 +16,7 @@ export const type = {
   label: 'font-sans text-xs uppercase tracking-[0.14em] text-slate-500 font-normal',
   labelBrand: 'font-sans text-xs uppercase tracking-[0.14em] text-[#00A29A] font-normal',
   stat: 'font-sans text-3xl font-bold font-stretch-expanded tracking-[0.02em] text-[#00A29A]',
-  nav: 'font-sans text-base font-normal tracking-[0.01em] text-slate-600',
+  nav: 'font-sans text-[13px] sm:text-sm font-normal tracking-[0.05em] text-slate-600',
   btn: 'font-sans text-sm font-normal tracking-[0.04em]',
   btnStrong: 'font-sans text-sm font-bold font-stretch-expanded tracking-[0.04em]',
 };

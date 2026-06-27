@@ -25,9 +25,15 @@ export const LanguageProvider = ({ children }) => {
 
   const value = useMemo(() => {
     const dict = dictionaries[lang] || dictionaries.zh;
-    const t = (key, fallback) => {
-      const val = key.split('.').reduce((acc, part) => acc?.[part], dict);
-      return val ?? fallback ?? key;
+    const t = (key, vars) => {
+      let val = key.split('.').reduce((acc, part) => acc?.[part], dict);
+      if (val == null) return vars?.fallback ?? key;
+      if (vars && typeof val === 'string') {
+        Object.entries(vars).forEach(([name, value]) => {
+          val = val.replace(new RegExp(`\\{${name}\\}`, 'g'), String(value));
+        });
+      }
+      return val;
     };
     return { lang, setLang, t, dict };
   }, [lang]);

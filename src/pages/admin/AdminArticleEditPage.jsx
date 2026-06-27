@@ -1,17 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ImagePlus, Save, Upload, X } from 'lucide-react';
+import { ArrowLeft, ImagePlus, Save, ScanEye, Upload, X } from 'lucide-react';
+import { AdminConfirmDialog } from '../../components/admin/AdminConfirmDialog';
+import { AdminArticlePreviewModal } from '../../components/admin/AdminArticlePreviewModal';
+import { AdminLanguageBar } from '../../components/admin/AdminLanguageBar';
+import {
+  ARTICLE_CATEGORIES,
+  getArticleCategoryId,
+  getCategoryLabel,
+} from '../../constants/articleCategories';
 import {
   createEmptyArticle,
   getCustomArticle,
   isArticleComplete,
   upsertCustomArticle,
 } from '../../utils/industryArticles';
+import { useLanguage } from '../../i18n/LanguageContext';
 import { type } from '../../styles/typography';
 
-const LANGS = [
-  { key: 'en', label: 'English' },
-  { key: 'zh', label: '中文' },
+const CONTENT_LANGS = [
+  { key: 'en', labelKey: 'admin.contentLang.en' },
+  { key: 'zh', labelKey: 'admin.contentLang.zh' },
 ];
 
 const Field = ({ label, children }) => (
@@ -29,12 +38,15 @@ const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 export const AdminArticleEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const isNew = id === 'new';
 
   const [article, setArticle] = useState(() => (isNew ? createEmptyArticle() : getCustomArticle(id)));
   const [activeLang, setActiveLang] = useState('en');
-  const [savedMessage, setSavedMessage] = useState('');
   const [publishError, setPublishError] = useState('');
+  const [draftSavedOpen, setDraftSavedOpen] = useState(false);
+  const [pendingEditId, setPendingEditId] = useState(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [missing, setMissing] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -55,12 +67,17 @@ export const AdminArticleEditPage = () => {
 
   if (!isNew && missing) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-        <div className="text-center">
-          <p className={type.lead}>Article not found.</p>
-          <Link to="/admin/articles" className="text-[#00A29A] hover:underline mt-4 inline-block">
-            Back to list
-          </Link>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="px-4 sm:px-6 py-4">
+          <AdminLanguageBar />
+        </div>
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="text-center">
+            <p className={type.lead}>{t('admin.edit.notFound')}</p>
+            <Link to="/admin/articles" className="text-[#00A29A] hover:underline mt-4 inline-block">
+              {t('admin.actions.back')}
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -69,6 +86,7 @@ export const AdminArticleEditPage = () => {
   if (!article) return null;
 
   const fields = article[activeLang];
+  const selectedCategoryId = getArticleCategoryId(article.en?.category, article.zh?.category);
 
   const updateField = (name, value) => {
     setPublishError('');
@@ -78,17 +96,27 @@ export const AdminArticleEditPage = () => {
     }));
   };
 
+  const handleCategoryChange = (categoryId) => {
+    if (!categoryId) return;
+    setPublishError('');
+    setArticle((prev) => ({
+      ...prev,
+      en: { ...prev.en, category: getCategoryLabel(categoryId, 'en') },
+      zh: { ...prev.zh, category: getCategoryLabel(categoryId, 'zh') },
+    }));
+  };
+
   const handleImageFile = (event) => {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      setPublishError('Please choose an image file.');
+      setPublishError(t('admin.edit.imageErrorType'));
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setPublishError('Image must be under 2 MB.');
+      setPublishError(t('admin.edit.imageErrorSize'));
       return;
     }
 
@@ -109,7 +137,7 @@ export const AdminArticleEditPage = () => {
 
   const save = (status) => {
     if (status === 'published' && !isArticleComplete(article)) {
-      setPublishError('Fill in all required fields in English and 中文 before publishing.');
+      setPublishError(t('admin.edit.publishError'));
       return;
     }
     setPublishError('');
@@ -119,51 +147,88 @@ export const AdminArticleEditPage = () => {
       return;
     }
     setArticle(next);
-    setSavedMessage('Draft saved.');
-    window.setTimeout(() => setSavedMessage(''), 2500);
-    if (isNew) navigate(`/admin/articles/${next.id}`, { replace: true });
+    if (isNew) {
+      setPendingEditId(next.id);
+    }
+    setDraftSavedOpen(true);
   };
+
+  const closeDraftSavedDialog = () => {
+    setDraftSavedOpen(false);
+    if (pendingEditId) {
+      navigate(`/admin/articles/${pendingEditId}`, { replace: true });
+      setPendingEditId(null);
+    }
+  };
+
+  const formActions = (
+    <div className="pt-6 border-t border-slate-200 space-y-3">
+      {publishError && <p className={type.bodySm + ' text-red-600'}>{publishError}</p>}
+      <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
+        <button
+          type="button"
+          onClick={() => setPreviewOpen(true)}
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] ${type.btn}`}
+        >
+          <ScanEye className="w-4 h-4" /> {t('admin.actions.preview')}
+        </button>
+        <button
+          type="button"
+          onClick={() => save('draft')}
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg hover:border-slate-300 ${type.btn}`}
+        >
+          <Save className="w-4 h-4" /> {t('admin.actions.saveDraft')}
+        </button>
+        <button
+          type="button"
+          onClick={() => save('published')}
+          disabled={!canPublish}
+          title={canPublish ? t('admin.edit.publishTitle') : t('admin.edit.publishDisabledTitle')}
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg ${type.btnStrong} ${
+            canPublish
+              ? 'bg-[#00A29A] hover:bg-[#008f88] text-white'
+              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+          }`}
+        >
+          <Upload className="w-4 h-4" /> {t('admin.actions.publish')}
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <AdminConfirmDialog
+        open={draftSavedOpen}
+        alertOnly
+        title={t('admin.dialog.draftSavedTitle')}
+        message={t('admin.dialog.draftSavedMessage')}
+        confirmLabel={t('admin.actions.ok')}
+        onConfirm={closeDraftSavedDialog}
+        onCancel={closeDraftSavedDialog}
+      />
+
+      {previewOpen && (
+        <AdminArticlePreviewModal
+          article={article}
+          initialLang={activeLang}
+          onClose={() => setPreviewOpen(false)}
+        />
+      )}
+
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 space-y-3">
+        <AdminLanguageBar />
         <Link
           to="/admin/articles"
           className={`inline-flex items-center gap-2 text-slate-600 hover:text-[#00A29A] ${type.btn}`}
         >
-          <ArrowLeft className="w-4 h-4" /> Back
+          <ArrowLeft className="w-4 h-4" /> {t('admin.actions.back')}
         </Link>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-          {savedMessage && <span className={type.bodySm + ' text-[#00A29A]'}>{savedMessage}</span>}
-          {publishError && <span className={type.bodySm + ' text-red-600'}>{publishError}</span>}
-          <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => save('draft')}
-            className={`inline-flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:border-slate-300 ${type.btn}`}
-          >
-            <Save className="w-4 h-4" /> Save draft
-          </button>
-          <button
-            type="button"
-            onClick={() => save('published')}
-            disabled={!canPublish}
-            title={canPublish ? 'Publish article' : 'Fill required fields in EN and 中文 to publish'}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${type.btnStrong} ${
-              canPublish
-                ? 'bg-[#00A29A] hover:bg-[#008f88] text-white'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-            }`}
-          >
-            <Upload className="w-4 h-4" /> Publish
-          </button>
-          </div>
-        </div>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex gap-2 mb-8">
-          {LANGS.map(({ key, label }) => (
+          {CONTENT_LANGS.map(({ key, labelKey }) => (
             <button
               key={key}
               type="button"
@@ -174,28 +239,48 @@ export const AdminArticleEditPage = () => {
                   : 'bg-white border border-slate-200 text-slate-600 hover:border-[#00A29A]/40'
               }`}
             >
-              {label}
+              {t(labelKey)}
             </button>
           ))}
         </div>
 
         {!canPublish && (
           <p className={`${type.bodySm} text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-6`}>
-            Publish is available when date, category, title, excerpt, and body are filled in both English and 中文. Image is optional.
+            {t('admin.edit.publishHint')}
           </p>
         )}
 
         <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-5">
-          <Field label="Date">
+          <Field label={t('admin.edit.date')}>
             <input type="date" value={fields.date} onChange={(e) => updateField('date', e.target.value)} className={inputClass} />
           </Field>
-          <Field label="Category">
-            <input type="text" value={fields.category} onChange={(e) => updateField('category', e.target.value)} className={inputClass} placeholder="Regulation / 政策" />
+          <Field label={t('admin.edit.category')}>
+            <select
+              value={selectedCategoryId ?? ''}
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              className={inputClass + ' bg-white'}
+            >
+              <option value="" disabled>
+                {t('admin.edit.selectCategory')}
+              </option>
+              {ARTICLE_CATEGORIES.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {activeLang === 'zh' ? category.zh : category.en}
+                </option>
+              ))}
+            </select>
+            {!selectedCategoryId && (article.en?.category || article.zh?.category) && (
+              <p className={`${type.bodySm} text-amber-700 mt-2`}>
+                {t('admin.edit.categoryLegacy', {
+                  value: fields.category || article.en?.category || article.zh?.category,
+                })}
+              </p>
+            )}
           </Field>
-          <Field label="Title">
+          <Field label={t('admin.edit.title')}>
             <input type="text" value={fields.title} onChange={(e) => updateField('title', e.target.value)} className={inputClass} required />
           </Field>
-          <Field label="Cover image (optional)">
+          <Field label={t('admin.edit.coverImage')}>
             <div className="space-y-3">
               {fields.image ? (
                 <div className="relative rounded-lg overflow-hidden border border-slate-200 bg-slate-100">
@@ -204,7 +289,7 @@ export const AdminArticleEditPage = () => {
                     type="button"
                     onClick={() => updateField('image', '')}
                     className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-                    aria-label="Remove image"
+                    aria-label={t('admin.actions.removeImage')}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -223,7 +308,7 @@ export const AdminArticleEditPage = () => {
                   onClick={() => fileInputRef.current?.click()}
                   className={`inline-flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] ${type.btn}`}
                 >
-                  <ImagePlus className="w-4 h-4" /> Add from device
+                  <ImagePlus className="w-4 h-4" /> {t('admin.actions.addFromDevice')}
                 </button>
               </div>
               <input
@@ -231,19 +316,20 @@ export const AdminArticleEditPage = () => {
                 value={fields.image?.startsWith('data:') ? '' : (fields.image ?? '')}
                 onChange={(e) => updateField('image', e.target.value)}
                 className={inputClass}
-                placeholder="Or paste image URL (e.g. /data/concrete-batching-plant/4.jpeg)"
+                placeholder={t('admin.edit.imageUrlPlaceholder')}
               />
               {fields.image?.startsWith('data:') && (
-                <p className={type.bodySm + ' text-slate-500'}>Image loaded from device. Remove it to enter a URL instead.</p>
+                <p className={type.bodySm + ' text-slate-500'}>{t('admin.edit.imageFromDevice')}</p>
               )}
             </div>
           </Field>
-          <Field label="Excerpt (short summary)">
+          <Field label={t('admin.edit.excerpt')}>
             <textarea value={fields.excerpt} onChange={(e) => updateField('excerpt', e.target.value)} rows={3} className={inputClass + ' resize-y'} />
           </Field>
-          <Field label="Body (paragraphs separated by blank line)">
+          <Field label={t('admin.edit.body')}>
             <textarea value={fields.body} onChange={(e) => updateField('body', e.target.value)} rows={12} className={inputClass + ' resize-y'} />
           </Field>
+          {formActions}
         </div>
       </main>
     </div>

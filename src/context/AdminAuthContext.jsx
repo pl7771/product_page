@@ -25,8 +25,8 @@ export const AdminAuthProvider = ({ children }) => {
 
   const login = (password) => {
     const expected = import.meta.env.VITE_ADMIN_PASSWORD;
-    if (!expected) return { ok: false, error: 'Admin password is not configured (VITE_ADMIN_PASSWORD).' };
-    if (password !== expected) return { ok: false, error: 'Invalid password.' };
+    if (!expected) return { ok: false, errorKey: 'notConfigured' };
+    if (password !== expected) return { ok: false, errorKey: 'invalid' };
 
     sessionStorage.setItem(
       SESSION_KEY,
