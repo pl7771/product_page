@@ -1,43 +1,86 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { DatabaseSync } from 'node:sqlite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, 'data');
-const DB_PATH = path.join(DATA_DIR, 'articles.json');
+const DB_PATH = path.join(DATA_DIR, 'articles.db');
+const LEGACY_JSON_PATH = path.join(DATA_DIR, 'articles.json');
 
-const ensureDb = () => {
+const ensureDataDir = () => {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  if (!fs.existsSync(DB_PATH)) fs.writeFileSync(DB_PATH, '[]', 'utf8');
 };
+
+const parseArticle = (row) => JSON.parse(row.data);
+
+const sortArticles = (articles) =>
+  articles.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
+
+const withTransaction = (db, fn) => {
+  db.exec('BEGIN');
+  try {
+    fn();
+    db.exec('COMMIT');
+  } catch (error) {
+    db.exec('ROLLBACK');
+    throw error;
+  }
+};
+
+const migrateFromJson = (db) => {
+  const { count } = db.prepare('SELECT COUNT(*) AS count FROM articles').get();
+  if (count > 0 || !fs.existsSync(LEGACY_JSON_PATH)) return;
+
+  const raw = fs.readFileSync(LEGACY_JSON_PATH, 'utf8');
+  const articles = JSON.parse(raw);
+  if (!Array.isArray(articles) || articles.length === 0) return;
+
+  const insert = db.prepare('INSERT OR REPLACE INTO articles (id, data) VALUES (?, ?)');
+  withTransaction(db, () => {
+    for (const article of articles) {
+      insert.run(String(article.id), JSON.stringify(article));
+    }
+  });
+
+  console.log(`Migrated ${articles.length} article(s) from articles.json → articles.db`);
+};
+
+const db = (() => {
+  ensureDataDir();
+  const connection = new DatabaseSync(DB_PATH);
+  connection.exec('PRAGMA journal_mode = WAL');
+  connection.exec(`
+    CREATE TABLE IF NOT EXISTS articles (
+      id TEXT PRIMARY KEY,
+      data TEXT NOT NULL
+    )
+  `);
+  migrateFromJson(connection);
+  return connection;
+})();
 
 export const readArticles = () => {
-  ensureDb();
-  const raw = fs.readFileSync(DB_PATH, 'utf8');
-  const parsed = JSON.parse(raw);
-  return Array.isArray(parsed) ? parsed : [];
+  const rows = db.prepare('SELECT data FROM articles').all();
+  return sortArticles(rows.map(parseArticle));
 };
 
-export const writeArticles = (articles) => {
-  ensureDb();
-  fs.writeFileSync(DB_PATH, JSON.stringify(articles, null, 2), 'utf8');
+export const getArticle = (id) => {
+  const row = db.prepare('SELECT data FROM articles WHERE id = ?').get(String(id));
+  return row ? parseArticle(row) : null;
 };
-
-export const getArticle = (id) => readArticles().find((a) => a.id === id) ?? null;
 
 export const upsertArticle = (article) => {
-  const articles = readArticles();
-  const index = articles.findIndex((a) => a.id === article.id);
   const next = { ...article, updatedAt: new Date().toISOString() };
-
-  if (index >= 0) articles[index] = next;
-  else articles.unshift(next);
-
-  writeArticles(articles);
+  db.prepare('INSERT OR REPLACE INTO articles (id, data) VALUES (?, ?)').run(
+    String(next.id),
+    JSON.stringify(next),
+  );
   return next;
 };
 
 export const deleteArticle = (id) => {
-  const articles = readArticles().filter((a) => a.id !== id);
-  writeArticles(articles);
+  db.prepare('DELETE FROM articles WHERE id = ?').run(String(id));
 };

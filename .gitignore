@@ -13,6 +13,9 @@ dist-ssr
 *.local
 server/.env
 server/data/articles.json
+server/data/articles.db
+server/data/articles.db-wal
+server/data/articles.db-shm
 
 # Editor directories and files
 .vscode/*
