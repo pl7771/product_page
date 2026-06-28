@@ -16,7 +16,7 @@ export const HeroSection = () => {
         loading="eager"
         fetchPriority="high"
         pictureClassName="absolute inset-0 block w-full h-full"
-        className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+        className="absolute inset-0 w-full h-full object-cover object-center -scale-x-105 scale-y-105"
       />
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950/65 via-slate-900/45 to-slate-900/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-slate-900/10" />
