@@ -34,6 +34,33 @@ jobs:
           VITE_SITE_URL: http://8.140.28.87
         run: npm run build
 
+      - name: Ensure server prerequisites
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" bash -s <<'SETUP'
+          set -euo pipefail
+          if ! command -v node >/dev/null 2>&1 || [[ "$(node -p "process.versions.node.split('.')[0]")" -lt 22 ]]; then
+            echo "Installing Node.js 22..."
+            curl -fsSL https://rpm.nodesource.com/setup_22.x | bash -
+            dnf install -y nodejs
+          fi
+          if ! command -v pm2 >/dev/null 2>&1; then
+            echo "Installing PM2..."
+            npm install -g pm2
+            pm2 startup systemd -u root --hp /root | tail -1 | bash || true
+          fi
+          mkdir -p /var/www/hbshandao/server/data
+          node -v
+          pm2 -v
+          SETUP
+
       - name: Deploy to server
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
