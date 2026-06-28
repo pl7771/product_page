@@ -84,6 +84,10 @@ jobs:
 
           ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" env ADMIN_PASSWORD="$ADMIN_PASSWORD" bash -s <<'REMOTE'
           set -euo pipefail
+          chown -R nginx:nginx /var/www/hbshandao/dist
+          find /var/www/hbshandao/dist -type d -exec chmod 755 {} \;
+          find /var/www/hbshandao/dist -type f -exec chmod 644 {} \;
+          chmod 755 /var/www/hbshandao
           cd /var/www/hbshandao/server
           mkdir -p data
           printf 'PORT=3001\nADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" > .env
