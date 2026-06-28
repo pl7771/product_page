@@ -16,6 +16,8 @@ server/data/articles.json
 server/data/articles.db
 server/data/articles.db-wal
 server/data/articles.db-shm
+deploy_key
+deploy_key.pub
 
 # Editor directories and files
 .vscode/*

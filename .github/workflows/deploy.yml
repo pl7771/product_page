@@ -1,0 +1,74 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            server/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix server
+
+      - name: Build frontend
+        env:
+          # Until ICP + domain: site is tested by IP. Change to https://www.hbshandao.com later.
+          VITE_SITE_URL: http://8.140.28.87
+        run: npm run build
+
+      - name: Deploy to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" 'mkdir -p /var/www/hbshandao/server/data'
+
+          rsync -avz \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+            --delete \
+            --exclude 'node_modules' \
+            --exclude 'server/.env' \
+            --exclude 'server/data/articles.db' \
+            --exclude 'server/data/articles.db-wal' \
+            --exclude 'server/data/articles.db-shm' \
+            --exclude 'server/data/articles.json' \
+            dist server \
+            "${SSH_USER}@${SSH_HOST}:/var/www/hbshandao/"
+
+          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" env ADMIN_PASSWORD="$ADMIN_PASSWORD" bash -s <<'REMOTE'
+          set -euo pipefail
+          cd /var/www/hbshandao/server
+          mkdir -p data
+          printf 'PORT=3001\nADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" > .env
+          npm ci --omit=dev
+          if pm2 describe hbshandao-api >/dev/null 2>&1; then
+            pm2 restart hbshandao-api
+          else
+            pm2 start index.js --name hbshandao-api --cwd /var/www/hbshandao/server
+          fi
+          pm2 save
+          REMOTE
