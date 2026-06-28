@@ -84,10 +84,13 @@ jobs:
 
           ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" env ADMIN_PASSWORD="$ADMIN_PASSWORD" bash -s <<'REMOTE'
           set -euo pipefail
-          chown -R nginx:nginx /var/www/hbshandao/dist
-          find /var/www/hbshandao/dist -type d -exec chmod 755 {} \;
-          find /var/www/hbshandao/dist -type f -exec chmod 644 {} \;
+          NGINX_USER="$(awk '/^user / { print $2; exit }' /etc/nginx/nginx.conf | tr -d ';')"
+          if [[ -n "$NGINX_USER" ]] && id "$NGINX_USER" >/dev/null 2>&1; then
+            chown -R "$NGINX_USER:$NGINX_USER" /var/www/hbshandao/dist
+          fi
+          chmod 755 /var/www
           chmod 755 /var/www/hbshandao
+          chmod -R a+rX /var/www/hbshandao/dist
           cd /var/www/hbshandao/server
           mkdir -p data
           printf 'PORT=3001\nADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" > .env
