@@ -20,6 +20,9 @@ if ! command -v pm2 >/dev/null 2>&1; then
   npm install -g pm2
 fi
 
+echo "==> rsync (optional, for manual deploys)"
+dnf install -y rsync
+
 echo "==> App directories"
 mkdir -p "$APP_DIR/server/data"
 chmod 755 "$APP_DIR" "$APP_DIR/server" "$APP_DIR/server/data"

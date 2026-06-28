@@ -45,19 +45,15 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
-          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" 'mkdir -p /var/www/hbshandao/server/data'
+          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" 'mkdir -p /var/www/hbshandao/server/data && rm -rf /var/www/hbshandao/dist'
 
-          rsync -avz \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
-            --delete \
-            --exclude 'node_modules' \
-            --exclude 'server/.env' \
-            --exclude 'server/data/articles.db' \
-            --exclude 'server/data/articles.db-wal' \
-            --exclude 'server/data/articles.db-shm' \
-            --exclude 'server/data/articles.json' \
+          tar -czf - \
+            --exclude='server/node_modules' \
+            --exclude='server/.env' \
+            --exclude='server/data' \
             dist server \
-            "${SSH_USER}@${SSH_HOST}:/var/www/hbshandao/"
+            | ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes "${SSH_USER}@${SSH_HOST}" \
+              'tar -xzf - -C /var/www/hbshandao'
 
           ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" env ADMIN_PASSWORD="$ADMIN_PASSWORD" bash -s <<'REMOTE'
           set -euo pipefail
