@@ -210,9 +210,9 @@ export default {
     submit: '提交咨询',
     sending: '发送中...',
     sent: '消息发送成功！',
-    phones: ['+86 166 3110 8208', '+86 166 31108228'],
+    phones: ['+86 166 3110 8208', '+86 166 3110 8228'],
     whatsapp: '+8616631105554',
-    emailAddress: 'hsshandao@outlook.com',
+    emailAddress: 'hbshandao@outlook.com',
   },
 
   footer: {
