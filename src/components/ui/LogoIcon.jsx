@@ -1,4 +1,4 @@
-import logoCh from '../../assets/logos/logo-ch.png';
+import logoCh from '../../assets/logos/logo_ch_3.png';
 
 const logos = {
   header: { src: logoCh, alt: '德合信' },

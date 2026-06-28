@@ -82,7 +82,7 @@ export const PrivacyPolicy = () => {
           If you have questions or comments about this Privacy Policy, please contact us at:
         </p>
         <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200 inline-block">
-          <p className="font-mono text-sm text-slate-700">Email: hsshandao@outlook.com</p>
+          <p className="font-mono text-sm text-slate-700">Email: hbshandao@outlook.com</p>
         </div>
       </section>
     </LegalLayout>

@@ -205,15 +205,18 @@ export const Navigation = ({ leftSlot }) => {
       </div>
 
       <div className="relative z-10 py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-12 flex items-center justify-between gap-2 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-6 min-w-0 flex-1 overflow-hidden">
             {leftSlot && <div className="flex-shrink-0">{leftSlot}</div>}
-            <LogoChip variant="nav">
-              <LogoIcon variant="header" className="h-8 sm:h-9 w-auto max-w-[160px] sm:max-w-[220px] object-contain object-left" />
+            <LogoChip variant="nav" className="min-w-0 max-w-full">
+              <LogoIcon
+                variant="header"
+                className="h-9 sm:h-12 w-auto max-w-[min(100%,10.5rem)] sm:max-w-[280px] object-contain object-left"
+              />
             </LogoChip>
           </div>
 
-          <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
+          <div className="hidden md:flex items-center gap-0.5 lg:gap-1 shrink-0">
             {links.map((link, index) => (
               <div key={link.to || link.href} className="flex items-center">
                 {renderLink(link)}
@@ -226,8 +229,8 @@ export const Navigation = ({ leftSlot }) => {
             <LanguageSwitcher />
           </div>
 
-          <div className="flex items-center gap-2 md:hidden">
-            <LanguageSwitcher />
+          <div className="flex items-center gap-1.5 shrink-0 md:hidden">
+            <LanguageSwitcher compact />
             <button
               className={`p-2 rounded-full transition-all ${mobileMenuOpen ? 'bg-[#00A29A] text-white' : 'text-slate-600 hover:text-[#00A29A]'}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

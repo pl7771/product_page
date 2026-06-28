@@ -80,7 +80,7 @@ export const LegalLayout = ({ title, subtitle, children, sections }) => {
                 If you need clarification on any of these terms, please contact our legal team.
               </p>
               <a 
-                href="mailto:hsshandao@outlook.com"
+                href="mailto:hbhandao@outlook.com"
                 className="inline-flex items-center gap-2 text-[#00A29A] font-semibold hover:text-[#008f88] transition-colors"
               >
                 Contact Support →
