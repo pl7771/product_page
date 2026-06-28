@@ -18,6 +18,7 @@ import {
   updateArticle,
 } from '../../api/articles';
 import { isArticleComplete } from '../../utils/industryArticles';
+import { getArticleUpdateDay } from '../../utils/articleDates';
 import {
   defaultArticleFilters,
   filterAndSortArticles,
@@ -44,12 +45,18 @@ const StatusBadge = ({ article }) => {
 
 const ArticleMeta = ({ article }) => {
   const { t } = useLanguage();
+  const updatedDay = getArticleUpdateDay(article.updatedAt, article.createdAt);
 
   return (
     <div className="flex-1 min-w-0">
       <div className="flex flex-wrap items-center gap-2 mb-1">
         <StatusBadge article={article} />
         <span className={type.bodySm}>{article.en?.date || article.zh?.date}</span>
+        {updatedDay && (
+          <span className={`${type.bodySm} text-slate-500`}>
+            {t('admin.articles.lastUpdated')}: {updatedDay}
+          </span>
+        )}
       </div>
       <p className={`${type.cardTitleSm} truncate`}>
         {article.en?.title || article.zh?.title || t('admin.articles.untitled')}

@@ -17,6 +17,8 @@ import {
 } from '../../utils/industryArticles';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { type } from '../../styles/typography';
+import { getArticleUpdateDay } from '../../utils/articleDates';
+import { optimizeArticleImage } from '../../utils/optimizeArticleImage';
 
 const CONTENT_LANGS = [
   { key: 'en', labelKey: 'admin.contentLang.en' },
@@ -24,16 +26,16 @@ const CONTENT_LANGS = [
 ];
 
 const Field = ({ label, children }) => (
-  <div>
+  <div className="min-w-0 w-full">
     <label className={`block ${type.label} normal-case tracking-normal text-slate-700 mb-2`}>{label}</label>
     {children}
   </div>
 );
 
 const inputClass =
-  'w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#00A29A] focus:ring-1 focus:ring-[#00A29A]';
+  'w-full min-w-0 max-w-full box-border border border-slate-200 rounded-lg px-3 sm:px-4 py-3 text-sm focus:outline-none focus:border-[#00A29A] focus:ring-1 focus:ring-[#00A29A]';
 
-const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+const MAX_INPUT_IMAGE_BYTES = 20 * 1024 * 1024;
 
 export const AdminArticleEditPage = () => {
   const { id } = useParams();
@@ -50,6 +52,7 @@ export const AdminArticleEditPage = () => {
   const [loading, setLoading] = useState(!isNew);
   const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [optimizingImage, setOptimizingImage] = useState(false);
   const [savedToServer, setSavedToServer] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -133,34 +136,39 @@ export const AdminArticleEditPage = () => {
     }));
   };
 
-  const handleImageFile = (event) => {
+  const handleImageFile = async (event) => {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
       setPublishError(t('admin.edit.imageErrorType'));
       return;
     }
-    if (file.size > MAX_IMAGE_BYTES) {
+    if (file.size > MAX_INPUT_IMAGE_BYTES) {
       setPublishError(t('admin.edit.imageErrorSize'));
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = String(reader.result);
-      setPublishError('');
+    setOptimizingImage(true);
+    setPublishError('');
+
+    try {
+      const dataUrl = await optimizeArticleImage(file);
       setArticle((prev) => ({
         ...prev,
         en: { ...prev.en, image: dataUrl },
         zh: { ...prev.zh, image: dataUrl },
       }));
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      setPublishError(t('admin.edit.imageErrorOptimize'));
+    } finally {
+      setOptimizingImage(false);
+    }
   };
 
   const canPublish = isArticleComplete(article);
+  const isPublishedEdit = !isNew && article.status === 'published';
 
   const save = async (status) => {
     if (status === 'published' && !isArticleComplete(article)) {
@@ -229,22 +237,29 @@ export const AdminArticleEditPage = () => {
         <button
           type="button"
           onClick={() => save('published')}
-          disabled={!canPublish || saving}
-          title={canPublish ? t('admin.edit.publishTitle') : t('admin.edit.publishDisabledTitle')}
+          disabled={!canPublish || saving || optimizingImage}
+          title={
+            canPublish
+              ? isPublishedEdit
+                ? t('admin.edit.publishChangesTitle')
+                : t('admin.edit.publishTitle')
+              : t('admin.edit.publishDisabledTitle')
+          }
           className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg ${type.btnStrong} ${
-            canPublish && !saving
+            canPublish && !saving && !optimizingImage
               ? 'bg-[#00A29A] hover:bg-[#008f88] text-white'
               : 'bg-slate-200 text-slate-400 cursor-not-allowed'
           }`}
         >
-          <Upload className="w-4 h-4" /> {t('admin.actions.publish')}
+          <Upload className="w-4 h-4" />{' '}
+          {isPublishedEdit ? t('admin.actions.publishChanges') : t('admin.actions.publish')}
         </button>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       <PageSEO
         title={t('seo.admin.title')}
         description={t('seo.admin.description')}
@@ -279,7 +294,7 @@ export const AdminArticleEditPage = () => {
         </Link>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 min-w-0 overflow-x-hidden">
         <div className="flex gap-2 mb-8">
           {CONTENT_LANGS.map(({ key, labelKey }) => (
             <button
@@ -297,13 +312,19 @@ export const AdminArticleEditPage = () => {
           ))}
         </div>
 
+        {!isNew && article && (
+          <p className={`${type.bodySm} text-slate-500 mb-6`}>
+            {t('admin.articles.lastUpdated')}: {getArticleUpdateDay(article.updatedAt, article.createdAt) || '—'}
+          </p>
+        )}
+
         {!canPublish && (
           <p className={`${type.bodySm} text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-6`}>
             {t('admin.edit.publishHint')}
           </p>
         )}
 
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-8 space-y-5 min-w-0 overflow-hidden">
           <Field label={t('admin.edit.date')}>
             <input type="date" value={fields.date} onChange={(e) => updateField('date', e.target.value)} className={inputClass} />
           </Field>
@@ -359,9 +380,11 @@ export const AdminArticleEditPage = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className={`inline-flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] ${type.btn}`}
+                  disabled={optimizingImage}
+                  className={`inline-flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:border-[#00A29A]/40 hover:text-[#00A29A] disabled:opacity-60 ${type.btn}`}
                 >
-                  <ImagePlus className="w-4 h-4" /> {t('admin.actions.addFromDevice')}
+                  <ImagePlus className="w-4 h-4" />{' '}
+                  {optimizingImage ? t('admin.edit.imageOptimizing') : t('admin.actions.addFromDevice')}
                 </button>
               </div>
               <input
