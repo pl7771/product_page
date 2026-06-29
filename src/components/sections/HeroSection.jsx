@@ -2,7 +2,6 @@ import { ArrowRight, Play, Wind, Droplets, Snowflake, ShieldCheck } from 'lucide
 import { useLanguage } from '../../i18n/LanguageContext';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { SmokeBackground } from '../layout/SmokeBackground';
-import { CountUpStat } from '../ui/CountUpStat';
 import { type } from '../../styles/typography';
 
 const HERO_IMAGE = '/data/concrete-batching-plant/4.jpeg';
@@ -91,7 +90,7 @@ export const HeroSection = () => {
               [t('hero.stat3Value'), t('hero.stat3Label')],
             ].map(([value, label]) => (
               <div key={label}>
-                <CountUpStat value={value} className={`${type.stat} mb-1.5 block`} />
+                <div className={`${type.stat} mb-1.5`}>{value}</div>
                 <div className={`${type.label} !text-slate-300/90 normal-case tracking-[0.08em]`}>{label}</div>
               </div>
             ))}
