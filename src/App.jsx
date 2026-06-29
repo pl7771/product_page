@@ -7,6 +7,7 @@ import { Navigation } from './components/layout/Navigation';
 import { Footer } from './components/layout/Footer';
 import { BackToTop } from './components/ui/BackToTop';
 import { HeroSection } from './components/sections/HeroSection';
+import { IndustriesStrip } from './components/sections/IndustriesStrip';
 import { ProductShowcase } from './components/sections/ProductShowcase';
 import { TrustSection } from './components/sections/TrustSection';
 import { QuickContacts } from './components/sections/QuickContacts';
@@ -51,6 +52,7 @@ const HomePage = ({ onContactClick, onGalleryClick }) => {
       />
       <Navigation />
       <HeroSection />
+      <IndustriesStrip />
       <ProjectsSection />
       <ProductShowcase onContactClick={onContactClick} onGalleryClick={onGalleryClick} />
       <QuickContacts />

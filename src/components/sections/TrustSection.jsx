@@ -1,3 +1,4 @@
+import { Quote, TrendingUp } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading, SectionLead, sectionHeadingClassName } from '../ui/SectionHeading';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -26,12 +27,19 @@ export const TrustSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {trust.testimonials.map((test, idx) => (
             <Reveal key={test.role} delay={idx * 120}>
-              <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-[var(--shadow-soft)] hover:shadow-lg hover:border-[#00A29A]/25 transition-all flex flex-col h-full">
+              <div className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-[var(--shadow-soft)] hover:shadow-xl hover:-translate-y-1 hover:border-[#00A29A]/25 transition-all duration-300 flex flex-col h-full">
                 <div className="aspect-[16/10] relative overflow-hidden bg-slate-100">
-                  <OptimizedImage src={test.image} alt={test.role} loading="lazy" pictureClassName="block w-full h-full" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <OptimizedImage src={test.image} alt={test.role} loading="lazy" pictureClassName="block w-full h-full" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  {test.metric && (
+                    <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md shadow-md">
+                      <TrendingUp className="w-3.5 h-3.5 text-[#00A29A]" strokeWidth={2.4} />
+                      <span className="text-xs font-semibold text-slate-800">{test.metric}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-6 flex flex-col flex-1">
-                  <p className={`${type.body} text-slate-700 mb-6 flex-grow`}>&ldquo;{test.quote}&rdquo;</p>
+                  <Quote className="w-7 h-7 text-[#00A29A]/20 mb-3" fill="currentColor" strokeWidth={0} />
+                  <p className={`${type.body} text-slate-700 mb-6 flex-grow`}>{test.quote}</p>
                   <div className="pt-4 border-t border-slate-100">
                     <p className={`${type.cardTitleSm} text-slate-900`}>{test.author}</p>
                     <p className={`${type.bodySm} text-slate-500 mt-0.5`}>{test.role}</p>

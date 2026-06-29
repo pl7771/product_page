@@ -64,6 +64,13 @@ export default {
       '专注于局部空间环境改善，提供加湿、除尘、降温一站式解决方案 — 集研发、销售与微雾工程项目设计施工于一体。',
     ctaPrimary: '查看设备',
     ctaSecondary: '联系我们',
+    applicationsLabel: '我们的业务',
+    applications: [
+      { icon: 'dust', label: '工业除尘' },
+      { icon: 'humidify', label: '精准加湿' },
+      { icon: 'cooling', label: '喷雾降温' },
+      { icon: 'disinfect', label: '雾化消毒' },
+    ],
     stat1Value: '90%+',
     stat1Label: '除尘效率',
     stat2Value: '24/7',
@@ -77,6 +84,17 @@ export default {
     title: '核心业务',
     subtitle: '涵盖多个行业的微雾工程解决方案，点击分类查看具体项目。',
     viewProjects: '查看项目',
+  },
+
+  industries: {
+    label: '广泛服务于各行业',
+    list: [
+      { icon: 'mining', name: '矿山与重工业' },
+      { icon: 'construction', name: '建筑工程' },
+      { icon: 'chemical', name: '化工与纺织' },
+      { icon: 'agriculture', name: '农业与温室' },
+      { icon: 'municipal', name: '市政环卫' },
+    ],
   },
 
   industry: {
@@ -167,6 +185,7 @@ export default {
         author: '运营经理',
         role: '混凝土搅拌站 — 扬尘治理项目',
         image: '/data/concrete-batching-plant/4.jpeg',
+        metric: '扬尘降低 90%+',
       },
       {
         quote:
@@ -174,6 +193,7 @@ export default {
         author: '景观开发负责人',
         role: '生态雾景观项目',
         image: '/data/eco-atomizer/2.jpg',
+        metric: '降温加湿一体化',
       },
       {
         quote:
@@ -181,6 +201,7 @@ export default {
         author: '设施主管',
         role: '市政环卫 — 除臭治理',
         image: '/data/odor-control/3.jpeg',
+        metric: '24/7 自动除臭',
       },
     ],
   },

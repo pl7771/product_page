@@ -65,6 +65,13 @@ export default {
       'One-stop solutions for humidification, dust suppression, and cooling — from R&D and equipment supply to engineering design and installation.',
     ctaPrimary: 'View Equipment',
     ctaSecondary: 'Contact Us',
+    applicationsLabel: 'What we do',
+    applications: [
+      { icon: 'dust', label: 'Dust Suppression' },
+      { icon: 'humidify', label: 'Humidification' },
+      { icon: 'cooling', label: 'Cooling' },
+      { icon: 'disinfect', label: 'Disinfection' },
+    ],
     stat1Value: '90%+',
     stat1Label: 'Dust Reduction',
     stat2Value: '24/7',
@@ -78,6 +85,17 @@ export default {
     title: 'Our Expertise',
     subtitle: 'Explore our solutions across key industries. Click a category to view projects.',
     viewProjects: 'View Projects',
+  },
+
+  industries: {
+    label: 'Trusted across industries',
+    list: [
+      { icon: 'mining', name: 'Mining & Heavy Industry' },
+      { icon: 'construction', name: 'Construction' },
+      { icon: 'chemical', name: 'Chemicals & Textiles' },
+      { icon: 'agriculture', name: 'Agriculture & Greenhouses' },
+      { icon: 'municipal', name: 'Municipal Sanitation' },
+    ],
   },
 
   industry: {
@@ -170,6 +188,7 @@ export default {
         author: 'Operations Manager',
         role: 'Concrete Batching Plant — Dust Suppression',
         image: '/data/concrete-batching-plant/4.jpeg',
+        metric: '90%+ dust reduction',
       },
       {
         quote:
@@ -177,6 +196,7 @@ export default {
         author: 'Landscape Development Director',
         role: 'Ecological Mistscape Project',
         image: '/data/eco-atomizer/2.jpg',
+        metric: 'Cooling + humidity in one',
       },
       {
         quote:
@@ -184,6 +204,7 @@ export default {
         author: 'Facility Supervisor',
         role: 'Municipal Sanitation — Odor Control',
         image: '/data/odor-control/3.jpeg',
+        metric: '24/7 automated odor control',
       },
     ],
   },

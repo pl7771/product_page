@@ -1,12 +1,22 @@
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Wind, Droplets, Snowflake, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { OptimizedImage } from '../ui/OptimizedImage';
+import { SmokeBackground } from '../layout/SmokeBackground';
+import { CountUpStat } from '../ui/CountUpStat';
 import { type } from '../../styles/typography';
 
 const HERO_IMAGE = '/data/concrete-batching-plant/4.jpeg';
 
+const APP_ICONS = {
+  dust: Wind,
+  humidify: Droplets,
+  cooling: Snowflake,
+  disinfect: ShieldCheck,
+};
+
 export const HeroSection = () => {
-  const { t } = useLanguage();
+  const { t, dict } = useLanguage();
+  const applications = dict.hero?.applications ?? [];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -20,6 +30,7 @@ export const HeroSection = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950/65 via-slate-900/45 to-slate-900/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-slate-900/10" />
+      <SmokeBackground variant="mist" className="absolute inset-0 pointer-events-none z-[1]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-32 w-full">
         <div className="max-w-3xl">
@@ -35,7 +46,26 @@ export const HeroSection = () => {
             {t('hero.titleLine2')}
           </h1>
 
-          <p className={`${type.lead} !text-slate-100/95 max-w-2xl mb-10 font-normal`}>{t('hero.subtitle')}</p>
+          <p className={`${type.lead} !text-slate-100/95 max-w-2xl mb-8 font-normal`}>{t('hero.subtitle')}</p>
+
+          {applications.length > 0 && (
+            <div className="flex flex-wrap gap-2.5 mb-10">
+              {applications.map((app) => {
+                const Icon = APP_ICONS[app.icon] ?? Wind;
+                return (
+                  <span
+                    key={app.icon}
+                    className="inline-flex items-center gap-2 pl-2.5 pr-3.5 py-2 rounded-full surface-glass shadow-md shadow-black/10"
+                  >
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#00A29A]/90">
+                      <Icon className="w-3.5 h-3.5 text-white" strokeWidth={2.4} />
+                    </span>
+                    <span className={`${type.bodySm} !text-white/95 font-medium whitespace-nowrap`}>{app.label}</span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a
@@ -61,7 +91,7 @@ export const HeroSection = () => {
               [t('hero.stat3Value'), t('hero.stat3Label')],
             ].map(([value, label]) => (
               <div key={label}>
-                <div className={`${type.stat} mb-1.5`}>{value}</div>
+                <CountUpStat value={value} className={`${type.stat} mb-1.5 block`} />
                 <div className={`${type.label} !text-slate-300/90 normal-case tracking-[0.08em]`}>{label}</div>
               </div>
             ))}
