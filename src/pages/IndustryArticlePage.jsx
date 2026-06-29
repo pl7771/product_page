@@ -8,6 +8,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useIndustryArticles } from '../hooks/useIndustryArticles';
 import { PageSEO } from '../components/seo/PageSEO';
 import { buildArticleSchema } from '../seo/organizationSchema';
+import { schemaGraph, buildBreadcrumb } from '../seo/structuredData';
 import { formatSeoText } from '../seo/siteConfig';
 import { type } from '../styles/typography';
 
@@ -60,7 +61,13 @@ export const IndustryArticlePage = () => {
         path={`/industry-information/${article.id}`}
         image={article.image || undefined}
         type="article"
-        jsonLd={buildArticleSchema(article, lang)}
+        jsonLd={schemaGraph([
+          buildBreadcrumb(lang, [
+            { name: t('industry.title'), path: '/industry-information' },
+            { name: article.title, path: `/industry-information/${article.id}` },
+          ]),
+          buildArticleSchema(article, lang),
+        ])}
       />
       <Navigation leftSlot={backButton} />
 

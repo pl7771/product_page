@@ -1,4 +1,4 @@
-const SEED_ARTICLES = [
+export const SEED_ARTICLES = [
   {
     id: '1',
     status: 'published',

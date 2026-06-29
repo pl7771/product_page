@@ -67,6 +67,11 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/service-areas" className={footerLink}>
+                  {t('nav.serviceAreas')}
+                </Link>
+              </li>
+              <li>
                 <a href="/#contact" className={footerLink}>
                   {t('nav.contact')}
                 </a>

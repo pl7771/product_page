@@ -28,6 +28,22 @@ jobs:
           npm ci
           npm ci --prefix server
 
+      - name: Install Chrome system libraries (for prerender)
+        # Puppeteer downloads its own Chrome during `npm ci`; these are the shared
+        # libraries it needs to launch headless. Non-fatal: prerender falls back to
+        # the plain SPA if the browser can't start, so a miss here never breaks deploy.
+        run: |
+          sudo apt-get update || true
+          sudo apt-get install -y \
+            libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libdrm2 \
+            libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libasound2t64 libpango-1.0-0 libcairo2 fonts-liberation \
+            || sudo apt-get install -y \
+            libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \
+            libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libasound2 libpango-1.0-0 libcairo2 fonts-liberation \
+            || true
+
       - name: Build frontend
         env:
           # Until ICP + domain: site is tested by IP. Change to https://www.hbshandao.com later.

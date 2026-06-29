@@ -10,12 +10,15 @@ import { HeroSection } from './components/sections/HeroSection';
 import { IndustriesStrip } from './components/sections/IndustriesStrip';
 import { ProductShowcase } from './components/sections/ProductShowcase';
 import { TrustSection } from './components/sections/TrustSection';
+import { FaqSection } from './components/sections/FaqSection';
 import { QuickContacts } from './components/sections/QuickContacts';
 import ProjectsSection from './components/ProjectsSection';
 
 // Pages (Новые страницы)
 import { ProjectCategoryPage } from './pages/ProjectCategoryPage';
 import { SingleProjectPage } from './pages/SingleProjectPage';
+import { ServiceAreasPage } from './pages/ServiceAreasPage';
+import { ServiceAreaPage } from './pages/ServiceAreaPage';
 import { IndustryInformationPage } from './pages/IndustryInformationPage';
 import { IndustryArticlePage } from './pages/IndustryArticlePage';
 
@@ -48,7 +51,7 @@ const HomePage = ({ onContactClick, onGalleryClick }) => {
         description={t('seo.home.description')}
         path="/"
         keywords={t('meta.keywords')}
-        jsonLd={buildOrganizationSchema(lang, dict.contact)}
+        jsonLd={buildOrganizationSchema(lang, dict.contact, dict.products?.list, dict.faq?.items)}
       />
       <Navigation />
       <HeroSection />
@@ -57,6 +60,7 @@ const HomePage = ({ onContactClick, onGalleryClick }) => {
       <ProductShowcase onContactClick={onContactClick} onGalleryClick={onGalleryClick} />
       <QuickContacts />
       <TrustSection />
+      <FaqSection />
       <Footer />
     </>
   );
@@ -92,6 +96,8 @@ export default function App() {
         />
         <Route path="/projects/:categoryId" element={<ProjectCategoryPage />} />
         <Route path="/projects/:categoryId/:projectId" element={<SingleProjectPage />} />
+        <Route path="/service-areas" element={<ServiceAreasPage />} />
+        <Route path="/service-areas/:regionId" element={<ServiceAreaPage />} />
         <Route path="/industry-information" element={<IndustryInformationPage />} />
         <Route path="/industry-information/:articleId" element={<IndustryArticlePage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />

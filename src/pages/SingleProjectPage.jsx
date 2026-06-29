@@ -8,12 +8,13 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { PageSEO } from '../components/seo/PageSEO';
 import { formatSeoText } from '../seo/siteConfig';
+import { schemaGraph, buildBreadcrumb, buildProjectSchema } from '../seo/structuredData';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { preloadImage } from '../utils/image';
 
 export const SingleProjectPage = () => {
   const { categoryId, projectId } = useParams();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const projectCategories = useLocalizedProjects();
 
   const category = projectCategories.find((cat) => cat.id === categoryId);
@@ -50,6 +51,18 @@ export const SingleProjectPage = () => {
         path={`/projects/${categoryId}/${projectId}`}
         image={project.cover || project.images?.[0]}
         keywords={t('meta.keywords')}
+        jsonLd={schemaGraph([
+          buildBreadcrumb(lang, [
+            ...(category ? [{ name: category.title, path: `/projects/${categoryId}` }] : []),
+            { name: project.title, path: `/projects/${categoryId}/${projectId}` },
+          ]),
+          buildProjectSchema(lang, {
+            title: project.title,
+            description: project.fullDescription || project.shortDesc || '',
+            image: project.cover || project.images?.[0],
+            path: `/projects/${categoryId}/${projectId}`,
+          }),
+        ])}
       />
       <Navigation />
 

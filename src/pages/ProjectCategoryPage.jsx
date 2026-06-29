@@ -9,6 +9,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { PageSEO } from '../components/seo/PageSEO';
 import { formatSeoText } from '../seo/siteConfig';
+import { schemaGraph, buildBreadcrumb } from '../seo/structuredData';
 import { CyclingImage } from '../components/ui/CyclingImage';
 import { type } from '../styles/typography';
 
@@ -128,7 +129,7 @@ const ProjectItem = ({ project }) => {
 export const ProjectCategoryPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const projectCategories = useLocalizedProjects();
 
   const category = projectCategories.find((cat) => cat.id === categoryId);
@@ -171,6 +172,9 @@ export const ProjectCategoryPage = () => {
         path={`/projects/${categoryId}`}
         image={category.cover}
         keywords={t('meta.keywords')}
+        jsonLd={schemaGraph([
+          buildBreadcrumb(lang, [{ name: category.title, path: `/projects/${categoryId}` }]),
+        ])}
       />
       <Navigation leftSlot={backButton} />
       

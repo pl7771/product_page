@@ -6,7 +6,7 @@ export default {
     description:
       'Hebei Shandao Environmental Technology — precision micro-mist systems for industrial dust suppression, humidification, cooling, and turnkey engineering across China.',
     keywords:
-      'Hebei Shandao Environmental Technology, Hebei Shandao, micro-mist, dust suppression, humidification, atomization, industrial misting, 河北善道环境科技有限公司, precision micro-mist systems',
+      'Hebei Shandao Environmental Technology, Hebei Shandao, micro-mist, mist system, artificial fog, fog landscape, dust suppression, spray dust suppression, high-pressure atomization, fog cannon, humidification, cooling mist, industrial misting, 河北善道环境科技有限公司, 雾森系统, precision micro-mist systems',
   },
 
   seo: {
@@ -51,6 +51,7 @@ export default {
     technology: 'Projects',
     industry: 'Industry Information',
     contact: 'Contacts',
+    serviceAreas: 'Service Areas',
     back: 'Back',
     brandLine1: 'Hebei Shandao',
     brandLine2: 'Environmental Tech',
@@ -209,6 +210,38 @@ export default {
     ],
   },
 
+  faq: {
+    eyebrow: 'FAQ',
+    title: 'Mist System — Frequently Asked Questions',
+    subtitle: 'Common questions about micro-mist systems, atomization equipment, and misting projects.',
+    items: [
+      {
+        q: 'What is a micro-mist (fog) system?',
+        a: 'A micro-mist system — also called artificial fog or atomization system — pressurizes water and forces it through micron nozzles to create an ultra-fine, fog-like mist used for landscape fog effects, cooling, humidification, and spray dust suppression. Hebei Shandao supplies the equipment and handles engineering design and installation.',
+      },
+      {
+        q: 'How much does a mist system cost?',
+        a: 'Cost depends on the misting area, number of nozzles, pump capacity, pipework, and control method — it is usually estimated per square meter or per project. Share your site details for a tailored design and quote.',
+      },
+      {
+        q: 'How does a micro-mist system work?',
+        a: 'A high-pressure pump raises water to several megapascals; precision nozzles break it into 1–10 micron droplets that evaporate quickly, absorbing heat to cool and humidify the air while binding airborne particles for dust suppression.',
+      },
+      {
+        q: 'Where are mist systems used?',
+        a: 'Common uses include landscape fog and cooling in scenic areas, gardens, residential compounds, and parks; industrial dust suppression and yard spray; cooling and disinfection in livestock farming; and precise humidification for greenhouses and mushroom cultivation.',
+      },
+      {
+        q: 'What is the difference between mist, high-pressure micro-mist, and spray dust-suppression systems?',
+        a: 'All three rely on high-pressure micron atomization. "Mist/fog" usually refers to landscape fog systems, "high-pressure micro-mist" to humidification and cooling equipment, and "spray dust suppression" to industrial dust control. The configuration is chosen by application.',
+      },
+      {
+        q: 'Which areas do you serve?',
+        a: 'Based in Shijiazhuang, Hebei Province, we serve North China and deliver mist-system design, supply, and installation nationwide.',
+      },
+    ],
+  },
+
   contact: {
     eyebrow: 'Contact',
     title: 'Contact Us',
@@ -237,6 +270,12 @@ export default {
     phones: ['+86 166 3110 8208', '+86 166 3110 8228'],
     whatsapp: '+86 166 3110 5554',
     emailAddress: 'hbshandao@outlook.com',
+    address: {
+      full: 'No. 60 Botanical Garden Street, Xinhua District, Shijiazhuang, Hebei Province (50 m east of the Botanical Garden south gate)',
+      street: 'No. 60 Botanical Garden Street, Xinhua District (50 m east of the Botanical Garden south gate)',
+      locality: 'Shijiazhuang',
+      region: 'Hebei',
+    },
   },
 
   footer: {
@@ -244,7 +283,7 @@ export default {
     tagline:
       'Precision atomization systems for industrial dust suppression, environmental control, and micro-mist engineering projects.',
     contactTitle: 'Contact Us',
-    address: 'Hebei Province, China',
+    address: 'No. 60 Botanical Garden Street, Xinhua District, Shijiazhuang, Hebei Province',
     linksTitle: 'Quick Links',
     followTitle: 'Follow Us',
     copyright: 'Hebei Shandao Environmental Technology Co., Ltd.',
@@ -261,6 +300,82 @@ export default {
     projectDetails: 'Project Details',
     viewGallery: 'View Full Gallery',
     projectNotFound: 'Project not found',
+  },
+
+  serviceAreas: {
+    eyebrow: 'Service Areas',
+    title: 'Mist System Service Areas',
+    subtitle:
+      'Headquartered in Shijiazhuang, Hebei, Hebei Shandao delivers micro-mist systems, artificial-fog landscaping, and spray dust suppression — design, supply, and installation across North China and nationwide.',
+    indexHint: 'Choose a region to see typical local applications and service notes.',
+    viewRegion: 'View details',
+    applicationsLabel: 'Typical local applications',
+    coverageLabel: 'Service notes',
+    relatedLabel: 'Related case studies',
+    citiesLabel: 'Cities covered',
+    contactCta: 'Need a local project plan or quote? Talk to our engineering team.',
+    notFound: 'Region not found.',
+    metaTitleTpl: '{region} Mist System & Spray Dust Suppression | Hebei Shandao Environmental Technology',
+    metaDescTpl:
+      '{region} micro-mist systems, artificial-fog landscaping, and spray dust suppression — equipment supply, design, and installation by Hebei Shandao. Coverage: {cities}.',
+    regions: {
+      huabei: {
+        name: 'North China · Hebei',
+        cities: 'Shijiazhuang, Beijing, Tianjin, Tangshan, Baoding',
+        h1: 'North China Mist Systems & Spray Dust Suppression',
+        intro:
+          'Headquartered in Shijiazhuang, we respond quickly across the Beijing–Tianjin–Hebei area. North China concentrates heavy industry — steel, mining, batching plants, and coal preparation drive strong dust-control demand, while dry winters call for workshop humidification.',
+        points: [
+          { t: 'Industrial spray dust suppression', d: 'High-pressure spray and fog cannons for steel, mining, concrete batching, and coal plants to cut PM2.5 and PM10.' },
+          { t: 'Workshop humidification', d: 'Micro-mist humidification for textile, printing, and electronics workshops during dry seasons.' },
+          { t: 'Landscape fog', d: 'Artificial fog for gardens, parks, and residential compounds, with cooling and ambiance.' },
+          { t: 'Local service', d: 'A nearby team for fast survey, installation, and maintenance.' },
+        ],
+        coverage: 'Equipment supply, engineering design, and installation across Shijiazhuang and the Beijing–Tianjin–Hebei region.',
+      },
+      henan: {
+        name: 'Henan',
+        cities: 'Zhengzhou, Kaifeng, Luohe, Sanmenxia, Pingdingshan',
+        h1: 'Henan Mist Systems, Fog Equipment & Misting Projects',
+        intro:
+          'Serving Zhengzhou, Kaifeng, Luohe, Sanmenxia, and Pingdingshan. Henan has a strong agricultural base — greenhouse humidification and livestock cooling/disinfection are in demand — while urban construction drives site and yard dust control.',
+        points: [
+          { t: 'Greenhouse & mushroom humidification', d: 'Ultrasonic and high-pressure mist hold suitable humidity for greenhouses and mushroom cultivation.' },
+          { t: 'Site & yard dust control', d: 'Spray dust suppression and hoarding sprinklers for construction sites and aggregate yards.' },
+          { t: 'Livestock cooling & disinfection', d: 'Evaporative cooling and atomized disinfection for animal housing to ease heat stress.' },
+          { t: 'Landscape artificial fog', d: 'Mist landscapes and cooling for scenic areas, gardens, and residential compounds.' },
+        ],
+        coverage: 'Equipment supply, design, and installation across major Henan cities.',
+      },
+      metros: {
+        name: 'Key Cities',
+        cities: 'Chengdu, Wuhan, Xi’an, Chongqing',
+        h1: 'Chengdu · Wuhan · Xi’an · Chongqing Mist & Landscape Fog',
+        intro:
+          'Serving key cities including Chengdu, Wuhan, Xi’an, and Chongqing. Hot, humid summers in Chengdu, Wuhan, and Chongqing drive outdoor cooling demand, while Xi’an’s tourism and landscape projects make artificial fog widely applicable.',
+        points: [
+          { t: 'Scenic & garden fog', d: 'Mist landscapes for scenic areas and gardens, with cooling and negative ions.' },
+          { t: 'Outdoor commercial cooling', d: 'Spray cooling for restaurant terraces and commercial streets.' },
+          { t: 'Residential fog features', d: 'Water features and mist landscaping for residential compounds.' },
+          { t: 'Indoor venue humidification', d: 'Precise humidification for exhibition halls, greenhouses, and similar spaces.' },
+        ],
+        coverage: 'Project-based design, supply, and installation coordination across key cities in Southwest, Central, and Northwest China.',
+      },
+      shandong: {
+        name: 'Shandong',
+        cities: 'Jinan, Qingdao',
+        h1: 'Shandong Mist Systems · Spray Dust Suppression & Disinfection',
+        intro:
+          'Serving Jinan, Qingdao, and coastal areas. Shandong’s industry, ports, food processing, and large-scale livestock farming concentrate demand for yard dust control, odor/disinfection, and livestock cooling.',
+        points: [
+          { t: 'Port & yard dust control', d: 'High-pressure spray and fog cannons for bulk yards and material transfer.' },
+          { t: 'Odor control & disinfection', d: 'Spray odor neutralization and disinfection for waste transfer, wastewater, and food-processing sites.' },
+          { t: 'Livestock cooling & disinfection', d: 'Cooling and biosecurity disinfection for large-scale farming.' },
+          { t: 'Coastal landscape fog', d: 'Artificial fog landscapes for scenic and commercial spaces.' },
+        ],
+        coverage: 'Equipment supply, design, and installation across Jinan, Qingdao, and coastal Shandong.',
+      },
+    },
   },
 
   productModal: {

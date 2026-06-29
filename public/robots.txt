@@ -2,4 +2,17 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
+# Chinese search engines (explicit, in addition to the * group above)
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+
+User-agent: Sogou web spider
+Allow: /
+Disallow: /admin/
+
+User-agent: 360Spider
+Allow: /
+Disallow: /admin/
+
 Sitemap: https://www.hbshandao.com/sitemap.xml
