@@ -8,13 +8,6 @@ export function useLocalizedProjects() {
 }
 
 export function useLocalizedProducts() {
-  const { dict, t } = useLanguage();
-  return useMemo(
-    () =>
-      getLocalizedProducts(dict).map((p) => ({
-        ...p,
-        price: t('products.requestQuote'),
-      })),
-    [dict, t],
-  );
+  const { dict } = useLanguage();
+  return useMemo(() => getLocalizedProducts(dict), [dict]);
 }

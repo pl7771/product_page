@@ -98,7 +98,7 @@ export const HeroSection = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce opacity-70">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce motion-reduce:animate-none opacity-70">
         <div className="w-6 h-10 border-2 border-white/40 rounded-full flex items-start justify-center p-2">
           <div className="w-1 h-2 bg-white/80 rounded-full" />
         </div>

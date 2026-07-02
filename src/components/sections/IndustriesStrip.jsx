@@ -19,7 +19,7 @@ export const IndustriesStrip = () => {
     <section className="bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-7">
         <div className="flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-8">
-          <span className={`${type.label} text-slate-400 shrink-0`}>{industries.label}</span>
+          <span className={`${type.label} shrink-0`}>{industries.label}</span>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3 sm:gap-x-9">
             {industries.list.map((item) => {
               const Icon = INDUSTRY_ICONS[item.icon] ?? Factory;

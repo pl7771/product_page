@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { MessageCircle, Phone, Mail, ArrowRight, Send, Copy } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { MessageCircle, Phone, Mail, ArrowRight, Send, Copy, Check } from 'lucide-react';
 import { SectionHeading, SectionLead } from '../ui/SectionHeading';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { QR_WECHAT, QR_WHATSAPP } from '../../assets/qr';
@@ -7,22 +7,35 @@ import { type } from '../../styles/typography';
 
 export const QuickContacts = () => {
   const { t, dict, lang } = useLanguage();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [wechatCopied, setWechatCopied] = useState(false);
+  const [formOpened, setFormOpened] = useState(false);
+  const copiedTimerRef = useRef(null);
   const contact = dict.contact;
+
+  useEffect(() => () => window.clearTimeout(copiedTimerRef.current), []);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-      alert(t('contact.wechatCopied'));
+      setWechatCopied(true);
+      window.clearTimeout(copiedTimerRef.current);
+      copiedTimerRef.current = window.setTimeout(() => setWechatCopied(false), 2500);
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      alert(t('contact.sent'));
-      setIsSubmitting(false);
-    }, 1000);
+    const data = new FormData(e.target);
+    const name = [data.get('firstName'), data.get('lastName')].filter(Boolean).join(' ');
+    const replyEmail = data.get('email');
+    const bodyLines = [
+      data.get('message'),
+      '',
+      `${t('contact.firstName')}/${t('contact.lastName')}: ${name}`,
+      replyEmail ? `${t('contact.email')}: ${replyEmail}` : null,
+    ].filter(Boolean);
+    const mailtoLink = `mailto:${contact.emailAddress}?subject=${encodeURIComponent(t('contact.formTitle'))}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+    window.location.href = mailtoLink;
+    setFormOpened(true);
   };
 
   const whatsappLink = `https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`;
@@ -50,9 +63,22 @@ export const QuickContacts = () => {
             <p className={`${type.bodySm} text-slate-500 mb-6`}>{t('contact.wechatDesc')}</p>
             <button
               onClick={() => copyToClipboard('wxid_bol1pjica7ek22')}
-              className={`mt-auto w-full inline-flex items-center justify-center gap-2 py-3 bg-[#07C160] hover:bg-[#06AD56] text-white rounded-xl transition-colors ${type.btnStrong} shadow-md shadow-[#07C160]/25 hover:shadow-[#07C160]/40`}
+              aria-live="polite"
+              className={`mt-auto w-full inline-flex items-center justify-center gap-2 py-3 text-white rounded-xl transition-colors ${type.btnStrong} shadow-md ${
+                wechatCopied
+                  ? 'bg-emerald-600 shadow-emerald-600/25'
+                  : 'bg-[#07C160] hover:bg-[#06AD56] shadow-[#07C160]/25 hover:shadow-[#07C160]/40'
+              }`}
             >
-              {t('contact.wechatCopy')} <Copy className="w-4 h-4" />
+              {wechatCopied ? (
+                <>
+                  {t('contact.wechatCopied')} <Check className="w-4 h-4" />
+                </>
+              ) : (
+                <>
+                  {t('contact.wechatCopy')} <Copy className="w-4 h-4" />
+                </>
+              )}
             </button>
           </div>
 
@@ -112,10 +138,15 @@ export const QuickContacts = () => {
               <input type="email" name="email" placeholder={t('contact.email')} required className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#00A29A] focus:ring-1 focus:ring-[#00A29A]" />
             )}
             <textarea name="message" placeholder={t('contact.message')} rows={3} required className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#00A29A] focus:ring-1 focus:ring-[#00A29A] resize-none" />
-            <button type="submit" disabled={isSubmitting} className={`w-full py-3 bg-[#00A29A] hover:bg-[#008f88] text-white ${type.btnStrong} rounded-lg transition-all flex items-center justify-center gap-2 shadow-md disabled:opacity-60`}>
-              {isSubmitting ? t('contact.sending') : t('contact.submit')}
-              {!isSubmitting && <Send className="w-4 h-4" />}
+            <button type="submit" className={`w-full py-3 bg-[#00A29A] hover:bg-[#008f88] text-white ${type.btnStrong} rounded-lg transition-all flex items-center justify-center gap-2 shadow-md`}>
+              {t('contact.submit')}
+              <Send className="w-4 h-4" />
             </button>
+            {formOpened && (
+              <p aria-live="polite" className={`${type.bodySm} text-center text-[#00A29A]`}>
+                {t('contact.sent')}
+              </p>
+            )}
           </form>
         </div>
       </div>

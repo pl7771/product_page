@@ -46,6 +46,11 @@ export default {
     },
   },
 
+  common: {
+    close: 'Close',
+    backToTop: 'Back to top',
+  },
+
   nav: {
     products: 'Product Gallery',
     technology: 'Projects',
@@ -55,6 +60,8 @@ export default {
     back: 'Back',
     brandLine1: 'Hebei Shandao',
     brandLine2: 'Environmental Tech',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
   },
 
   hero: {
@@ -105,7 +112,7 @@ export default {
     readMore: 'Read more',
     backToList: 'Back',
     notFound: 'Article not found.',
-    contactCta: 'Need help applying this to your site? Talk to our engineering team.',
+    contactCta: 'Need help applying this to your project? Talk to our engineering team.',
     filter: {
       searchPlaceholder: 'Search articles…',
       allCategories: 'All',
@@ -120,9 +127,8 @@ export default {
     titleHighlight: '',
     description:
       'Components we deploy on installation projects — turnkey misting and humidification services for industrial clients.',
-    requestOffer: 'Request Commercial Offer',
+    requestOffer: 'Request a Quote',
     contact: 'Contact',
-    requestQuote: 'Request Quote',
     photosSoon: 'Photos coming soon',
     specsTitle: 'Ultrasonic Humidifier',
     specsSubtitle: 'Model Specifications',
@@ -265,8 +271,7 @@ export default {
     email: 'Email',
     message: 'How can we help you?',
     submit: 'Submit Request',
-    sending: 'Sending...',
-    sent: 'Message sent successfully!',
+    sent: 'Opening your email app — hit send to reach us.',
     phones: ['+86 166 3110 8208', '+86 166 3110 8228'],
     whatsapp: '+86 166 3110 5554',
     emailAddress: 'hbshandao@outlook.com',
