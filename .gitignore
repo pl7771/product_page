@@ -29,3 +29,7 @@ deploy_key.pub
 *.njsproj
 *.sln
 *.sw?
+PRODUCT.md
+DESIGN.md
+.impeccable/design.json
+.impeccable/live/config.json

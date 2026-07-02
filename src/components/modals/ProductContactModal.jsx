@@ -6,13 +6,13 @@ export const ProductContactModal = ({ product, onClose }) => {
   const { t, dict, lang } = useLanguage();
   if (!product) return null;
 
-  const whatsappMsg = encodeURIComponent(`${t('productModal.interestMsg')} ${product.name} (${product.price})`);
+  const whatsappMsg = encodeURIComponent(`${t('productModal.interestMsg')} ${product.name}`);
   const whatsappLink = `https://wa.me/${dict.contact.whatsapp.replace(/\D/g, '')}?text=${whatsappMsg}`;
 
   return (
     <div className="fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="relative bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 w-full max-w-md mx-2 shadow-2xl animate-in fade-in zoom-in duration-300">
-        <button onClick={onClose} className="absolute top-3 right-3 p-2 text-slate-400 hover:text-[#00A29A] hover:bg-slate-100 rounded-full transition-all" aria-label="Close">
+        <button onClick={onClose} className="absolute top-3 right-3 p-2 text-slate-400 hover:text-[#00A29A] hover:bg-slate-100 rounded-full transition-all" aria-label={t('common.close')}>
           <X className="w-5 h-5" />
         </button>
 
@@ -40,7 +40,7 @@ export const ProductContactModal = ({ product, onClose }) => {
             </div>
             <h4 className="text-slate-900 font-semibold text-center text-sm">{t('productModal.wechat')}</h4>
             <div className="bg-white p-2 rounded-lg w-24 h-24 border border-slate-200">
-              <img src={QR_WECHAT} alt="WeChat" loading="lazy" className="w-full h-full object-contain" draggable={false} />
+              <img src={QR_WECHAT} alt="WeChat QR" loading="lazy" className="w-full h-full object-contain" draggable={false} />
             </div>
           </div>
         </div>

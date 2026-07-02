@@ -21,6 +21,7 @@ export const CyclingImage = ({
 
   useEffect(() => {
     if (len <= 1) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const id = setInterval(() => {
       setCurrentImgIndex((prev) => {
         const next = (prev + 1) % len;

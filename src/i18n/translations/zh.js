@@ -45,6 +45,11 @@ export default {
     },
   },
 
+  common: {
+    close: '关闭',
+    backToTop: '返回顶部',
+  },
+
   nav: {
     products: '产品图库',
     technology: '工程案例',
@@ -53,6 +58,8 @@ export default {
     back: '返回',
     brandLine1: '河北善道',
     brandLine2: '环境科技',
+    openMenu: '打开菜单',
+    closeMenu: '关闭菜单',
   },
 
   hero: {
@@ -117,9 +124,8 @@ export default {
     title: '产品图库',
     titleHighlight: '',
     description: '我们为客户安装项目所部署的设备组件 — 提供微雾加湿交钥匙工程服务。',
-    requestOffer: '获取商业方案',
+    requestOffer: '获取报价',
     contact: '联系',
-    requestQuote: '询价',
     photosSoon: '图片即将上线',
     specsTitle: '超声波加湿机',
     specsSubtitle: '型号规格参数',
@@ -229,8 +235,7 @@ export default {
     email: '邮箱',
     message: '请描述您的需求',
     submit: '提交咨询',
-    sending: '发送中...',
-    sent: '消息发送成功！',
+    sent: '正在打开您的邮箱应用，请点击发送以完成咨询。',
     phones: ['+86 166 3110 8208', '+86 166 3110 8228'],
     whatsapp: '+8616631105554',
     emailAddress: 'hbshandao@outlook.com',

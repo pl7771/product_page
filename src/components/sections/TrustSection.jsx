@@ -10,19 +10,17 @@ export const TrustSection = () => {
   const { trust } = dict;
 
   return (
-    <section id="trust" className="py-12 sm:py-16 bg-slate-50 border-t border-slate-200 relative overflow-hidden section-mesh">
+    <section id="trust" className="py-16 sm:py-24 bg-slate-50 border-t border-slate-200 relative overflow-hidden section-mesh">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00A29A]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <Reveal>
-          <div className="text-center mb-8">
-            <SectionHeading centered>{trust.testimonialsEyebrow}</SectionHeading>
-            {trust.testimonialsTitle && (
-              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-3 text-center`}>{trust.testimonialsTitle}</h3>
-            )}
-            <SectionLead centered className="max-w-2xl mx-auto">{trust.testimonialsSubtitle}</SectionLead>
-          </div>
-        </Reveal>
+        <div className="text-center mb-8">
+          <SectionHeading centered>{trust.testimonialsEyebrow}</SectionHeading>
+          {trust.testimonialsTitle && (
+            <h3 className={`${sectionHeadingClassName} text-slate-900 mb-3 text-center`}>{trust.testimonialsTitle}</h3>
+          )}
+          <SectionLead centered className="max-w-2xl mx-auto">{trust.testimonialsSubtitle}</SectionLead>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {trust.testimonials.map((test, idx) => (
@@ -50,19 +48,17 @@ export const TrustSection = () => {
           ))}
         </div>
 
-        <Reveal>
-          <div className="max-w-3xl mx-auto text-left">
-            <SectionHeading centered>{trust.eyebrow}</SectionHeading>
-            {trust.title && (
-              <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
-            )}
-            <div className={`${type.bodySm} sm:text-[15px] text-slate-600 space-y-4 leading-relaxed`}>
-              {trust.description.split('\n\n').map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-              ))}
-            </div>
+        <div className="max-w-3xl mx-auto text-left">
+          <SectionHeading>{trust.eyebrow}</SectionHeading>
+          {trust.title && (
+            <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
+          )}
+          <div className={`${type.bodySm} sm:text-[15px] text-slate-600 space-y-4 leading-relaxed`}>
+            {trust.description.split('\n\n').map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            ))}
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -10,7 +10,8 @@ const OBSERVER_OPTIONS = { threshold: 0.4 };
  */
 export const CountUpStat = ({ value, className = '', duration = 1400 }) => {
   const [ref, isVisible] = useIntersectionObserver(OBSERVER_OPTIONS);
-  const match = String(value).match(/^(\D*)(\d+)(.*)$/);
+  const isRatio = String(value).includes('/');
+  const match = !isRatio ? String(value).match(/^(\D*)(\d+)(.*)$/) : null;
   const target = match ? Number(match[2]) : null;
   const [display, setDisplay] = useState(target === null ? value : `${match[1]}0${match[3]}`);
   const rafRef = useRef(null);

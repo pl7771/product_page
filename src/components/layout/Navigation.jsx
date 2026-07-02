@@ -232,8 +232,11 @@ export const Navigation = ({ leftSlot }) => {
           <div className="flex items-center gap-1.5 shrink-0 md:hidden">
             <LanguageSwitcher compact />
             <button
-              className={`p-2 rounded-full transition-all ${mobileMenuOpen ? 'bg-[#00A29A] text-white' : 'text-slate-600 hover:text-[#00A29A]'}`}
+              className={`p-2.5 rounded-full transition-all ${mobileMenuOpen ? 'bg-[#00A29A] text-white' : 'text-slate-600 hover:text-[#00A29A]'}`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label={mobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -241,7 +244,7 @@ export const Navigation = ({ leftSlot }) => {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden relative border-t border-slate-200/80 py-3 px-4 sm:px-6 flex flex-col gap-1">
+          <div id="mobile-nav-menu" className="md:hidden relative border-t border-slate-200/80 py-3 px-4 sm:px-6 flex flex-col gap-1">
             {links.map((link) => renderLink(link, true))}
           </div>
         )}
