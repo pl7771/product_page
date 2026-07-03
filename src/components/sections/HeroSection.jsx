@@ -1,7 +1,6 @@
 import { ArrowRight, Play, Wind, Droplets, Snowflake, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { OptimizedImage } from '../ui/OptimizedImage';
-import { SmokeBackground } from '../layout/SmokeBackground';
 import { type } from '../../styles/typography';
 
 const HERO_IMAGE = '/data/concrete-batching-plant/4.jpeg';
@@ -29,7 +28,6 @@ export const HeroSection = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950/65 via-slate-900/45 to-slate-900/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-slate-900/10" />
-      <SmokeBackground variant="mist" className="absolute inset-0 pointer-events-none z-[1]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-32 w-full">
         <div className="max-w-3xl">
