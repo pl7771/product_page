@@ -46,8 +46,8 @@ jobs:
 
       - name: Build frontend
         env:
-          # Until ICP + domain: site is tested by IP. Change to https://www.hbshandao.com later.
-          VITE_SITE_URL: http://8.140.28.87
+          # ICP filing complete (冀ICP备2026024129号-1), HTTPS live on the domain.
+          VITE_SITE_URL: https://www.hbshandao.com
         run: npm run build
 
       - name: Ensure server prerequisites
