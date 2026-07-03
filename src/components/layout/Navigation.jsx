@@ -5,16 +5,17 @@ import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 import { LogoIcon } from '../ui/LogoIcon';
 import { LogoChip } from '../ui/LogoChip';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { useLangBase } from '../../i18n/routing';
 
 const SCROLL_THRESHOLD = 80;
 const SCROLL_DELTA = 8;
 const ANCHOR_SCROLL_SETTLE_MS = 250;
 const ANCHOR_SCROLL_MAX_MS = 4000;
 
-const NavSectionLink = ({ href, label, className, onNavigate }) => {
+const NavSectionLink = ({ href, homePath, label, className, onNavigate }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const sectionId = href.replace('/#', '');
+  const sectionId = href.split('#')[1];
 
   const scrollToSection = useCallback(() => {
     const attempt = () => {
@@ -35,8 +36,8 @@ const NavSectionLink = ({ href, label, className, onNavigate }) => {
     e.preventDefault();
     onNavigate();
 
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== homePath) {
+      navigate(homePath);
       window.setTimeout(scrollToSection, 350);
     } else {
       scrollToSection();
@@ -59,6 +60,8 @@ export const Navigation = ({ leftSlot }) => {
   const anchorScrollMaxTimerRef = useRef(null);
   const { t } = useLanguage();
   const location = useLocation();
+  const base = useLangBase();
+  const homePath = base || '/';
 
   const endAnchorNavigation = useCallback(() => {
     anchorNavigatingRef.current = false;
@@ -142,10 +145,12 @@ export const Navigation = ({ leftSlot }) => {
   }, [mobileMenuOpen, endAnchorNavigation]);
 
   const links = [
-    { href: '/#products', label: t('nav.products') },
-    { href: '/#projects-section', label: t('nav.technology') },
-    { to: '/industry-information', label: t('nav.industry') },
-    { href: '/#contact', label: t('nav.contact') },
+    { href: `${base}/#products`, label: t('nav.products') },
+    { href: `${base}/#projects-section`, label: t('nav.technology') },
+    { to: `${base}/solutions`, label: t('nav.solutions') },
+    { to: `${base}/industry-information`, label: t('nav.industry') },
+    { to: `${base}/service-areas`, label: t('nav.serviceAreas') },
+    { href: `${base}/#contact`, label: t('nav.contact') },
   ];
 
   const navLinkClassName =
@@ -153,9 +158,9 @@ export const Navigation = ({ leftSlot }) => {
 
   const isLinkActive = (link) => {
     if (link.to) return location.pathname.startsWith(link.to);
-    if (link.href === '/#contact') return location.pathname === '/' && location.hash === '#contact';
-    if (link.href === '/#products') return location.pathname === '/' && location.hash === '#products';
-    if (link.href === '/#projects-section') return location.pathname === '/' && location.hash === '#projects-section';
+    if (link.href?.includes('#')) {
+      return location.pathname === homePath && location.hash === `#${link.href.split('#')[1]}`;
+    }
     return false;
   };
 
@@ -187,6 +192,7 @@ export const Navigation = ({ leftSlot }) => {
       <NavSectionLink
         key={link.href}
         href={link.href}
+        homePath={homePath}
         label={link.label}
         className={mobileClass}
         onNavigate={handleNavSectionClick}

@@ -1,5 +1,5 @@
 import { writeFileSync } from 'node:fs';
-import { getStaticRoutes, articleRoute } from './routes.mjs';
+import { getStaticRoutes, articleRoute, enTwin } from './routes.mjs';
 import { PRODUCTION_SITE_ORIGIN } from '../src/seo/siteOrigin.js';
 import { SEED_ARTICLES } from '../server/seedArticles.js';
 
@@ -46,17 +46,23 @@ const urlEntry = ({ path, lastmod, priority, changefreq }) => `  <url>
 
 const articles = await getArticles();
 
+// Every logical (Chinese) URL plus its /en twin.
+const expand = (opts) => [
+  urlEntry(opts),
+  urlEntry({ ...opts, path: enTwin(opts.path) }),
+];
+
 const entries = [
-  ...getStaticRoutes().map((path) =>
-    urlEntry({
+  ...getStaticRoutes().flatMap((path) =>
+    expand({
       path,
       lastmod: today,
       changefreq: path === '/' ? 'weekly' : 'monthly',
       priority: path === '/' ? '1.0' : '0.7',
     }),
   ),
-  ...articles.map((a) =>
-    urlEntry({
+  ...articles.flatMap((a) =>
+    expand({
       path: articleRoute(a.id),
       lastmod: articleLastmod(a),
       changefreq: 'monthly',

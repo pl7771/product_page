@@ -4,7 +4,7 @@ export default {
   meta: {
     title: 'Hebei Shandao Environmental Technology | Precision Micro-Mist Systems',
     description:
-      'Hebei Shandao Environmental Technology — precision micro-mist systems for industrial dust suppression, humidification, cooling, and turnkey engineering across China.',
+      'Hebei Shandao Environmental Technology — source manufacturer of mist (fog) systems and industrial humidification and dust-suppression equipment: R&D, production, engineering design, installation, and repair across China.',
     keywords:
       'Hebei Shandao Environmental Technology, Hebei Shandao, micro-mist, mist system, artificial fog, fog landscape, dust suppression, spray dust suppression, high-pressure atomization, fog cannon, humidification, cooling mist, industrial misting, 河北善道环境科技有限公司, 雾森系统, precision micro-mist systems',
   },
@@ -13,35 +13,35 @@ export default {
     home: {
       title: 'Hebei Shandao Environmental Technology | Precision Micro-Mist Systems',
       description:
-        'One-stop micro-mist solutions for humidification, dust suppression, and cooling — R&D, equipment supply, engineering design, and installation by Hebei Shandao Environmental Technology.',
+        'Source manufacturer of mist systems, artificial-fog landscaping, and spray dust-suppression equipment — R&D, production, engineering, installation, and repair by Hebei Shandao for scenic areas, communities, and industrial workshops.',
     },
     industry: {
-      title: 'Industry Information | Hebei Shandao Environmental Technology',
+      title: 'Industry Information | Hebei Shandao',
       description:
         'Latest trends, regulations, and insights in eco-friendly atomization and micro-mist engineering from Hebei Shandao Environmental Technology.',
     },
     article: {
-      title: '{title} | Hebei Shandao Environmental Technology',
+      title: '{title} | Hebei Shandao',
       description: '{excerpt}',
     },
     projectCategory: {
-      title: '{category} Projects | Hebei Shandao Environmental Technology',
+      title: '{category} Projects | Hebei Shandao',
       description: '{description}',
     },
     project: {
-      title: '{project} | {category} | Hebei Shandao Environmental Technology',
+      title: '{project} | {category} | Hebei Shandao',
       description: '{description}',
     },
     privacy: {
-      title: 'Privacy Policy | Hebei Shandao Environmental Technology',
+      title: 'Privacy Policy | Hebei Shandao',
       description: 'How Hebei Shandao Environmental Technology collects, uses, and protects your personal information.',
     },
     terms: {
-      title: 'Terms of Service | Hebei Shandao Environmental Technology',
+      title: 'Terms of Service | Hebei Shandao',
       description: 'Terms and conditions for using the Hebei Shandao Environmental Technology website and services.',
     },
     admin: {
-      title: 'Admin | Hebei Shandao Environmental Technology',
+      title: 'Admin | Hebei Shandao',
       description: 'Private administration area.',
     },
   },
@@ -57,6 +57,7 @@ export default {
     industry: 'Industry Information',
     contact: 'Contacts',
     serviceAreas: 'Service Areas',
+    solutions: 'Solutions',
     back: 'Back',
     brandLine1: 'Hebei Shandao',
     brandLine2: 'Environmental Tech',
@@ -65,7 +66,7 @@ export default {
   },
 
   hero: {
-    badge: 'Eco-Friendly Atomization Solutions',
+    badge: 'Mist Systems · Eco-Friendly Atomization',
     titleLine1: 'Precision',
     titleHighlight: 'Micro-Mist',
     titleLine2: 'Systems',
@@ -98,11 +99,11 @@ export default {
   industries: {
     label: 'Trusted across industries',
     list: [
-      { icon: 'mining', name: 'Mining & Heavy Industry' },
-      { icon: 'construction', name: 'Construction' },
-      { icon: 'chemical', name: 'Chemicals & Textiles' },
-      { icon: 'agriculture', name: 'Agriculture & Greenhouses' },
-      { icon: 'municipal', name: 'Municipal Sanitation' },
+      { icon: 'mining', name: 'Mining & Heavy Industry', to: '/solutions/stone' },
+      { icon: 'construction', name: 'Construction', to: '/solutions/cement' },
+      { icon: 'chemical', name: 'Chemicals & Textiles', to: '/solutions/textile' },
+      { icon: 'agriculture', name: 'Agriculture & Greenhouses', to: '/projects/marine' },
+      { icon: 'municipal', name: 'Municipal Sanitation', to: '/projects/science' },
     ],
   },
 
@@ -126,7 +127,7 @@ export default {
     title: 'Product Gallery',
     titleHighlight: '',
     description:
-      'Components we deploy on installation projects — turnkey misting and humidification services for industrial clients.',
+      'Mist-system, fog-making, and high-pressure micro-mist equipment we deploy on installation projects — factory-direct supply with turnkey humidification, cooling, dust suppression, installation, and repair.',
     requestOffer: 'Request a Quote',
     contact: 'Contact',
     photosSoon: 'Photos coming soon',
@@ -239,11 +240,23 @@ export default {
       },
       {
         q: 'What is the difference between mist, high-pressure micro-mist, and spray dust-suppression systems?',
-        a: 'All three rely on high-pressure micron atomization. "Mist/fog" usually refers to landscape fog systems, "high-pressure micro-mist" to humidification and cooling equipment, and "spray dust suppression" to industrial dust control. The configuration is chosen by application.',
+        a: 'All three rely on high-pressure micron atomization. "Mist/fog" usually refers to landscape fog systems, "high-pressure micro-mist" to humidification and cooling equipment, and "spray dust suppression" to industrial dust control. The same technology is also marketed as fog-spray systems, fog machines, or artificial-mist equipment. The configuration is chosen by application.',
       },
       {
         q: 'Which areas do you serve?',
         a: 'Based in Shijiazhuang, Hebei Province, we serve North China and deliver mist-system design, supply, and installation nationwide.',
+      },
+      {
+        q: 'How do I choose a mist-system brand? Are you a manufacturer?',
+        a: 'We are a source manufacturer in Shijiazhuang: equipment is developed and produced in-house, and we handle engineering and installation ourselves. When comparing brands, look at delivered projects, build materials, control systems, and after-sales capability rather than price alone. Reference cases and factory visits are welcome.',
+      },
+      {
+        q: 'How do I get a mist-system quotation?',
+        a: 'Tell us the application (landscape, workshop, or storage yard), the coverage area or number of spray points, and the on-site water and power conditions — we will prepare a configuration plan and quotation, usually within 1–2 business days.',
+      },
+      {
+        q: 'Do you provide installation and after-sales repair?',
+        a: 'Yes. We handle system design, installation, commissioning, and operator training. On-site repair is available in and around Shijiazhuang; for projects elsewhere we provide remote guidance and spare-parts supply, with pumps, nozzles, and other consumables kept in stock.',
       },
     ],
   },
@@ -286,7 +299,7 @@ export default {
   footer: {
     companyName: 'Hebei Shandao Environmental Technology Co., Ltd.',
     tagline:
-      'Precision atomization systems for industrial dust suppression, environmental control, and micro-mist engineering projects.',
+      'Source manufacturer of mist systems and industrial humidification & dust-suppression equipment — design, installation, and maintenance of micro-mist engineering projects.',
     contactTitle: 'Contact Us',
     address: 'No. 60 Botanical Garden Street, Xinhua District, Shijiazhuang, Hebei Province',
     linksTitle: 'Quick Links',
@@ -320,7 +333,7 @@ export default {
     citiesLabel: 'Cities covered',
     contactCta: 'Need a local project plan or quote? Talk to our engineering team.',
     notFound: 'Region not found.',
-    metaTitleTpl: '{region} Mist System & Spray Dust Suppression | Hebei Shandao Environmental Technology',
+    metaTitleTpl: '{region} Mist System & Spray Dust Suppression | Hebei Shandao',
     metaDescTpl:
       '{region} micro-mist systems, artificial-fog landscaping, and spray dust suppression — equipment supply, design, and installation by Hebei Shandao. Coverage: {cities}.',
     regions: {
@@ -333,7 +346,7 @@ export default {
         points: [
           { t: 'Industrial spray dust suppression', d: 'High-pressure spray and fog cannons for steel, mining, concrete batching, and coal plants to cut PM2.5 and PM10.' },
           { t: 'Workshop humidification', d: 'Micro-mist humidification for textile, printing, and electronics workshops during dry seasons.' },
-          { t: 'Landscape fog', d: 'Artificial fog for gardens, parks, and residential compounds, with cooling and ambiance.' },
+          { t: 'Landscape fog', d: 'Artificial fog for gardens, parks, communities, and greening projects, with cooling and ambiance.' },
           { t: 'Local service', d: 'A nearby team for fast survey, installation, and maintenance.' },
         ],
         coverage: 'Equipment supply, engineering design, and installation across Shijiazhuang and the Beijing–Tianjin–Hebei region.',
@@ -383,6 +396,144 @@ export default {
     },
   },
 
+  solutions: {
+    eyebrow: 'Solutions',
+    title: 'Industrial Humidification & Dust-Suppression Solutions',
+    subtitle:
+      'Micro-mist humidification, spray dust suppression, and atomization systems tailored to specific industries — designed, supplied, installed, and serviced by the source manufacturer.',
+    indexHint: 'Choose an industry to see typical conditions and system notes.',
+    viewSolution: 'View solution',
+    applicationsLabel: 'Typical conditions & approach',
+    coverageLabel: 'Service notes',
+    relatedLabel: 'Related case studies',
+    scenariosLabel: 'Typical facilities',
+    contactCta: 'Need a plan or quote for your plant? Talk to our engineering team.',
+    notFound: 'Solution not found.',
+    metaDescTpl: '{intro}',
+    items: {
+      textile: {
+        name: 'Textile & Spinning Mills',
+        h1: 'Textile Mill Humidification · Spinning Workshop Micro-Mist',
+        metaTitle: 'Textile Mill Humidifiers & Spinning Workshop Mist | Hebei Shandao',
+        scenarios: 'Spinning, weaving, and synthetic-fiber workshops; garment and fabric production',
+        intro:
+          'Textile and spinning workshops are highly sensitive to relative humidity: dry air causes yarn breaks, fly waste, and static cling, hurting quality and output. High-pressure micro-mist raises workshop humidity quickly and evenly while also binding airborne fibers.',
+        points: [
+          { t: 'Constant humidity', d: 'Zone-based targets (typically 55–75% RH) with sensor-linked automatic operation and separate day/night settings.' },
+          { t: 'Anti-static humidification', d: 'Stable humidity suppresses static build-up, reducing fly adhesion and yarn breaks — the standard anti-static humidification approach for textile floors.' },
+          { t: 'Dust and lint control', d: 'Micro-mist binds airborne lint and dust, improving air quality on the floor.' },
+          { t: 'Custom nozzle layout', d: 'As the manufacturer, we lay out nozzles to match floor area and machinery, keeping water and energy use in check.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of humidification and dust-control systems for textile, spinning, weaving, and synthetic-fiber workshops.',
+      },
+      nonwoven: {
+        name: 'Non-Woven Fabric Plants',
+        h1: 'Non-Woven Workshop Humidity Control',
+        metaTitle: 'Non-Woven Workshop Humidity Control | Hebei Shandao',
+        scenarios: 'Non-woven production lines, melt-blown and spunbond workshops',
+        intro:
+          'Non-woven production demands tight humidity and static control: dry conditions cause fiber fly, charged rolls, and unstable grammage. Micro-mist humidification stabilizes workshop humidity without wetting the material.',
+        points: [
+          { t: 'Stable output', d: 'Steady humidity supports uniform grammage and flat winding, reducing breaks and rejects.' },
+          { t: 'Static control', d: 'Keeps workshop humidity inside the process window to match anti-static requirements.' },
+          { t: 'Dry fog, no dripping', d: 'Micron droplets flash-evaporate without condensing on equipment or rolls.' },
+          { t: 'Per-line zoning', d: 'Independent control per production line balances effect and energy use.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of humidity-control systems for non-woven and melt-blown workshops.',
+      },
+      painting: {
+        name: 'Paint & Coating Shops',
+        h1: 'Auto Paint Booth Humidification · Coating Workshop Micro-Mist',
+        metaTitle: 'Paint Booth & Coating Workshop Humidification | Hebei Shandao',
+        scenarios: 'Automotive paint booths; furniture and machinery coating lines',
+        intro:
+          'Painting and coating processes have strict humidity, cleanliness, and static requirements: dry air leads to orange peel, pinholes, and static dust attraction. Micro-mist humidification removes static and suppresses paint mist and dust, helping stabilize coating quality.',
+        points: [
+          { t: 'Static elimination', d: 'Humidification against static in spray painting reduces rework caused by dust attracted to the finish.' },
+          { t: 'Overspray suppression', d: 'Water mist captures suspended paint mist and dust, improving workshop air.' },
+          { t: 'Process humidity', d: 'Humidity bands set to the coating process, maintained automatically.' },
+          { t: 'Safe configuration', d: 'Equipment selection and pipe routing follow the safety requirements of the paint-booth environment.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of humidification and dust-control systems for paint booths and coating workshops.',
+      },
+      grinding: {
+        name: 'Grinding & Polishing Shops',
+        h1: 'Grinding Workshop Dust Suppression & Humidification',
+        metaTitle: 'Grinding Workshop Dust Suppression | Hebei Shandao',
+        scenarios: 'Metal grinding and polishing; woodworking sanding shops',
+        intro:
+          'Grinding and polishing generate high concentrations of fine dust that spreads easily in dry air, creating occupational-health and safety risks. Spray dust suppression captures airborne dust with micron droplets while raised humidity prevents re-entrainment.',
+        points: [
+          { t: 'Airborne dust capture', d: 'Micron droplets bind dust particles and settle them, lowering PM levels on the floor.' },
+          { t: 'Workstation focus', d: 'Directed spray at grinding stations controls dust at the source.' },
+          { t: 'Humidity holding', d: 'Suitable humidity keeps settled dust from lifting off floors and equipment.' },
+          { t: 'Linked operation', d: 'Runs on schedules or linked to ventilation and production hours.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of spray dust-suppression and humidification systems for grinding and polishing shops.',
+      },
+      tobacco: {
+        name: 'Tobacco Workshops',
+        h1: 'Tobacco Workshop Humidification',
+        metaTitle: 'Tobacco Workshop Humidification | Hebei Shandao',
+        scenarios: 'Primary processing, leaf storage, and packing workshops',
+        intro:
+          'Tobacco leaf and cut tobacco are humidity-sensitive: dry conditions raise breakage rates and weight loss and destabilize quality. Workshop micro-mist holds the process humidity band, cutting breakage and losses.',
+        points: [
+          { t: 'Process humidity', d: 'Separate setpoints for primary processing, leaf storage, and packing, held automatically.' },
+          { t: 'Fine dry fog', d: 'Micron droplets vaporize quickly without wetting leaf or machinery.' },
+          { t: 'Per-section zoning', d: 'Independent control per section matches differing process needs.' },
+          { t: 'Reliable materials', d: 'Stainless-steel wetted parts available for easy cleaning and maintenance.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of humidification systems for tobacco processing, storage, and packing workshops.',
+      },
+      paper: {
+        name: 'Paper & Printing Plants',
+        h1: 'Paper Mill Humidification · Print Shop Humidity Control',
+        metaTitle: 'Paper Mill & Print Shop Humidification | Hebei Shandao',
+        scenarios: 'Paper mills, printing workshops, and paper storage',
+        intro:
+          'Paper moisture content follows ambient humidity: dry air causes shrinkage, curl, static, and misregistration. Micro-mist humidification stabilizes workshop humidity, improving paper handling and print quality.',
+        points: [
+          { t: 'Constant humidity', d: 'Stable relative humidity reduces paper deformation and web breaks.' },
+          { t: 'Anti-static', d: 'Suppresses static on paper and machines, reducing jams and cling.' },
+          { t: 'Dry fog, no dripping', d: 'Droplets disperse instantly without condensing on paper or equipment.' },
+          { t: 'Storage humidity', d: 'Holds warehouse humidity to cut storage losses.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of humidification systems for paper mills, print shops, and paper storage.',
+      },
+      cement: {
+        name: 'Cement & Building Materials',
+        h1: 'Cement Plant Fog Dust Suppression · Building-Materials Dust Control',
+        metaTitle: 'Cement Plant Dust Suppression Equipment | Hebei Shandao',
+        scenarios: 'Cement plants, batching plants, building-materials lines, loading points',
+        intro:
+          'Cement and building-materials production has many dispersed dust sources: crushing, milling, conveying, and loading all emit dust. Water-mist dust-suppression equipment sprays at the key nodes to keep dust from escaping and helps sites meet emission requirements.',
+        points: [
+          { t: 'Node treatment', d: 'Directed spray at loading points and belt-transfer points — the main emission nodes.' },
+          { t: 'Water-mist capture', d: 'Micron droplets bind suspended particles, lowering PM2.5 and PM10.' },
+          { t: 'Smart interlock', d: 'Starts and stops with production activity, no dedicated operator needed.' },
+          { t: 'Easy maintenance', d: 'Quick-change nozzles and filters with responsive repair service.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of spray dust-suppression systems for cement plants, batching plants, and building-materials producers.',
+      },
+      stone: {
+        name: 'Stone Crushing & Aggregate Yards',
+        h1: 'Crusher Workshop Dust Control · Aggregate Yard Wind-Dust Suppression',
+        metaTitle: 'Stone Plant Dust Control & Aggregate Yard Suppression | Hebei Shandao',
+        scenarios: 'Crushing workshops, screening lines, conveyors, open storage yards',
+        intro:
+          'Stone crushing and aggregate storage are priority dust sources: crushing and screening produce dense dust, and open yards lift dust in wind. Systematic spray suppression covers crushing, conveying, and storage — a complete dust-pollution solution for stone plants.',
+        points: [
+          { t: 'Crusher-point spray', d: 'Directed spray at crusher inlets and outlets suppresses dust at the source.' },
+          { t: 'Conveyor suppression', d: 'Spray at belt-transfer points cuts dust from falling material.' },
+          { t: 'Yard wind-dust control', d: 'High-pressure micro-mist combined with sprinklers and scheduling controls wind-lifted dust in open yards.' },
+          { t: 'Whole-site plans', d: 'Site-plan-based overall dust-control proposals and quotes, with phased delivery supported.' },
+        ],
+        coverage: 'Design, supply, installation, and repair of spray dust-suppression systems for stone plants, sand-and-gravel yards, and material storage.',
+      },
+    },
+  },
+
   productModal: {
     title: 'Contact About',
     subtitle: 'Choose your preferred contact method',
@@ -407,7 +558,7 @@ export default {
     categories: {
       industrial: {
         title: 'Industrial Micro-Mist Dust Suppression',
-        description: 'High-pressure misting solutions for dust control in mining, construction, and heavy industry.',
+        description: 'High-pressure micro-mist, spray dust suppression, and fog-cannon solutions for mining, construction, and heavy industry.',
         projects: {
           1: {
             title: 'Concrete Batching Plant Dust Control',
@@ -431,7 +582,7 @@ export default {
       },
       ecology: {
         title: 'Ecological Mistscape Aesthetics Engineering',
-        description: 'Artificial fog systems for landscape aesthetics, cooling, and unique atmospheric effects.',
+        description: 'Mist systems and artificial fog landscapes for scenic areas, gardens, communities, and greening projects — aesthetics, cooling, and atmosphere.',
         projects: {
           2: {
             title: 'Landscape Mistscape Project',

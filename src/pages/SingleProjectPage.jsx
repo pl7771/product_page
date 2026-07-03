@@ -36,7 +36,19 @@ export const SingleProjectPage = () => {
     preloadImage(project.images[(currentImgIndex + 1) % project.images.length]);
   }, [project, currentImgIndex]);
 
-  if (!project) return <div className="min-h-screen flex items-center justify-center">{t('projectPage.projectNotFound')}</div>;
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <PageSEO
+          title={t('projectPage.projectNotFound')}
+          description={t('projectPage.projectNotFound')}
+          path={`/projects/${categoryId}/${projectId}`}
+          noindex
+        />
+        {t('projectPage.projectNotFound')}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white flex flex-col">

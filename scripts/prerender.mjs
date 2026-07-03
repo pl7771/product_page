@@ -21,7 +21,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getStaticRoutes, articleRoute } from './routes.mjs';
+import { getStaticRoutes, articleRoute, withEnglishTwins } from './routes.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -155,18 +155,20 @@ const main = async () => {
   const staticServer = await startStaticServer();
   log(`serving dist on :${STATIC_PORT}`);
 
-  // 3. Resolve routes (static + dynamic article ids from the API).
-  const routes = new Set(getStaticRoutes());
+  // 3. Resolve routes (static + dynamic article ids from the API),
+  //    then add the /en twins so both languages get static HTML.
+  const logicalRoutes = new Set(getStaticRoutes());
   if (apiUp) {
     try {
       const res = await fetch(`http://127.0.0.1:${API_PORT}/api/articles/public`);
       const articles = await res.json();
-      for (const a of articles) routes.add(articleRoute(a.id));
+      for (const a of articles) logicalRoutes.add(articleRoute(a.id));
       log(`found ${articles.length} published article(s)`);
     } catch {
       warn('could not fetch article list');
     }
   }
+  const routes = withEnglishTwins([...logicalRoutes]);
 
   // 4. Crawl + snapshot.
   let browser;
@@ -191,10 +193,17 @@ const main = async () => {
         waitUntil: 'networkidle0',
         timeout: 30000,
       });
-      // Wait until React has rendered and PageSEO has set the document title.
+      // Wait until React has rendered, the URL language has been applied
+      // (LangGate sets documentElement.lang), and PageSEO has set the title.
+      const expectedLang = route === '/en' || route.startsWith('/en/') ? 'en' : 'zh-CN';
       await page.waitForFunction(
-        () => document.title && document.title.length > 0 && document.getElementById('root')?.childElementCount > 0,
+        (expected) =>
+          document.documentElement.lang === expected &&
+          document.title &&
+          document.title.length > 0 &&
+          document.getElementById('root')?.childElementCount > 0,
         { timeout: 15000 },
+        expectedLang,
       );
 
       const html = await page.evaluate(() => `<!doctype html>\n${document.documentElement.outerHTML}`);

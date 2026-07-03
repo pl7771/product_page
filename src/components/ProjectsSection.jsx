@@ -2,11 +2,13 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SectionHeading, SectionLead } from './ui/SectionHeading';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useLocalizedPath } from '../i18n/routing';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { OptimizedImage } from './ui/OptimizedImage';
 
 const ProjectsSection = () => {
   const { t } = useLanguage();
+  const lp = useLocalizedPath();
   const projectCategories = useLocalizedProjects();
 
   return (
@@ -28,7 +30,7 @@ const ProjectsSection = () => {
           {projectCategories.map((cat) => (
             <Link
               key={cat.id}
-              to={`/projects/${cat.id}`}
+              to={lp(`/projects/${cat.id}`)}
               className="group relative h-[280px] sm:h-[340px] rounded-2xl overflow-hidden shadow-[var(--shadow-soft)] hover:shadow-2xl hover:shadow-[#00A29A]/20 transition-all duration-500 hover:-translate-y-1.5 border border-slate-200/80 bg-white block"
             >
               <OptimizedImage

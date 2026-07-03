@@ -5,6 +5,7 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { IndustryArticleContent } from '../components/industry/IndustryArticleContent';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useLocalizedPath } from '../i18n/routing';
 import { useIndustryArticles } from '../hooks/useIndustryArticles';
 import { PageSEO } from '../components/seo/PageSEO';
 import { buildArticleSchema } from '../seo/organizationSchema';
@@ -16,6 +17,7 @@ export const IndustryArticlePage = () => {
   const { articleId } = useParams();
   const navigate = useNavigate();
   const { t, lang } = useLanguage();
+  const lp = useLocalizedPath();
   const { getArticle } = useIndustryArticles();
 
   const article = getArticle(articleId);
@@ -27,7 +29,7 @@ export const IndustryArticlePage = () => {
   const backButton = (
     <button
       type="button"
-      onClick={() => navigate('/industry-information')}
+      onClick={() => navigate(lp('/industry-information'))}
       className={`group flex items-center gap-2 px-3 h-10 text-slate-700 hover:text-[#00A29A] transition-colors bg-white/80 hover:bg-white border border-slate-200 hover:border-[#00A29A]/50 rounded-md shadow-sm ${type.btn}`}
     >
       <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
@@ -77,7 +79,7 @@ export const IndustryArticlePage = () => {
           contactCta={t('industry.contactCta')}
           contactLabel={t('nav.contact')}
           onContactClick={() => {
-            navigate('/');
+            navigate(lp('/'));
             window.setTimeout(() => {
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 350);

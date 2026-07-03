@@ -6,6 +6,7 @@ import { Footer } from '../components/layout/Footer';
 import { SectionHeading, SectionLead } from '../components/ui/SectionHeading';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useLocalizedPath } from '../i18n/routing';
 import { useIndustryArticles } from '../hooks/useIndustryArticles';
 import { PageSEO } from '../components/seo/PageSEO';
 import { ARTICLE_CATEGORIES, getCategoryIdFromLabel, getCategoryLabel } from '../constants/articleCategories';
@@ -22,6 +23,7 @@ const matchesSearch = (article, query) => {
 
 export const IndustryInformationPage = () => {
   const { dict, t, lang } = useLanguage();
+  const lp = useLocalizedPath();
   const { industry } = dict;
   const { articles, loading } = useIndustryArticles();
   const [search, setSearch] = useState('');
@@ -120,7 +122,7 @@ export const IndustryInformationPage = () => {
               {filteredArticles.map((article) => (
                 <Link
                   key={article.id}
-                  to={`/industry-information/${article.id}`}
+                  to={lp(`/industry-information/${article.id}`)}
                   className="group flex flex-col overflow-hidden surface-card hover:shadow-lg hover:border-[#00A29A]/35 transition-all duration-300"
                 >
                   {article.image && (

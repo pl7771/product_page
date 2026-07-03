@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Check, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Factory, Check, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -8,37 +8,37 @@ import { useLocalizedPath } from '../i18n/routing';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { PageSEO } from '../components/seo/PageSEO';
 import { formatSeoText } from '../seo/siteConfig';
-import { schemaGraph, buildBreadcrumb, buildServiceAreaSchema } from '../seo/structuredData';
-import { serviceAreaRegions } from '../data/serviceAreas';
+import { schemaGraph, buildBreadcrumb, buildProjectSchema } from '../seo/structuredData';
+import { industrySolutions } from '../data/industrySolutions';
 import { type } from '../styles/typography';
 
-export const ServiceAreaPage = () => {
-  const { regionId } = useParams();
+export const SolutionPage = () => {
+  const { solutionId } = useParams();
   const { t, dict, lang } = useLanguage();
   const lp = useLocalizedPath();
   const projectCategories = useLocalizedProjects();
-  const sa = dict.serviceAreas;
-  const region = sa?.regions?.[regionId];
-  const config = serviceAreaRegions.find((r) => r.id === regionId);
+  const sol = dict.solutions;
+  const item = sol?.items?.[solutionId];
+  const config = industrySolutions.find((s) => s.id === solutionId);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [regionId]);
+  }, [solutionId]);
 
-  if (!region) {
+  if (!item) {
     return (
       <div className="min-h-screen bg-white flex flex-col">
-        <PageSEO title={t('serviceAreas.title')} description={sa?.subtitle} path={`/service-areas/${regionId}`} noindex />
+        <PageSEO title={sol.title} description={sol.subtitle} path={`/solutions/${solutionId}`} noindex />
         <Navigation />
         <main className="flex-grow pt-32 pb-20 px-4 text-center">
-          <p className={type.lead}>{t('serviceAreas.notFound')}</p>
+          <p className={type.lead}>{sol.notFound}</p>
         </main>
         <Footer />
       </div>
     );
   }
 
-  const path = `/service-areas/${regionId}`;
+  const path = `/solutions/${solutionId}`;
   const relatedCategories = (config?.categories || [])
     .map((id) => projectCategories.find((c) => c.id === id))
     .filter(Boolean);
@@ -46,20 +46,19 @@ export const ServiceAreaPage = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <PageSEO
-        title={formatSeoText(sa.metaTitleTpl, { region: region.name })}
-        description={formatSeoText(sa.metaDescTpl, { region: region.name, cities: region.cities })}
+        title={item.metaTitle}
+        description={formatSeoText(sol.metaDescTpl, { intro: item.intro })}
         path={path}
         keywords={t('meta.keywords')}
         jsonLd={schemaGraph([
           buildBreadcrumb(lang, [
-            { name: sa.title, path: '/service-areas' },
-            { name: region.name, path },
+            { name: sol.title, path: '/solutions' },
+            { name: item.name, path },
           ]),
-          buildServiceAreaSchema(lang, {
-            name: region.h1,
-            description: region.intro,
+          buildProjectSchema(lang, {
+            title: item.h1,
+            description: item.intro,
             path,
-            areaName: region.name,
           }),
         ])}
       />
@@ -68,23 +67,23 @@ export const ServiceAreaPage = () => {
       <header className="pt-32 pb-12 sm:pt-40 sm:pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-200 section-mesh">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
-            <MapPin className="w-4 h-4 text-[#00A29A]" />
-            <span className={`${type.labelBrand} normal-case tracking-[0.08em]`}>{t('serviceAreas.eyebrow')}</span>
+            <Factory className="w-4 h-4 text-[#00A29A]" />
+            <span className={`${type.labelBrand} normal-case tracking-[0.08em]`}>{sol.eyebrow}</span>
           </div>
-          <h1 className={`${type.pageTitle} mb-5 max-w-3xl`}>{region.h1}</h1>
-          <p className={`${type.lead} max-w-3xl mb-5`}>{region.intro}</p>
+          <h1 className={`${type.pageTitle} mb-5 max-w-3xl`}>{item.h1}</h1>
+          <p className={`${type.lead} max-w-3xl mb-5`}>{item.intro}</p>
           <p className={`${type.bodySm}`}>
-            <span className="text-slate-400">{t('serviceAreas.citiesLabel')}: </span>
-            <span className="text-slate-600">{region.cities}</span>
+            <span className="text-slate-400">{sol.scenariosLabel}: </span>
+            <span className="text-slate-600">{item.scenarios}</span>
           </p>
         </div>
       </header>
 
       <main className="flex-grow px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
-          <h2 className={`${type.sectionTitle} !text-slate-900 mb-8`}>{t('serviceAreas.applicationsLabel')}</h2>
+          <h2 className={`${type.sectionTitle} !text-slate-900 mb-8`}>{sol.applicationsLabel}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-            {region.points.map((point) => (
+            {item.points.map((point) => (
               <div key={point.t} className="surface-card p-6 flex gap-4">
                 <span className="flex-shrink-0 w-9 h-9 rounded-full bg-[#00A29A]/10 text-[#00A29A] flex items-center justify-center">
                   <Check className="w-4.5 h-4.5" strokeWidth={2.5} />
@@ -99,7 +98,7 @@ export const ServiceAreaPage = () => {
 
           {relatedCategories.length > 0 && (
             <div className="mb-16">
-              <h2 className={`${type.sectionTitle} !text-slate-900 mb-8`}>{t('serviceAreas.relatedLabel')}</h2>
+              <h2 className={`${type.sectionTitle} !text-slate-900 mb-8`}>{sol.relatedLabel}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {relatedCategories.map((cat) => (
                   <Link
@@ -116,13 +115,13 @@ export const ServiceAreaPage = () => {
           )}
 
           <div className="surface-card p-6 sm:p-8 bg-slate-50/80">
-            <h2 className={`${type.cardTitle} mb-2`}>{t('serviceAreas.coverageLabel')}</h2>
-            <p className={`${type.body} mb-6`}>{region.coverage}</p>
+            <h2 className={`${type.cardTitle} mb-2`}>{sol.coverageLabel}</h2>
+            <p className={`${type.body} mb-6`}>{item.coverage}</p>
             <Link
               to={lp('/#contact')}
               className={`inline-flex items-center gap-2 px-7 py-3.5 bg-[#00A29A] hover:bg-[#008f88] text-white ${type.btnStrong} rounded-xl transition-all shadow-[var(--shadow-brand)] hover:-translate-y-0.5`}
             >
-              {t('serviceAreas.contactCta')}
+              {sol.contactCta}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

@@ -1,6 +1,6 @@
 // src/App.jsx
 import { Routes, Route } from 'react-router-dom'; // ✅ Только Routes и Route, без BrowserRouter
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 // Layout & Sections
 import { Navigation } from './components/layout/Navigation';
@@ -19,6 +19,8 @@ import { ProjectCategoryPage } from './pages/ProjectCategoryPage';
 import { SingleProjectPage } from './pages/SingleProjectPage';
 import { ServiceAreasPage } from './pages/ServiceAreasPage';
 import { ServiceAreaPage } from './pages/ServiceAreaPage';
+import { SolutionsPage } from './pages/SolutionsPage';
+import { SolutionPage } from './pages/SolutionPage';
 import { IndustryInformationPage } from './pages/IndustryInformationPage';
 import { IndustryArticlePage } from './pages/IndustryArticlePage';
 
@@ -66,6 +68,37 @@ const HomePage = ({ onContactClick, onGalleryClick }) => {
   );
 };
 
+// Язык страницы определяется URL-префиксом: "/" — китайский, "/en/…" — английский.
+const LangGate = ({ lang: target, children }) => {
+  const { lang, setLang } = useLanguage();
+
+  useLayoutEffect(() => {
+    if (lang !== target) setLang(target);
+  }, [lang, target, setLang]);
+
+  return children;
+};
+
+// Публичные маршруты; смонтированы дважды — под "/" (zh) и "/en" (en).
+const PublicRoutes = ({ onContactClick, onGalleryClick }) => (
+  <Routes>
+    <Route
+      index
+      element={<HomePage onContactClick={onContactClick} onGalleryClick={onGalleryClick} />}
+    />
+    <Route path="projects/:categoryId" element={<ProjectCategoryPage />} />
+    <Route path="projects/:categoryId/:projectId" element={<SingleProjectPage />} />
+    <Route path="service-areas" element={<ServiceAreasPage />} />
+    <Route path="service-areas/:regionId" element={<ServiceAreaPage />} />
+    <Route path="solutions" element={<SolutionsPage />} />
+    <Route path="solutions/:solutionId" element={<SolutionPage />} />
+    <Route path="industry-information" element={<IndustryInformationPage />} />
+    <Route path="industry-information/:articleId" element={<IndustryArticlePage />} />
+    <Route path="privacy-policy" element={<PrivacyPolicy />} />
+    <Route path="terms-of-service" element={<TermsOfService />} />
+  </Routes>
+);
+
 export default function App() {
   // Стейты для модалок (глобальные)
   const [lightboxImg, setLightboxImg] = useState(null);
@@ -80,26 +113,18 @@ export default function App() {
     setGalleryProduct(product);
   };
 
+  const publicRoutes = (
+    <PublicRoutes
+      onContactClick={setProductContactModal}
+      onGalleryClick={openProductGallery}
+    />
+  );
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-[#00A29A]/30 selection:text-[#00A29A] overflow-x-hidden">
-      
+
       {/* Маршруты */}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              onContactClick={setProductContactModal}
-              onGalleryClick={openProductGallery}
-            />
-          }
-        />
-        <Route path="/projects/:categoryId" element={<ProjectCategoryPage />} />
-        <Route path="/projects/:categoryId/:projectId" element={<SingleProjectPage />} />
-        <Route path="/service-areas" element={<ServiceAreasPage />} />
-        <Route path="/service-areas/:regionId" element={<ServiceAreaPage />} />
-        <Route path="/industry-information" element={<IndustryInformationPage />} />
-        <Route path="/industry-information/:articleId" element={<IndustryArticlePage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route
           path="/admin/articles"
@@ -117,11 +142,11 @@ export default function App() {
             </RequireAdmin>
           }
         />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/en/*" element={<LangGate lang="en">{publicRoutes}</LangGate>} />
+        <Route path="/*" element={<LangGate lang="zh">{publicRoutes}</LangGate>} />
       </Routes>
 
-      <BackToTop /> 
+      <BackToTop />
 
       {/* Глобальные модалки */}
       {lightboxImg && <LightboxModal image={lightboxImg} onClose={() => setLightboxImg(null)} />}

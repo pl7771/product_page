@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { localizePath } from '../../i18n/routing';
 import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME } from '../../seo/siteConfig';
 
 const ensureMeta = (key, content, attr = 'name') => {
@@ -51,7 +52,11 @@ export const PageSEO = ({
   keywords = '',
 }) => {
   const { lang } = useLanguage();
-  const canonical = absoluteUrl(path);
+  // Chinese lives at "/", English at "/en" — canonical follows the current
+  // language; hreflang links the pair on both versions.
+  const zhUrl = absoluteUrl(path);
+  const enUrl = absoluteUrl(localizePath(path, 'en'));
+  const canonical = lang === 'en' ? enUrl : zhUrl;
   const imageUrl = image?.startsWith('http') ? image : absoluteUrl(image);
   const siteName = SITE_NAME[lang] || SITE_NAME.en;
   const robots = noindex ? 'noindex, nofollow' : 'index, follow';
@@ -66,8 +71,9 @@ export const PageSEO = ({
     ensureMeta('googlebot', robots);
 
     ensureLink('canonical', canonical);
-    ensureLink('alternate', canonical, { hreflang: 'x-default' });
-    ensureLink('alternate', canonical, { hreflang: lang === 'zh' ? 'zh-CN' : 'en' });
+    ensureLink('alternate', zhUrl, { hreflang: 'x-default' });
+    ensureLink('alternate', zhUrl, { hreflang: 'zh-CN' });
+    ensureLink('alternate', enUrl, { hreflang: 'en' });
 
     ensureMeta('og:title', title, 'property');
     ensureMeta('og:description', description, 'property');
@@ -83,7 +89,7 @@ export const PageSEO = ({
     ensureMeta('twitter:image', imageUrl);
 
     ensureJsonLd('page-json-ld', jsonLd);
-  }, [title, description, canonical, imageUrl, type, robots, locale, siteName, keywords, jsonLd, lang]);
+  }, [title, description, canonical, zhUrl, enUrl, imageUrl, type, robots, locale, siteName, keywords, jsonLd, lang]);
 
   return null;
 };

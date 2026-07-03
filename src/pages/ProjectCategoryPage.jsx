@@ -6,6 +6,7 @@ import { GalleryCarouselModal } from '../components/modals/GalleryCarouselModal'
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useLocalizedPath } from '../i18n/routing';
 import { useLocalizedProjects } from '../hooks/useLocalizedData';
 import { PageSEO } from '../components/seo/PageSEO';
 import { formatSeoText } from '../seo/siteConfig';
@@ -17,7 +18,9 @@ import { type } from '../styles/typography';
 const ContactLink = ({ children, className }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+  const lp = useLocalizedPath();
+  const homePath = lp('/');
+
   const handleClick = (e) => {
     e.preventDefault();
     const scrollToContact = () => {
@@ -34,8 +37,8 @@ const ContactLink = ({ children, className }) => {
     };
     
     // Если мы НЕ на главной — сначала переходим, потом скроллим
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== homePath) {
+      navigate(homePath);
       // Ждём пока React отрисует главную страницу
       setTimeout(scrollToContact, 300);
     } else {
@@ -43,9 +46,9 @@ const ContactLink = ({ children, className }) => {
       scrollToContact();
     }
   };
-  
+
   return (
-    <a href="/#contact" onClick={handleClick} className={className}>
+    <a href={lp('/#contact')} onClick={handleClick} className={className}>
       {children}
     </a>
   );
@@ -130,6 +133,7 @@ export const ProjectCategoryPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const { t, lang } = useLanguage();
+  const lp = useLocalizedPath();
   const projectCategories = useLocalizedProjects();
 
   const category = projectCategories.find((cat) => cat.id === categoryId);
@@ -139,7 +143,7 @@ export const ProjectCategoryPage = () => {
   }, [categoryId]);
 
   const handleBackToProjects = () => {
-    navigate('/');
+    navigate(lp('/'));
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const section = document.getElementById('projects-section');
@@ -151,7 +155,17 @@ export const ProjectCategoryPage = () => {
   };
 
   if (!category) {
-    return <div className="min-h-screen flex items-center justify-center">{t('projectPage.notFound')}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <PageSEO
+          title={t('projectPage.notFound')}
+          description={t('projectPage.notFound')}
+          path={`/projects/${categoryId}`}
+          noindex
+        />
+        {t('projectPage.notFound')}
+      </div>
+    );
   }
 
   const backButton = (

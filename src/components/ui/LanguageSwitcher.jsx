@@ -1,11 +1,27 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { localizePath, stripLangPrefix } from '../../i18n/routing';
 import { type } from '../../styles/typography';
 
 export const LanguageSwitcher = ({ className = '', compact = false }) => {
   const { lang, setLang } = useLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const buttonClass = compact
     ? `px-2 py-0.5 ${type.btnStrong} rounded-md transition-all text-[11px] leading-tight`
     : `px-2.5 py-1 ${type.btnStrong} rounded-md transition-all text-xs sm:text-sm`;
+
+  // Public pages live at language-prefixed URLs (zh at "/", en at "/en"),
+  // so switching languages navigates to the twin URL. Admin pages have no
+  // twin — there we only flip the UI language.
+  const switchTo = (target) => {
+    if (target === lang) return;
+    setLang(target);
+    if (location.pathname.startsWith('/admin')) return;
+    const logicalPath = stripLangPrefix(location.pathname);
+    navigate(`${localizePath(logicalPath, target)}${location.search}${location.hash}`);
+  };
 
   return (
     <div
@@ -15,7 +31,7 @@ export const LanguageSwitcher = ({ className = '', compact = false }) => {
     >
       <button
         type="button"
-        onClick={() => setLang('zh')}
+        onClick={() => switchTo('zh')}
         className={`${buttonClass} ${
           lang === 'zh'
             ? 'bg-[#00A29A] text-white shadow-sm'
@@ -26,7 +42,7 @@ export const LanguageSwitcher = ({ className = '', compact = false }) => {
       </button>
       <button
         type="button"
-        onClick={() => setLang('en')}
+        onClick={() => switchTo('en')}
         className={`${buttonClass} ${
           lang === 'en'
             ? 'bg-[#00A29A] text-white shadow-sm'

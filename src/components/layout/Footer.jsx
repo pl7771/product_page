@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { useLocalizedPath } from '../../i18n/routing';
 import { type } from '../../styles/typography';
 
 const footerBody = 'font-sans text-sm leading-relaxed font-normal text-white';
@@ -9,6 +10,7 @@ const footerLink = 'text-white hover:text-[#00A29A] transition-colors';
 
 export const Footer = () => {
   const { t, dict, lang } = useLanguage();
+  const lp = useLocalizedPath();
   const contact = dict.contact;
 
   return (
@@ -52,27 +54,32 @@ export const Footer = () => {
             <h4 className={`${footerHeading} mb-6`}>{t('footer.linksTitle')}</h4>
             <ul className={`${footerBody} space-y-3`}>
               <li>
-                <a href="/#products" className={footerLink}>
+                <a href={lp('/#products')} className={footerLink}>
                   {t('nav.products')}
                 </a>
               </li>
               <li>
-                <a href="/#projects-section" className={footerLink}>
+                <a href={lp('/#projects-section')} className={footerLink}>
                   {t('nav.technology')}
                 </a>
               </li>
               <li>
-                <Link to="/industry-information" className={footerLink}>
+                <Link to={lp('/solutions')} className={footerLink}>
+                  {t('nav.solutions')}
+                </Link>
+              </li>
+              <li>
+                <Link to={lp('/industry-information')} className={footerLink}>
                   {t('nav.industry')}
                 </Link>
               </li>
               <li>
-                <Link to="/service-areas" className={footerLink}>
+                <Link to={lp('/service-areas')} className={footerLink}>
                   {t('nav.serviceAreas')}
                 </Link>
               </li>
               <li>
-                <a href="/#contact" className={footerLink}>
+                <a href={lp('/#contact')} className={footerLink}>
                   {t('nav.contact')}
                 </a>
               </li>
@@ -87,10 +94,10 @@ export const Footer = () => {
             © {new Date().getFullYear()} {t('footer.copyright')}
           </p>
           <div className="flex gap-6">
-            <Link to="/privacy-policy" className={footerLink}>
+            <Link to={lp('/privacy-policy')} className={footerLink}>
               {t('footer.privacy')}
             </Link>
-            <Link to="/terms-of-service" className={footerLink}>
+            <Link to={lp('/terms-of-service')} className={footerLink}>
               {t('footer.terms')}
             </Link>
           </div>
