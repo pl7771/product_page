@@ -22,7 +22,7 @@ export const projectCategoriesStructure = [
       },
       {
         id: 10,
-        cover: '/data/coal-preparation-plant/1.jpeg',
+        cover: '/data/coal-dust-control/1.jpeg',
         images: [
           '/data/coal-dust-control/1.jpeg',
           '/data/coal-dust-control/2.jpeg',
@@ -49,7 +49,7 @@ export const projectCategoriesStructure = [
   },
   {
     id: 'ecology',
-    cover: '/data/eco-atomizer/2.jpg',
+    cover: '/data/eco-atomizer/1.jpg',
     projects: [
       {
         id: 2,
@@ -84,6 +84,7 @@ export const projectCategoriesStructure = [
           '/data/mushroom-cultivation/4.jpeg',
           '/data/mushroom-cultivation/5.jpeg',
           '/data/mushroom-cultivation/6.jpeg',
+          '/data/mushroom-cultivation/7.jpeg',
         ],
       },
       {
@@ -121,6 +122,10 @@ export const projectCategoriesStructure = [
           '/data/epidemic-prevention/1.jpeg',
           '/data/epidemic-prevention/4.jpeg',
           '/data/epidemic-prevention/5.jpeg',
+          '/data/epidemic-prevention/6.jpeg',
+          '/data/epidemic-prevention/7.jpeg',
+          '/data/epidemic-prevention/8.jpeg',
+          '/data/epidemic-prevention/9.jpeg',
         ],
       },
     ],

@@ -35,7 +35,7 @@ export const SEED_ARTICLES = [
     en: {
       date: '2026-02-08',
       category: 'Technology',
-      image: '/data/eco-atomizer/3.jpeg',
+      image: '/data/eco-atomizer/3.jpg',
       title: 'Ultrasonic vs. High-Pressure Atomization: Choosing the Right System',
       excerpt:
         'A practical comparison of ultrasonic humidifiers and high-pressure micro-mist systems for greenhouse, workshop, and outdoor cooling applications.',
@@ -45,7 +45,7 @@ export const SEED_ARTICLES = [
     zh: {
       date: '2026-02-08',
       category: '技术',
-      image: '/data/eco-atomizer/3.jpeg',
+      image: '/data/eco-atomizer/3.jpg',
       title: '超声波与高压雾化：如何选对系统',
       excerpt:
         '针对温室、车间及户外降温场景，对比超声波加湿机与高压微雾系统的适用性与运行成本。',
