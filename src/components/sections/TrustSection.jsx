@@ -49,15 +49,34 @@ export const TrustSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto text-left">
-          <SectionHeading>{trust.eyebrow}</SectionHeading>
+          <SectionHeading centered>{trust.eyebrow}</SectionHeading>
           {trust.title && (
-            <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6`}>{trust.title}</h3>
+            <h3 className={`${sectionHeadingClassName} text-slate-900 mb-6 text-center`}>{trust.title}</h3>
           )}
           <div className={`${type.bodySm} sm:text-[15px] text-slate-600 space-y-4 leading-relaxed`}>
             {trust.description.split('\n\n').map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
           </div>
+
+          {trust.features?.length > 0 && (
+            <ul className="mt-6 space-y-4">
+              {trust.features.map((feature) => {
+                const splitIndex = feature.search(/[:：]/);
+                const label = splitIndex > -1 ? feature.slice(0, splitIndex) : null;
+                const rest = splitIndex > -1 ? feature.slice(splitIndex + 1).trim() : feature;
+                return (
+                  <li key={feature.slice(0, 20)} className="flex gap-3">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00A29A] flex-shrink-0" aria-hidden="true" />
+                    <p className={`${type.bodySm} sm:text-[15px] text-slate-600 leading-relaxed`}>
+                      {label && <span className="font-semibold text-slate-900">{label}：</span>}
+                      {rest}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>
     </section>

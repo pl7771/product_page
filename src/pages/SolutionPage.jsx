@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Factory, Check, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Check, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -66,8 +66,8 @@ export const SolutionPage = () => {
 
       <header className="pt-32 pb-12 sm:pt-40 sm:pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-200 section-mesh">
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-2 mb-4">
-            <Factory className="w-4 h-4 text-[#00A29A]" />
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-px bg-[#00A29A]"></span>
             <span className={`${type.labelBrand} normal-case tracking-[0.08em]`}>{sol.eyebrow}</span>
           </div>
           <h1 className={`${type.pageTitle} mb-5 max-w-3xl`}>{item.h1}</h1>

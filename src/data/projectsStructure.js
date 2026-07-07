@@ -29,7 +29,6 @@ export const projectCategoriesStructure = [
           '/data/coal-dust-control/3.jpeg',
           '/data/coal-dust-control/4.jpeg',
           '/data/coal-dust-control/5.jpeg',
-          '/data/coal-dust-control/6.jpeg',
           '/data/coal-dust-control/7.jpeg',
         ],
       },

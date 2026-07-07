@@ -21,7 +21,11 @@ export const ProductShowcase = ({ onContactClick, onGalleryClick }) => {
             {t('products.title')}
             {t('products.titleHighlight')}
           </SectionHeading>
-          <SectionLead centered>{t('products.description')}</SectionLead>
+          <SectionLead centered>
+            {t('products.descriptionLine1')}
+            <br />
+            {t('products.descriptionLine2')}
+          </SectionLead>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

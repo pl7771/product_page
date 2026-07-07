@@ -70,8 +70,8 @@ export default {
     titleLine1: 'Precision',
     titleHighlight: 'Micro-Mist',
     titleLine2: 'Systems',
-    subtitle:
-      'One-stop solutions for humidification, dust suppression, and cooling — from R&D and equipment supply to engineering design and installation.',
+    subtitleLine1: 'One-stop solutions for humidification, dust suppression, and cooling',
+    subtitleLine2: 'From R&D and equipment supply to engineering design and installation',
     ctaPrimary: 'View Equipment',
     ctaSecondary: 'Contact Us',
     applicationsLabel: 'What we do',
@@ -97,7 +97,6 @@ export default {
   },
 
   industries: {
-    label: 'Trusted across industries',
     list: [
       { icon: 'mining', name: 'Mining & Heavy Industry', to: '/solutions/stone' },
       { icon: 'construction', name: 'Construction', to: '/solutions/cement' },
@@ -126,8 +125,8 @@ export default {
     eyebrow: 'Products',
     title: 'Product Gallery',
     titleHighlight: '',
-    description:
-      'Mist-system, fog-making, and high-pressure micro-mist equipment we deploy on installation projects — factory-direct supply with turnkey humidification, cooling, dust suppression, installation, and repair.',
+    descriptionLine1: 'Mist-system, fog-making, and high-pressure micro-mist equipment we deploy on installation projects',
+    descriptionLine2: 'Factory-direct supply with humidification, cooling, dust suppression, installation, and repair',
     requestOffer: 'Request a Quote',
     contact: 'Contact',
     photosSoon: 'Photos coming soon',
@@ -183,9 +182,14 @@ export default {
     eyebrow: 'About Us',
     title: '',
     description:
-      'Our company is deeply rooted in the field of eco-friendly atomization, serving as a comprehensive service provider that integrates R&D, sales, and the design and construction of micro-mist engineering projects. We specialize in offering clients one-stop solutions for localized environmental improvement—specifically focusing on humidification, dust suppression, and cooling. Our business footprint spans a wide array of industries: from environmental control in paper manufacturing, printing, chemicals, textiles, and synthetic fibers, to electronics manufacturing workshops; from odor control and treatment at landfills and waste transfer stations, to epidemic prevention and disinfection in the livestock and poultry farming sectors. Furthermore, our services extend to creating artificial mist landscapes for real estate developments and scenic areas, as well as providing precision humidification for specialized settings such as agricultural greenhouses and edible mushroom cultivation facilities.\n\nThe company consistently upholds a management philosophy centered on "Integrity, Innovation, Service, and Gratitude." This philosophy serves as the cornerstone for fostering team growth and responding precisely to our clients\' needs. We actively recruit high-caliber professional talent and strictly adhere to the operational principles of "Customer First, Service Foremost," maintaining rigorous quality control through our exceptional service standards and sophisticated technical expertise. By providing professional consultation and customized solutions to clients across diverse industries, we have earned the profound recognition and trust of a broad base of customers and partners alike.',
+      'Deeply rooted in the field of environmental atomization equipment, our company integrates R&D, sales, and misting system engineering. Guided by a focus on "improving localized environments," we are dedicated to providing one-stop, customized solutions—including humidification, dust suppression, and cooling—to clients across various industries, precisely empowering our four core business segments.',
     hpBlock: '',
-    features: [],
+    features: [
+      'Industrial workshop environment control: For industrial manufacturing scenarios such as paper making, printing, chemicals, textiles and synthetic fibers, and electronics manufacturing, we provide efficient workshop cooling and dust-suppression services, helping enterprises improve their production environment and enhance product yield and efficiency.',
+      'Municipal sanitation and livestock epidemic prevention: Provide scientific deodorization solutions for places prone to odors such as garbage dumps and garbage transfer stations; at the same time, provide safe and efficient epidemic prevention and disinfection atomization systems for the livestock breeding industry to ensure public health safety.',
+      'Precision humidification in modern agriculture: In-depth understanding of the development needs of agricultural modernization, providing precise humidification solutions for agricultural greenhouses, edible fungus cultivation, food processing and other industries, and creating the most suitable microclimate environment for the growth of crops and microorganisms.',
+      'Ecological fogging for cultural and tourism landscapes: Combining ecological aesthetics and fogging technology, we provide artificial fog landscape design and construction services of great ornamental value for real estate projects, tourist attractions, etc., to create a dreamlike ecological visual experience.',
+    ],
     testimonialsEyebrow: 'Project Outcomes',
     testimonialsTitle: '',
     testimonialsSubtitle: 'Feedback from installation and deployment engagements',

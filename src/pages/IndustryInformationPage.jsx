@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Calendar, ArrowUpRight, Search } from 'lucide-react';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
-import { SectionHeading, SectionLead } from '../components/ui/SectionHeading';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocalizedPath } from '../i18n/routing';
@@ -61,13 +60,19 @@ export const IndustryInformationPage = () => {
       />
       <Navigation />
 
-      <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
-          <header className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-            <SectionHeading centered>{industry.title}</SectionHeading>
-            <SectionLead centered>{industry.subtitle}</SectionLead>
-          </header>
+      <header className="pt-32 pb-12 sm:pt-40 sm:pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-200 section-mesh">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-px bg-[#00A29A]"></span>
+            <span className={`${type.labelBrand} normal-case tracking-[0.08em]`}>{t('nav.industry')}</span>
+          </div>
+          <h1 className={`${type.pageTitle} mb-5 max-w-3xl`}>{industry.title}</h1>
+          <p className={`${type.lead} max-w-3xl`}>{industry.subtitle}</p>
+        </div>
+      </header>
 
+      <main className="flex-grow pb-20 px-4 sm:px-6 lg:px-12 pt-10 sm:pt-12">
+        <div className="max-w-7xl mx-auto">
           <div className="mb-10 sm:mb-12 space-y-4">
             <div className="relative max-w-xl mx-auto">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />

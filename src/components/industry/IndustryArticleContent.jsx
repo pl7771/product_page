@@ -19,7 +19,20 @@ export const IndustryArticleContent = ({
 
   return (
     <article className="max-w-3xl mx-auto">
-      <div className={`flex flex-wrap items-center gap-2 ${type.label} normal-case tracking-[0.04em] mb-6`}>
+      {article.image && (
+        <div className="w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl overflow-hidden bg-slate-100 shadow-lg mb-8">
+          <OptimizedImage
+            src={article.image}
+            alt={article.title || ''}
+            loading="eager"
+            fetchPriority="high"
+            pictureClassName="block w-full h-full"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      <div className={`flex flex-wrap items-center gap-2 ${type.label} normal-case tracking-[0.04em] mb-4`}>
         <Calendar className="w-3.5 h-3.5 text-[#00A29A]" />
         {article.date ? (
           <time dateTime={article.date}>{article.date}</time>
@@ -35,25 +48,10 @@ export const IndustryArticleContent = ({
         )}
       </div>
 
-      <h1 className={`${type.pageTitle} mb-8`}>{article.title?.trim() || untitledText}</h1>
+      <h1 className={`${type.pageTitle} mb-6`}>{article.title?.trim() || untitledText}</h1>
 
-      {(article.image || article.excerpt) && (
-        <div className="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-8 mb-10">
-          {article.image && (
-            <div className="w-full sm:w-40 md:w-44 shrink-0 aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 shadow-sm">
-              <OptimizedImage
-                src={article.image}
-                alt={article.title || ''}
-                loading="eager"
-                pictureClassName="block w-full h-full"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-          {article.excerpt && (
-            <p className={`${type.lead} text-slate-700 flex-1 min-w-0 sm:pt-1`}>{article.excerpt}</p>
-          )}
-        </div>
+      {article.excerpt && (
+        <p className={`${type.lead} text-slate-700 mb-10 pb-8 border-b border-slate-200`}>{article.excerpt}</p>
       )}
 
       {paragraphs.length > 0 ? (

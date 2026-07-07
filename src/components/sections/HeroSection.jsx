@@ -31,9 +31,8 @@ export const HeroSection = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-32 w-full">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 surface-glass rounded-full mb-8 shadow-lg shadow-black/10">
-            <span className="w-2 h-2 bg-[#00A29A] rounded-full animate-pulse shadow-[0_0_12px_#00A29A]" />
-            <span className={`${type.bodySm} !text-white/95 tracking-[0.06em] font-medium`}>{t('hero.badge')}</span>
+          <div className="inline-flex items-center px-4 py-2 bg-black/35 backdrop-blur-md border border-white/15 rounded-full mb-8 shadow-lg shadow-black/20">
+            <span className={`${type.bodySm} !text-white tracking-[0.06em] font-medium`}>{t('hero.badge')}</span>
           </div>
 
           <h1 className={`${type.display} !text-white mb-6 drop-shadow-2xl`}>
@@ -43,7 +42,11 @@ export const HeroSection = () => {
             {t('hero.titleLine2')}
           </h1>
 
-          <p className={`${type.lead} !text-slate-100/95 max-w-2xl mb-8 font-normal`}>{t('hero.subtitle')}</p>
+          <p className={`${type.lead} !text-slate-100/95 max-w-2xl mb-8 font-normal`}>
+            {t('hero.subtitleLine1')}
+            <br />
+            {t('hero.subtitleLine2')}
+          </p>
 
           {applications.length > 0 && (
             <div className="flex flex-wrap gap-2.5 mb-10">
@@ -52,12 +55,12 @@ export const HeroSection = () => {
                 return (
                   <span
                     key={app.icon}
-                    className="inline-flex items-center gap-2 pl-2.5 pr-3.5 py-2 rounded-full surface-glass shadow-md shadow-black/10"
+                    className="inline-flex items-center gap-2 pl-2.5 pr-3.5 py-2 rounded-full bg-black/35 backdrop-blur-md border border-white/15 shadow-md shadow-black/20"
                   >
-                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#00A29A]/90">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#00A29A]">
                       <Icon className="w-3.5 h-3.5 text-white" strokeWidth={2.4} />
                     </span>
-                    <span className={`${type.bodySm} !text-white/95 font-medium whitespace-nowrap`}>{app.label}</span>
+                    <span className={`${type.bodySm} !text-white font-medium whitespace-nowrap`}>{app.label}</span>
                   </span>
                 );
               })}
