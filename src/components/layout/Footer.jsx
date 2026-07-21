@@ -90,19 +90,30 @@ export const Footer = () => {
         <div
           className={`pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 font-sans text-xs tracking-[0.04em] text-white/90`}
         >
-          <p className="text-white/90 flex flex-wrap items-center gap-x-2">
-            <span>
+          <div className="flex flex-col items-center md:items-start gap-1.5">
+            <p className="text-white/90">
               © {new Date().getFullYear()} {t('footer.copyright')}
-            </span>
-            <a
-              href="https://beian.miit.gov.cn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={footerLink}
-            >
-              冀ICP备2026024129号-1
-            </a>
-          </p>
+            </p>
+            <p className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1 text-white/90">
+              <a
+                href="https://beian.mps.gov.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${footerLink} inline-flex items-center gap-1`}
+              >
+                <img src="/beian-gongan.png" alt="公安备案" width="16" height="16" className="w-4 h-4 object-contain" />
+                冀公网安备13010502003062号
+              </a>
+              <a
+                href="https://beian.miit.gov.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={footerLink}
+              >
+                冀ICP备2026024129号-1
+              </a>
+            </p>
+          </div>
           <div className="flex gap-6">
             <Link to={lp('/privacy-policy')} className={footerLink}>
               {t('footer.privacy')}
