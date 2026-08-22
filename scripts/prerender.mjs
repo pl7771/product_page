@@ -2,7 +2,9 @@
  * Static prerendering (SSG) for the SPA.
  *
  * After `vite build`, this script:
- *   1. Boots the API server (so article pages render real content).
+ *   1. Picks an API to render article pages against: the live production API
+ *      first (same source the sitemap uses, so both agree on which articles
+ *      exist), falling back to a locally spawned server with the seed data.
  *   2. Serves dist/ over HTTP with an /api proxy and SPA fallback.
  *   3. Drives a headless browser over every route and saves the fully
  *      rendered HTML (with meta tags + JSON-LD injected by PageSEO) to
@@ -22,6 +24,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getStaticRoutes, articleRoute, withEnglishTwins } from './routes.mjs';
+import { PRODUCTION_SITE_ORIGIN } from '../src/seo/siteOrigin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -30,6 +33,9 @@ const SERVER_DIR = path.join(ROOT, 'server');
 
 const STATIC_PORT = 3100;
 const API_PORT = 3101;
+const LOCAL_API = `http://127.0.0.1:${API_PORT}`;
+/** Live site, same origin generate-sitemap.mjs reads articles from. */
+const LIVE_API = (process.env.VITE_SITE_URL || PRODUCTION_SITE_ORIGIN).replace(/\/$/, '');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -74,30 +80,55 @@ const ping = (url) =>
     req.end();
   });
 
-const proxyApi = (clientReq, clientRes) => {
-  const opts = {
-    hostname: '127.0.0.1',
-    port: API_PORT,
-    path: clientReq.url,
-    method: clientReq.method,
-    headers: clientReq.headers,
-  };
-  const proxyReq = httpRequest(opts, (proxyRes) => {
-    clientRes.writeHead(proxyRes.statusCode, proxyRes.headers);
-    proxyRes.pipe(clientRes);
-  });
-  proxyReq.on('error', () => {
-    clientRes.writeHead(502).end('api proxy error');
-  });
-  clientReq.pipe(proxyReq);
+/** Published articles from an API base, or null when it cannot be reached. */
+const fetchArticles = async (apiBase) => {
+  try {
+    const res = await fetch(`${apiBase}/api/articles/public`, {
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) return null;
+    const articles = await res.json();
+    return Array.isArray(articles) ? articles : null;
+  } catch {
+    return null;
+  }
 };
 
-const startStaticServer = () =>
+/**
+ * Proxy /api/* to whichever API we settled on. Responses are cached in memory:
+ * every prerendered page asks for the same article payload, and with images
+ * inlined as data URIs that payload is measured in megabytes.
+ */
+const apiCache = new Map();
+
+const proxyApi = async (apiBase, clientReq, clientRes) => {
+  const cached = apiCache.get(clientReq.url);
+  if (cached) {
+    clientRes.writeHead(cached.status, { 'Content-Type': cached.type });
+    return clientRes.end(cached.body);
+  }
+  try {
+    const upstream = await fetch(`${apiBase}${clientReq.url}`, {
+      headers: { accept: 'application/json' },
+    });
+    const body = Buffer.from(await upstream.arrayBuffer());
+    const type = upstream.headers.get('content-type') || 'application/json';
+    if (upstream.ok) apiCache.set(clientReq.url, { status: upstream.status, type, body });
+    clientRes.writeHead(upstream.status, { 'Content-Type': type });
+    return clientRes.end(body);
+  } catch {
+    clientRes.writeHead(502).end('api proxy error');
+    return undefined;
+  }
+};
+
+const startStaticServer = (apiBase) =>
   new Promise((resolve) => {
     const server = createServer(async (req, res) => {
       const url = decodeURIComponent(req.url.split('?')[0]);
 
-      if (url.startsWith('/api/')) return proxyApi(req, res);
+      if (url.startsWith('/api/')) return proxyApi(apiBase, req, res);
 
       const filePath = path.join(DIST, url);
       const ext = path.extname(filePath);
@@ -141,33 +172,44 @@ const main = async () => {
     process.exit(0);
   }
 
-  // 1. API server (best-effort: article pages need it; the rest do not).
-  const api = spawn('node', ['index.js'], {
-    cwd: SERVER_DIR,
-    env: { ...process.env, PORT: String(API_PORT), NODE_ENV: 'production' },
-    stdio: 'ignore',
-  });
-  api.on('error', () => warn('could not spawn API server'));
-  const apiUp = await waitFor(() => ping(`http://127.0.0.1:${API_PORT}/api/health`), { tries: 30 });
-  log(apiUp ? 'API server ready' : 'API server unavailable — article pages may be skipped');
+  // 1. Pick the API to render against. The live site wins: articles written in
+  //    the admin panel exist only in the production database, and the sitemap
+  //    already lists them from there. Rendering a different set is what shipped
+  //    those article URLs as copies of the home page.
+  let apiBase = null;
+  let articles = [];
+  let api = null;
 
-  // 2. Static server for dist.
-  const staticServer = await startStaticServer();
-  log(`serving dist on :${STATIC_PORT}`);
-
-  // 3. Resolve routes (static + dynamic article ids from the API),
-  //    then add the /en twins so both languages get static HTML.
-  const logicalRoutes = new Set(getStaticRoutes());
-  if (apiUp) {
-    try {
-      const res = await fetch(`http://127.0.0.1:${API_PORT}/api/articles/public`);
-      const articles = await res.json();
-      for (const a of articles) logicalRoutes.add(articleRoute(a.id));
-      log(`found ${articles.length} published article(s)`);
-    } catch {
-      warn('could not fetch article list');
+  const liveArticles = await fetchArticles(LIVE_API);
+  if (liveArticles) {
+    apiBase = LIVE_API;
+    articles = liveArticles;
+    log(`live API ${LIVE_API}: ${articles.length} published article(s)`);
+  } else {
+    warn(`live API unreachable at ${LIVE_API} — falling back to the local server`);
+    api = spawn('node', ['index.js'], {
+      cwd: SERVER_DIR,
+      env: { ...process.env, PORT: String(API_PORT), NODE_ENV: 'production' },
+      stdio: 'ignore',
+    });
+    api.on('error', () => warn('could not spawn API server'));
+    if (await waitFor(() => ping(`${LOCAL_API}/api/health`), { tries: 30 })) {
+      apiBase = LOCAL_API;
+      articles = (await fetchArticles(LOCAL_API)) || [];
+      log(`local API ready: ${articles.length} published article(s)`);
+    } else {
+      warn('no API available — article pages will be skipped');
     }
   }
+
+  // 2. Static server for dist.
+  const staticServer = await startStaticServer(apiBase || LOCAL_API);
+  log(`serving dist on :${STATIC_PORT}`);
+
+  // 3. Resolve routes (static + article ids from the API above), then add the
+  //    /en twins so both languages get static HTML.
+  const logicalRoutes = new Set(getStaticRoutes());
+  for (const a of articles) logicalRoutes.add(articleRoute(a.id));
   const routes = withEnglishTwins([...logicalRoutes]);
 
   // 4. Crawl + snapshot.
@@ -180,7 +222,7 @@ const main = async () => {
   } catch (err) {
     warn(`browser launch failed (${err.message}) — skipping prerender.`);
     staticServer.close();
-    api.kill();
+    api?.kill();
     process.exit(0);
   }
 
@@ -226,7 +268,7 @@ const main = async () => {
 
   await browser.close();
   staticServer.close();
-  api.kill();
+  api?.kill();
 
   log(`done: ${ok} prerendered, ${failed} failed.`);
 };
