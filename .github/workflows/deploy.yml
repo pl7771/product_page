@@ -3,6 +3,14 @@ name: Deploy
 on:
   push:
     branches: [main]
+  # Nightly rebuild so articles published from the admin panel get a
+  # prerendered page and a sitemap entry (crawlers like Baiduspider don't run
+  # JS). 19:17 UTC = 03:17 Beijing; off the hour because GitHub delays
+  # top-of-hour schedules. Visitors see new articles immediately regardless.
+  schedule:
+    - cron: '17 19 * * *'
+  # "Run workflow" button in the Actions tab for an on-demand rebuild.
+  workflow_dispatch:
 
 concurrency:
   group: production-deploy
