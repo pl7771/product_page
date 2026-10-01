@@ -1,6 +1,6 @@
 // src/App.jsx
 import { Routes, Route } from 'react-router-dom'; // ✅ Только Routes и Route, без BrowserRouter
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 // Layout & Sections
 import { Navigation } from './components/layout/Navigation';
@@ -28,6 +28,7 @@ import { IndustryArticlePage } from './pages/IndustryArticlePage';
 import { LightboxModal } from './components/modals/LightboxModal';
 import { InfoModal } from './components/modals/InfoModal';
 import { WeChatModal } from './components/modals/WeChatModal';
+import { preloadQrCodes } from './assets/qr';
 import { ProductContactModal } from './components/modals/ProductContactModal';
 import { GalleryCarouselModal } from './components/modals/GalleryCarouselModal';
 
@@ -107,6 +108,8 @@ export default function App() {
   const [productContactModal, setProductContactModal] = useState(null);
   const [galleryProduct, setGalleryProduct] = useState(null);
   const [galleryInitialIndex, setGalleryInitialIndex] = useState(0);
+
+  useEffect(() => preloadQrCodes(), []);
 
   const openProductGallery = (product, index = 0) => {
     setGalleryInitialIndex(index);

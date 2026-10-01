@@ -9,7 +9,7 @@ export const WeChatModal = ({ onClose }) => (
       <MessageCircle className="w-12 h-12 text-[#07C160] mx-auto mb-4"/>
       <h3 className="text-xl font-bold text-white mb-2">WeChat</h3>
       <div className="w-40 h-40 bg-white rounded-xl mx-auto mb-4 p-2">
-        <img src={QR_WECHAT} alt="WeChat QR" loading="lazy" className="w-full h-full object-contain" draggable={false} />
+        <img src={QR_WECHAT} alt="WeChat QR" className="w-full h-full object-contain" draggable={false} />
       </div>
       <p className="text-green-400 text-sm">Scan to contact us</p>
     </div>

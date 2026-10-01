@@ -40,7 +40,7 @@ export const ProductContactModal = ({ product, onClose }) => {
             </div>
             <h4 className="text-slate-900 font-semibold text-center text-sm">{t('productModal.wechat')}</h4>
             <div className="bg-white p-2 rounded-lg w-24 h-24 border border-slate-200">
-              <img src={QR_WECHAT} alt="WeChat QR" loading="lazy" className="w-full h-full object-contain" draggable={false} />
+              <img src={QR_WECHAT} alt="WeChat QR" className="w-full h-full object-contain" draggable={false} />
             </div>
           </div>
         </div>
