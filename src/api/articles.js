@@ -44,5 +44,13 @@ export const restoreArticle = (id) =>
 export const unpublishArticle = (id) =>
   apiFetch(`/articles/${id}/unpublish`, { method: 'POST' });
 
+/** Upload an image Blob; resolves to { url } of the stored file. */
+export const uploadArticleImage = (blob) =>
+  apiFetch('/uploads', {
+    method: 'POST',
+    headers: { 'Content-Type': blob.type || 'image/jpeg' },
+    body: blob,
+  });
+
 export const permanentlyDeleteArticle = (id) =>
   apiFetch(`/articles/${id}`, { method: 'DELETE' });

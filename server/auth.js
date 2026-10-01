@@ -24,14 +24,13 @@ const isValidToken = (token) => {
   return true;
 };
 
-export const requireAdmin = (req, res, next) => {
+export const isAdminRequest = (req) => {
   const header = req.headers.authorization;
-  if (!header?.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'unauthorized' });
-  }
+  return Boolean(header?.startsWith('Bearer ') && isValidToken(header.slice(7)));
+};
 
-  const token = header.slice(7);
-  if (!isValidToken(token)) {
+export const requireAdmin = (req, res, next) => {
+  if (!isAdminRequest(req)) {
     return res.status(401).json({ error: 'unauthorized' });
   }
 

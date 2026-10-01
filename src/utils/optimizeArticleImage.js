@@ -1,6 +1,17 @@
 const ARTICLE_IMAGE_MAX_WIDTH = 1440;
 const DEFAULT_QUALITY = 0.82;
 
+const MAX_OUTPUT_BYTES = 900_000;
+
+const canvasToJpeg = (canvas, quality) =>
+  new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error('encode_failed'))),
+      'image/jpeg',
+      quality,
+    );
+  });
+
 const loadImage = (file) =>
   new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
@@ -16,6 +27,7 @@ const loadImage = (file) =>
     image.src = url;
   });
 
+/** Resize and re-encode a picked image as a JPEG Blob ready for upload. */
 export const optimizeArticleImage = async (
   file,
   { maxWidth = ARTICLE_IMAGE_MAX_WIDTH, quality = DEFAULT_QUALITY } = {},
@@ -36,11 +48,6 @@ export const optimizeArticleImage = async (
   ctx.fillRect(0, 0, width, height);
   ctx.drawImage(image, 0, 0, width, height);
 
-  let dataUrl = canvas.toDataURL('image/jpeg', quality);
-
-  if (dataUrl.length > 1_200_000) {
-    dataUrl = canvas.toDataURL('image/jpeg', 0.72);
-  }
-
-  return dataUrl;
+  const blob = await canvasToJpeg(canvas, quality);
+  return blob.size > MAX_OUTPUT_BYTES ? canvasToJpeg(canvas, 0.72) : blob;
 };

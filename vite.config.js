@@ -10,6 +10,11 @@ export default defineConfig({
         target: 'http://localhost:3001',
         changeOrigin: true,
       },
+      // Article images uploaded from the admin panel (nginx serves them in production).
+      '/uploads': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
     },
     watch: {
       // Windows: avoids EBUSY when JPG/files in public/ are locked by Explorer, OneDrive, etc.

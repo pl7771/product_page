@@ -33,3 +33,5 @@ PRODUCT.md
 DESIGN.md
 .impeccable/design.json
 .impeccable/live/config.json
+server/data/uploads/
+server/data/articles.db.bak-*

@@ -7,8 +7,21 @@ import {
   readArticles,
   upsertArticle,
 } from './db.js';
-import { createSession, destroySession, requireAdmin, verifyPassword } from './auth.js';
+import {
+  createSession,
+  destroySession,
+  isAdminRequest,
+  requireAdmin,
+  verifyPassword,
+} from './auth.js';
 import { seedArticlesIfMissing } from './seedArticles.js';
+import {
+  extractInlineImages,
+  saveImage,
+  UPLOAD_MIME_TYPES,
+  UPLOADS_DIR,
+  UPLOADS_URL_PREFIX,
+} from './uploads.js';
 
 const PORT = Number(process.env.PORT) || 3001;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -19,6 +32,14 @@ const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
+
+// Production nginx serves these itself; this covers local dev (proxied by Vite).
+app.use(
+  UPLOADS_URL_PREFIX,
+  express.static(UPLOADS_DIR, { immutable: true, maxAge: '365d', fallthrough: false }),
+);
+
+const isPublic = (article) => article.status === 'published' && article.visible !== false;
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true });
@@ -48,10 +69,7 @@ app.get('/api/admin/me', requireAdmin, (_req, res) => {
 });
 
 app.get('/api/articles/public', (_req, res) => {
-  const articles = readArticles().filter(
-    (a) => a.status === 'published' && a.visible !== false,
-  );
-  res.json(articles);
+  res.json(readArticles().filter(isPublic));
 });
 
 app.get('/api/articles', requireAdmin, (_req, res) => {
@@ -60,9 +78,24 @@ app.get('/api/articles', requireAdmin, (_req, res) => {
 
 app.get('/api/articles/:id', (req, res) => {
   const article = getArticle(req.params.id);
-  if (!article) return res.status(404).json({ error: 'not_found' });
+  // Drafts and archived articles are admin-only; answer 404 rather than 401 so
+  // their IDs cannot be probed.
+  if (!article || (!isPublic(article) && !isAdminRequest(req))) {
+    return res.status(404).json({ error: 'not_found' });
+  }
   res.json(article);
 });
+
+app.post(
+  '/api/uploads',
+  requireAdmin,
+  express.raw({ type: UPLOAD_MIME_TYPES, limit: '8mb' }),
+  (req, res) => {
+    const url = Buffer.isBuffer(req.body) ? saveImage(req.body) : null;
+    if (!url) return res.status(400).json({ error: 'invalid_image' });
+    res.status(201).json({ url });
+  },
+);
 
 app.post('/api/articles', requireAdmin, (req, res) => {
   const body = req.body ?? {};
@@ -74,7 +107,7 @@ app.post('/api/articles', requireAdmin, (req, res) => {
     updatedAt: now,
   };
 
-  res.status(201).json(upsertArticle(article));
+  res.status(201).json(upsertArticle(extractInlineImages(article).article));
 });
 
 app.put('/api/articles/:id', requireAdmin, (req, res) => {
@@ -89,7 +122,7 @@ app.put('/api/articles/:id', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(article));
+  res.json(upsertArticle(extractInlineImages(article).article));
 });
 
 app.patch('/api/articles/:id/visibility', requireAdmin, (req, res) => {

@@ -10,7 +10,7 @@ import {
   getArticleCategoryId,
   getCategoryLabel,
 } from '../../constants/articleCategories';
-import { createArticle, fetchArticle, updateArticle } from '../../api/articles';
+import { createArticle, fetchArticle, updateArticle, uploadArticleImage } from '../../api/articles';
 import {
   createEmptyArticle,
   isArticleComplete,
@@ -154,11 +154,11 @@ export const AdminArticleEditPage = () => {
     setPublishError('');
 
     try {
-      const dataUrl = await optimizeArticleImage(file);
+      const { url } = await uploadArticleImage(await optimizeArticleImage(file));
       setArticle((prev) => ({
         ...prev,
-        en: { ...prev.en, image: dataUrl },
-        zh: { ...prev.zh, image: dataUrl },
+        en: { ...prev.en, image: url },
+        zh: { ...prev.zh, image: url },
       }));
     } catch {
       setPublishError(t('admin.edit.imageErrorOptimize'));
