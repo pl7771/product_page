@@ -31,6 +31,14 @@ echo "==> nginx site config"
 if [[ -f /etc/nginx/conf.d/default.conf ]]; then
   mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak
 fi
+# The stock nginx.conf ships its own `server_name _` on :80, which clashes with
+# our default_server ("conflicting server name" warning). Comment it out.
+sed -i '/^    server {/,/^    }/ s/^/#/' /etc/nginx/nginx.conf
+# Webroot for acme.sh HTTP-01 challenges. Root's umask is 027, so give nginx
+# a default ACL or it gets 403 on the challenge files acme.sh writes.
+mkdir -p /var/www/acme/.well-known/acme-challenge
+chmod -R a+rX /var/www/acme
+setfacl -R -m u:nginx:rX -d -m u:nginx:rX /var/www/acme
 cp "$SCRIPT_DIR/nginx/hbshandao.conf" /etc/nginx/conf.d/hbshandao.conf
 nginx -t
 systemctl enable nginx
