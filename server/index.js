@@ -22,6 +22,7 @@ import {
   UPLOADS_DIR,
   UPLOADS_URL_PREFIX,
 } from './uploads.js';
+import { requestDeploy } from './deployTrigger.js';
 
 const PORT = Number(process.env.PORT) || 3001;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -107,7 +108,9 @@ app.post('/api/articles', requireAdmin, (req, res) => {
     updatedAt: now,
   };
 
-  res.status(201).json(upsertArticle(extractInlineImages(article).article));
+  const saved = upsertArticle(extractInlineImages(article).article);
+  if (isPublic(saved)) requestDeploy();
+  res.status(201).json(saved);
 });
 
 app.put('/api/articles/:id', requireAdmin, (req, res) => {
@@ -122,7 +125,9 @@ app.put('/api/articles/:id', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(extractInlineImages(article).article));
+  const saved = upsertArticle(extractInlineImages(article).article);
+  if (isPublic(saved) || isPublic(existing)) requestDeploy();
+  res.json(saved);
 });
 
 app.patch('/api/articles/:id/visibility', requireAdmin, (req, res) => {
@@ -135,7 +140,9 @@ app.patch('/api/articles/:id/visibility', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(article));
+  const saved = upsertArticle(article);
+  if (isPublic(saved) || isPublic(existing)) requestDeploy();
+  res.json(saved);
 });
 
 app.post('/api/articles/:id/archive', requireAdmin, (req, res) => {
@@ -150,7 +157,10 @@ app.post('/api/articles/:id/archive', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(article));
+  // Archiving a published article removes it from the public set.
+  const saved = upsertArticle(article);
+  if (isPublic(existing)) requestDeploy();
+  res.json(saved);
 });
 
 app.post('/api/articles/:id/restore', requireAdmin, (req, res) => {
@@ -165,7 +175,9 @@ app.post('/api/articles/:id/restore', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(article));
+  const saved = upsertArticle(article);
+  if (isPublic(saved)) requestDeploy();
+  res.json(saved);
 });
 
 app.post('/api/articles/:id/unpublish', requireAdmin, (req, res) => {
@@ -179,7 +191,10 @@ app.post('/api/articles/:id/unpublish', requireAdmin, (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  res.json(upsertArticle(article));
+  // Unpublishing removes a previously public article from the public set.
+  const saved = upsertArticle(article);
+  if (isPublic(existing)) requestDeploy();
+  res.json(saved);
 });
 
 app.delete('/api/articles/:id', requireAdmin, (req, res) => {

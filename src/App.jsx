@@ -23,6 +23,7 @@ import { SolutionsPage } from './pages/SolutionsPage';
 import { SolutionPage } from './pages/SolutionPage';
 import { IndustryInformationPage } from './pages/IndustryInformationPage';
 import { IndustryArticlePage } from './pages/IndustryArticlePage';
+import { NotFound } from './pages/NotFound';
 
 // Modals
 import { LightboxModal } from './components/modals/LightboxModal';
@@ -97,6 +98,7 @@ const PublicRoutes = ({ onContactClick, onGalleryClick }) => (
     <Route path="industry-information/:articleId" element={<IndustryArticlePage />} />
     <Route path="privacy-policy" element={<PrivacyPolicy />} />
     <Route path="terms-of-service" element={<TermsOfService />} />
+    <Route path="*" element={<NotFound />} />
   </Routes>
 );
 

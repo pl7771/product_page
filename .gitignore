@@ -35,3 +35,8 @@ DESIGN.md
 .impeccable/live/config.json
 server/data/uploads/
 server/data/articles.db.bak-*
+
+# Generated at build time by scripts/generate-sitemap.mjs — not source.
+# (CI regenerates them before `vite build` copies public/ into dist/.)
+public/sitemap.xml
+public/robots.txt

@@ -11,6 +11,13 @@ on:
     - cron: '17 19 * * *'
   # "Run workflow" button in the Actions tab for an on-demand rebuild.
   workflow_dispatch:
+  # Fired by the API server (debounced) right after an article is published or
+  # changed in the admin panel, so the new page is prerendered and added to the
+  # sitemap within minutes instead of waiting for the nightly cron. These calls
+  # also count as repository activity, which keeps the schedule above from being
+  # disabled after 60 days of inactivity.
+  repository_dispatch:
+    types: [article-change]
 
 concurrency:
   group: production-deploy
@@ -96,7 +103,10 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
-          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" 'mkdir -p /var/www/hbshandao/server/data && rm -rf /var/www/hbshandao/dist'
+          # Unpack into a staging dir first; dist is swapped into place with a
+          # single rename below, so nginx never serves a half-extracted tree.
+          ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" \
+            'rm -rf /var/www/hbshandao/.stage && mkdir -p /var/www/hbshandao/.stage /var/www/hbshandao/server/data'
 
           tar -czf - \
             --exclude='server/node_modules' \
@@ -104,10 +114,28 @@ jobs:
             --exclude='server/data' \
             dist server \
             | ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes "${SSH_USER}@${SSH_HOST}" \
-              'tar -xzf - -C /var/www/hbshandao'
+              'tar -xzf - -C /var/www/hbshandao/.stage'
 
           ssh -i ~/.ssh/deploy_key "${SSH_USER}@${SSH_HOST}" env ADMIN_PASSWORD="$ADMIN_PASSWORD" bash -s <<'REMOTE'
           set -euo pipefail
+          cd /var/www/hbshandao
+
+          # --- Atomic swap of the static site (dist) ---------------------------
+          # Everything was unpacked under .stage first, so the only moment nginx
+          # could miss files is the rename below (one syscall), not the whole
+          # extraction. The previous tree is kept as dist.old until the new one is
+          # in place, then removed.
+          rm -rf dist.old
+          if [ -d dist ]; then mv dist dist.old; fi
+          mv .stage/dist dist
+
+          # Server code: overlay in place. node_modules/.env/data were excluded
+          # from the tarball, so they are preserved.
+          mkdir -p server/data
+          cp -a .stage/server/. server/
+          rm -rf .stage dist.old
+
+          # --- Permissions -----------------------------------------------------
           NGINX_USER="$(awk '/^user / { print $2; exit }' /etc/nginx/nginx.conf | tr -d ';')"
           if [[ -n "$NGINX_USER" ]] && id "$NGINX_USER" >/dev/null 2>&1; then
             chown -R "$NGINX_USER:$NGINX_USER" /var/www/hbshandao/dist
@@ -115,9 +143,19 @@ jobs:
           chmod 755 /var/www
           chmod 755 /var/www/hbshandao
           chmod -R a+rX /var/www/hbshandao/dist
+
+          # --- API restart -----------------------------------------------------
           cd /var/www/hbshandao/server
           mkdir -p data
-          printf 'PORT=3001\nADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD" > .env
+          # Rewrite .env but preserve any manually-set keys (e.g. the deploy-trigger
+          # token), which live only on the server and must survive each deploy.
+          PRESERVED="$( [ -f .env ] && grep -E '^(GITHUB_DISPATCH_TOKEN|GITHUB_DISPATCH_REPO|DEPLOY_TRIGGER_DEBOUNCE_MS)=' .env || true )"
+          {
+            printf 'PORT=3001\n'
+            printf 'ADMIN_PASSWORD=%s\n' "$ADMIN_PASSWORD"
+            [ -n "$PRESERVED" ] && printf '%s\n' "$PRESERVED"
+          } > .env.new
+          mv .env.new .env
           npm ci --omit=dev
           if pm2 describe hbshandao-api >/dev/null 2>&1; then
             pm2 restart hbshandao-api
